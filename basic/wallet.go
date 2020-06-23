@@ -1,42 +1,42 @@
 package basic
 
 import (
-    "errors"
-    "fmt"
+	"errors"
+	"fmt"
 )
 
 type BitCoin int
 
 type Stringer interface {
-    String() string
+	String() string
 }
 
 type Wallet struct {
-    balance BitCoin
+	balance BitCoin
 }
 
 var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
 
 func (bitCoin BitCoin) String() string {
-    return fmt.Sprintf("%d BTC", bitCoin)
+	return fmt.Sprintf("%d BTC", bitCoin)
 }
 
 func (wallet *Wallet) Deposit(amount BitCoin) {
-    wallet.balance += amount
+	wallet.balance += amount
 
 }
 
 func (wallet *Wallet) Balance() BitCoin {
-    return wallet.balance
+	return wallet.balance
 }
 
 func (wallet *Wallet) Withdraw(amount BitCoin) error {
 
-    if amount > wallet.balance {
-        return ErrInsufficientFunds
-    }
+	if amount > wallet.balance {
+		return ErrInsufficientFunds
+	}
 
-    wallet.balance -= amount
+	wallet.balance -= amount
 
-    return nil
+	return nil
 }
