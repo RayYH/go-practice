@@ -1,3 +1,9 @@
 # Go-Practice
 
-Go 练习代码。
+Some Go code.
+
+> **USE AT YOUR OWN RISKS **
+
+## LICENSE
+
+[MIT](LICENSE).

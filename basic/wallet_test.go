@@ -17,7 +17,7 @@ func assertError(t *testing.T, got error, want error) {
         t.Fatal("didn't get an error but wanted one")
     }
 
-    if got != ErrInsufficientFunds {
+    if got != want {
         t.Errorf("got %q, want %q", got, want)
     }
 }
