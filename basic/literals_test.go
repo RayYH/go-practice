@@ -9,7 +9,6 @@ func ExampleDisplayIntegerLiterals() {
 		0600,                 // 0 开头代表 8 进制，6*8^2 = 6 * 64 = 384
 		0_600,                // 同上
 		0o600,                // 同上 0o
-		0o600,                // 同上 0O
 		0xBadFace,            // 0x 代表十六进制
 		0xBad_Face,           // 同上
 		0x_67_7a_2f_cc_40_c6, // 下划线会被去除
