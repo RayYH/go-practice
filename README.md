@@ -2,7 +2,7 @@
 
 Some Go code.
 
-> **USE AT YOUR OWN RISKS **
+> **USE AT YOUR OWN RISKS.**
 
 ## LICENSE
 

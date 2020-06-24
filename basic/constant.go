@@ -1,5 +1,8 @@
 package basic
 
+// Go 支持的常量的类型
+// boolean, rune, integer, floating-point, complex, string
+
 // 常量声明格式 const identifier [type] = value - Go 支持布尔型、数值型、字符串型常量
 // type 在大多数时候都可以省略，因为编译器可以根据变量的值来推断其类型
 const Pi = 3.14159

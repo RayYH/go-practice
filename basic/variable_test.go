@@ -69,6 +69,15 @@ func ExampleShowLocalVariableThree() {
 	// Output: a b c: 5 7 abc
 }
 
+func ExampleShowLocalVariableFour() {
+	// 使用 := 进行并行赋值时，左边只需满足至少一个是第一次声明的即可
+	// 比如下面的 a 已经声明过，但还是可以使用 := 操作符
+	var a int
+	a, b, c := 1, 2, 3
+	fmt.Println("a b c:", a, b, c)
+	// Output: a b c: 1 2 3
+}
+
 func ExampleShowVariableInitializedInInit() {
 	fmt.Println(declaredVariable)
 	// Output: 0.7853981633974483

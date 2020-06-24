@@ -7,14 +7,14 @@ import (
 )
 
 // 布尔类型 bool
-func ExampleShowBoolean() {
+func ExampleDisplayBoolean() {
 	var aBool bool
 	fmt.Println("bool:", aBool)
 	// Output: bool: false
 }
 
 // 整型
-func ExampleShowInt() {
+func ExampleDisplayInt() {
 	var anInt int
 	var anInt8 int8
 	var anInt16 int16
@@ -34,7 +34,7 @@ func ExampleShowInt() {
 // 字符串的默认值是一个空字符串
 // 数学运算中应尽可能地使用 float64 位，因为 math 包中提供的类型都是 float64
 // 浮点型
-func ExampleShowFloat() {
+func ExampleDisplayFloat() {
 	var aFloat32 float32
 	var aFloat64 float64
 	fmt.Println("Default float values:", aFloat32, aFloat64)
@@ -42,7 +42,7 @@ func ExampleShowFloat() {
 }
 
 // 可以使用 type(variable) 来进行显式转换一个变量的类型
-func ExampleShowCasts() {
+func ExampleDisplayCasts() {
 	var n int16 = 34
 	var m int32
 	m = int32(n)
@@ -78,7 +78,7 @@ func ExampleTypeInterface() {
 	// Output: int float64 complex128
 }
 
-func ExamplePrintComplex() {
+func ExampleDisplayComplex() {
 	var defaultComplexValue complex128
 	fmt.Println("default:", defaultComplexValue)
 	re := 1.1
@@ -91,7 +91,7 @@ func ExamplePrintComplex() {
 	// 1.1 2.2
 }
 
-func ExampleShowByte() {
+func ExampleDisplayByte() {
 	var chA byte = 65
 	var chB byte = '\x41'
 	fmt.Println(chA, chB)
