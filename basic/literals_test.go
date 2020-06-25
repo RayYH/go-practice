@@ -53,3 +53,64 @@ func ExampleDisplayFloatPointLiterals() {
 		// Output: 0.000 72.400 72.400 2.718 1.000 0.000 1000000.000 0.250 12345.000 15.000 15.000 0.250 2048.000 1.938 0.500 0.125 348.000
 	}
 }
+
+func ExampleDisplayRuneLiterals() {
+	fmt.Println([]byte("café"))
+	fmt.Println([]rune("café"))
+	runes := []rune{
+		'a',
+		'本',
+		'\t',
+		'\000',
+		'\007',
+		'\377',
+		'\x07',
+		'\xff',
+		'\u12e4',
+		'\U00101234',
+		'\'', // rune literal containing single quote character
+	}
+
+	for index, word := range runes {
+		fmt.Printf("%#U starts at byte position %d\n", word, index)
+	}
+	// Output: [99 97 102 195 169]
+	// [99 97 102 233]
+	// U+0061 'a' starts at byte position 0
+	// U+672C '本' starts at byte position 1
+	// U+0009 starts at byte position 2
+	// U+0000 starts at byte position 3
+	// U+0007 starts at byte position 4
+	// U+00FF 'ÿ' starts at byte position 5
+	// U+0007 starts at byte position 6
+	// U+00FF 'ÿ' starts at byte position 7
+	// U+12E4 'ዤ' starts at byte position 8
+	// U+101234 starts at byte position 9
+	// U+0027 ''' starts at byte position 10
+}
+
+func ExampleDisplayStringLiterals() {
+	strings := []string{
+		`abc`,
+		`\n
+		\n`,
+		"\n",
+		"\"",
+		"Hello, world!\n",
+		"日本語",
+		"\u65e5本\U00008a9e",
+		`日本語`,
+		"\u65e5\u672c\u8a9e",
+		"\U000065e5\U0000672c\U00008a9e",
+		"\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e",
+	}
+
+	var value string
+	for _, value = range strings {
+		fmt.Printf("%s", value)
+	}
+	// Output: abc\n
+	//		\n
+	//"Hello, world!
+	//日本語日本語日本語日本語日本語日本語
+}

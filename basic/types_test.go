@@ -112,3 +112,59 @@ func ExampleDisplayByte() {
 	// 41 - 3B2 - 101234
 	// U+0041 - U+03B2 - U+101234
 }
+
+func ExampleDisplayArrays() {
+	var a [2]byte
+	var byteValue byte
+	for _, byteValue = range a {
+		fmt.Printf("%q", byteValue)
+	}
+
+	const N = 3
+	var b [2 * N]struct {
+		x, y int32
+	}
+	var structValue struct {
+		x, y int32
+	}
+	fmt.Printf("\n")
+	for _, structValue = range b {
+		fmt.Printf("%d%d", structValue.x, structValue.y)
+	}
+
+	var c [3]*float64
+	var d = [3]float64{
+		0.00, 1.11, 2.22,
+	}
+	fmt.Printf("\n")
+	var floatValuePointer *float64
+	var index int
+	for index = range d {
+		c[index] = &d[index]
+	}
+
+	for _, floatValuePointer = range c {
+		fmt.Printf("%.2f", *floatValuePointer)
+	}
+
+	fmt.Printf("\n")
+
+	var e = [2][2]int{
+		{1, 2},
+		{3, 4},
+	}
+
+	var arrayValue [2]int
+	var intValue int
+
+	for _, arrayValue = range e {
+		for _, intValue = range arrayValue {
+			fmt.Print(intValue)
+		}
+	}
+
+	// Output: '\x00''\x00'
+	// 000000000000
+	// 0.001.112.22
+	// 1234
+}
