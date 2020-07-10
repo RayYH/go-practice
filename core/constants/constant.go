@@ -3,6 +3,15 @@ package main
 // The type of constants go supported:
 // boolean, rune, integer, floating-point, complex, string
 
+// unsafe.Sizeof, cap, len can be applied to some expressions
+// real and imag applied to a complex constant and complex applied to numeric constants
+// The boolean truth values are represented by the predeclared constants true and false
+// The default type of an untyped constant is bool, rune, int, float64, complex128 or string
+
+// Numeric constants represent exact values of arbitrary precision and do not overflow.
+const HigherPrecisionPi = 3.14159265358979323846264338327950288419716939937510582097494459
+const LessThanOne = 3.141592653589793 / HigherPrecisionPi
+
 // 常量声明格式 const identifier [type] = value - Go 支持布尔型、数值型、字符串型常量
 // type 在大多数时候都可以省略，因为编译器可以根据变量的值来推断其类型
 const Pi = 3.14159

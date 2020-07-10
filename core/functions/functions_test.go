@@ -2,39 +2,36 @@ package main
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
 )
 
 func TestMultiPly3Nums(t *testing.T) {
-	if multiPly3Nums(2, 5, 6) != 60 {
-		t.Error("2 * 5 * 6 != 60")
-	}
+	assert.Equal(t, 60, multiPly3Nums(2, 5, 6))
 }
 
 func TestGet2XAnd3X(t *testing.T) {
-	if x2, x3 := getX2AndX3(2); x2 != 4 || x3 != 6 {
-		t.Error("2 * 2 != 4 OR 2 * != 6")
-	}
+	x2, x3 := getX2AndX3(2)
+	assert.Equal(t, 4, x2)
+	assert.Equal(t, 6, x3)
 }
 
 func TestGetNamed2XAnd3X(t *testing.T) {
-	if x2, x3 := getNamedX2AndX3(2); x2 != 4 || x3 != 6 {
-		t.Error("2 * 2 != 4 OR 2 * != 6")
-	}
+	x2, x3 := getNamedX2AndX3(2)
+	assert.Equal(t, 4, x2)
+	assert.Equal(t, 6, x3)
 }
 
 func TestMultiply(t *testing.T) {
 	n := 0
 	reply := &n
-	if multiply(3, 4, reply); *reply != 12 {
-		t.Error("3 * 4 != 12")
-	}
+	multiply(3, 4, reply)
+	assert.Equal(t, 12, *reply)
 }
 
 func TestMin(t *testing.T) {
-	if min(1, 2, 3, 4, 5) != 1 {
-		t.Error("1 is the smallest value in 1 2 3 4 5")
-	}
+	assert.Equal(t, 1, min(1, 2, 3, 4, 5))
 }
 
 func ExampleDefer() {
@@ -67,40 +64,22 @@ func ExampleB() {
 	// leaving: b
 }
 
-func ExampleFibonacci() {
+func TestFibonacci(t *testing.T) {
 	result := 0
+	nums := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}
 	for i := 0; i <= 10; i++ {
 		result = fibonacci(i)
-		fmt.Printf("fibonacci(%d) is: %d\n", i, result)
+		assert.Equal(t, nums[i], result)
 	}
-	// Output:
-	// fibonacci(0) is: 1
-	// fibonacci(1) is: 1
-	// fibonacci(2) is: 2
-	// fibonacci(3) is: 3
-	// fibonacci(4) is: 5
-	// fibonacci(5) is: 8
-	// fibonacci(6) is: 13
-	// fibonacci(7) is: 21
-	// fibonacci(8) is: 34
-	// fibonacci(9) is: 55
-	// fibonacci(10) is: 89
 }
 
 func TestEvenAndOdd(t *testing.T) {
-	if odd(18) {
-		t.Error("18 is odd")
-	}
-
-	if even(19) {
-		t.Error("19 is even")
-	}
+	assert.True(t, odd(17))
+	assert.True(t, even(18))
 }
 
 func TestCallback(t *testing.T) {
-	if callback(1, 2, add) != 3 {
-		t.Error("1+2 != 3")
-	}
+	assert.Equal(t, 3, callback(1, 2, add))
 }
 
 func ExampleClosure() {
@@ -115,7 +94,36 @@ func ExampleClosure() {
 }
 
 func TestGetRet(t *testing.T) {
-	if getRet() != 2 {
-		t.Error("error")
+	assert.Equal(t, 2, getRet())
+}
+
+func TestAdder(t *testing.T) {
+	plusTwo := AddTwo()
+	assert.Equal(t, 5, plusTwo(3))
+	plus := Adder(4)
+	assert.Equal(t, 9, plus(5))
+}
+
+func TestSequentialAdder(t *testing.T) {
+	var f = SequentialAdder()
+	assert.Equal(t, 1, f(1))
+	assert.Equal(t, 21, f(20))
+	assert.Equal(t, 321, f(300))
+}
+
+func TestMakeAddSuffix(t *testing.T) {
+	addBmp := MakeAddSuffix(".bmp")
+	addJpeg := MakeAddSuffix(".jpeg")
+	assert.Equal(t, "file.bmp", addBmp("file"))
+	assert.Equal(t, "file.jpeg", addJpeg("file"))
+}
+
+func TestCalculateFunctionExecTime(t *testing.T) {
+	start := time.Now()
+	for i := 0; i < 100; i++ {
+
 	}
+	end := time.Now()
+	delta := end.Sub(start)
+	assert.True(t, delta.Nanoseconds() > 0)
 }

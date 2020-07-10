@@ -1,8 +1,12 @@
 package types
 
 import (
+	"bytes"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"math"
+	"strconv"
+	"strings"
 	"testing"
 	"unicode/utf8"
 )
@@ -199,4 +203,104 @@ func ExampleGetStringLength() {
 	// Output:
 	// len(myStr) = 12
 	// utf8.RuneCountInString(myStr) = 8
+}
+
+func TestStringUsage(t *testing.T) {
+	var rawStr1 = ``
+	assert.Equal(t, "", rawStr1)
+
+	var xmlStr1 = `
+<xml>
+    <node></node>
+</xml>
+`
+	assert.Equal(t, "\n<xml>\n    <node></node>\n</xml>\n", xmlStr1)
+
+	var sql = `
+SELECT *
+FROM table
+`
+	assert.Equal(t, "\nSELECT *\nFROM table\n", sql)
+
+	var json = `
+{
+    "key": "value"
+}
+`
+	assert.Equal(t, "\n{\n    \"key\": \"value\"\n}\n", json)
+
+	var multilineStr = `
+    1234567890
+    ~!@#$%^&*()_+|
+    abcABC
+    `
+	assert.Equal(t, "\n    1234567890\n    ~!@#$%^&*()_+|\n    abcABC\n    ", multilineStr)
+}
+
+func TestStringOperations(t *testing.T) {
+	s := "a-b-c"
+	assert.Equal(t, []string{"a", "b", "c"}, strings.Split(s, "-"))
+	a := []string{"a", "b", "c"}
+	assert.Equal(t, "a-b-c", strings.Join(a, "-"))
+	assert.Equal(t, "a b c", strings.TrimSpace(" a b c "))
+}
+
+func TestStringCast(t *testing.T) {
+	s := "10"
+	i, err := strconv.Atoi(s)
+	assert.Equal(t, 10, i)
+	assert.Nil(t, err)
+
+	n := 99
+	str := strconv.Itoa(n)
+	assert.Equal(t, "99", str)
+
+	var a interface{}
+	a = "str"
+	str2 := a.(string)
+	assert.Equal(t, "str", str2)
+}
+
+// using +=
+func BenchmarkStringAdd(b *testing.B) {
+	b.ResetTimer()
+	s := ""
+	for i := 0; i < b.N; i++ {
+		s += "s"
+	}
+	b.StopTimer()
+}
+
+// using Sprintf
+func BenchmarkSprintf(b *testing.B) {
+	b.ResetTimer()
+	s := "s"
+	for i := 0; i < b.N; i++ {
+		s = fmt.Sprintf("%v", s)
+	}
+	b.StopTimer()
+}
+
+// using strings.Builder
+func BenchmarkStringsBuilder(b *testing.B) {
+	b.ResetTimer()
+	var stringsBuilder strings.Builder
+	s := "s"
+	for i := 0; i < b.N; i++ {
+		stringsBuilder.WriteString(s)
+	}
+	_ = stringsBuilder.String()
+	b.StopTimer()
+}
+
+// using bytes.Buffer
+func BenchmarkBytesBuffer(b *testing.B) {
+	b.ResetTimer()
+	s := "s"
+	var bytesBuffer bytes.Buffer
+	for i := 0; i < b.N; i++ {
+		bytesBuffer.WriteString(s)
+	}
+	_ = bytesBuffer.String()
+	b.StopTimer()
 }

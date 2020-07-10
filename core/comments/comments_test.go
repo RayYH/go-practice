@@ -1,9 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
-func ExampleDisplayHelloWorld() {
-	fmt.Println("Hello World!")
-	// Output:
-	// Hello World!
+func TestSomething(t *testing.T) {
+	assert.Equal(t, 1, 1, "they should be equal")
 }

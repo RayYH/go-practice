@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
 func ExampleShowPi() {
@@ -53,4 +55,11 @@ func ExampleDeclareConstInsideAFunc() {
 	const Truth = true
 	fmt.Println("Go?", Truth)
 	// Output: Go? true
+}
+
+func TestConstantWillNotLosePrecision(t *testing.T) {
+	assert.Equal(t, float32(3.1415927), float32(HigherPrecisionPi))
+	// default is float64
+	assert.Equal(t, 3.141592653589793, HigherPrecisionPi)
+	assert.NotEqual(t, LessThanOne, 3.141592653589793/3.141592653589793)
 }
