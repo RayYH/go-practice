@@ -113,12 +113,12 @@ func ExampleBreak() {
 			if j > 5 {
 				break
 			}
-			print(j)
+			fmt.Print(j)
 		}
-		print("  ")
+		fmt.Print("  ")
 	}
 	// Output:
-	// 012345 012345 012345
+	// 012345  012345  012345
 }
 
 func ExampleContinue() {
@@ -126,8 +126,8 @@ func ExampleContinue() {
 		if i == 5 {
 			continue
 		}
-		print(i)
-		print(" ")
+		fmt.Print(i)
+		fmt.Print(" ")
 	}
 	// Output:
 	// 0 1 2 3 4 6 7 8 9
