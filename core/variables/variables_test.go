@@ -1,4 +1,4 @@
-package basic
+package variables
 
 import (
 	"fmt"
@@ -89,4 +89,23 @@ func ExampleBlankIdentifier() {
 	var _, age = "Ray", 24
 	fmt.Println("age:", age)
 	// Output: age: 24
+}
+
+func ExampleIterateOverAString() {
+	for index, s := range "Hello World" {
+		fmt.Printf("The index number of %c is %d\n", s, index)
+	}
+
+	// Output:
+	// The index number of H is 0
+	// The index number of e is 1
+	// The index number of l is 2
+	// The index number of l is 3
+	// The index number of o is 4
+	// The index number of   is 5
+	// The index number of W is 6
+	// The index number of o is 7
+	// The index number of r is 8
+	// The index number of l is 9
+	// The index number of d is 10
 }

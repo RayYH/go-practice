@@ -1,6 +1,6 @@
-package basic
+package main
 
-// Go 支持的常量的类型
+// The type of constants go supported:
 // boolean, rune, integer, floating-point, complex, string
 
 // 常量声明格式 const identifier [type] = value - Go 支持布尔型、数值型、字符串型常量

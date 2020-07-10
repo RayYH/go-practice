@@ -1,6 +1,8 @@
-package basic
+package main
 
 import "fmt"
+
+// https://golang.org/ref/spec#Integer_literals
 
 func ExampleDisplayIntegerLiterals() {
 	numbers := []int64{
@@ -54,6 +56,42 @@ func ExampleDisplayFloatPointLiterals() {
 	}
 }
 
+func ExampleDisplayImaginaryLiterals() {
+	complexes := []complex128{
+		0i,
+		123i,   // == 123i for backward-compatibility
+		0o123i, // == 0o123 * 1i == 83i
+		0xabci, // == 0xabc * 1i == 2748i
+		0.i,
+		2.71828i,
+		1.e+0i,
+		6.67428e-11i,
+		1e6i,
+		.25i,
+		.12345e+5i,
+		0x1p-2i, // == 0x1p-2 * 1i == 0.25i
+		100 + 10i,
+	}
+
+	for index, comp := range complexes {
+		fmt.Printf("%.5f starts at byte position %d\n", comp, index)
+	}
+
+	// Output: (0.00000+0.00000i) starts at byte position 0
+	// (0.00000+123.00000i) starts at byte position 1
+	// (0.00000+83.00000i) starts at byte position 2
+	// (0.00000+2748.00000i) starts at byte position 3
+	// (0.00000+0.00000i) starts at byte position 4
+	// (0.00000+2.71828i) starts at byte position 5
+	// (0.00000+1.00000i) starts at byte position 6
+	// (0.00000+0.00000i) starts at byte position 7
+	// (0.00000+1000000.00000i) starts at byte position 8
+	// (0.00000+0.25000i) starts at byte position 9
+	// (0.00000+12345.00000i) starts at byte position 10
+	// (0.00000+0.25000i) starts at byte position 11
+	// (100.00000+10.00000i) starts at byte position 12
+}
+
 func ExampleDisplayRuneLiterals() {
 	fmt.Println([]byte("café"))
 	fmt.Println([]rune("café"))
@@ -68,7 +106,7 @@ func ExampleDisplayRuneLiterals() {
 		'\xff',
 		'\u12e4',
 		'\U00101234',
-		'\'', // rune literal containing single quote character
+		'\'', // rune literals containing single quote character
 	}
 
 	for index, word := range runes {

@@ -12,12 +12,12 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: Checkout code
+      - name: Checkout core
         uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
       - name: run go fmt
-        run: go fmt ./...
+        run: gofmt -s -w .
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply go fmt changes
@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-      - name: Checkout code
+      - name: Checkout core
         uses: actions/checkout@v2
       - name: Test
         run: go test ./...

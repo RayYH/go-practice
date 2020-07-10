@@ -1,9 +1,10 @@
-package basic
+package types
 
 import (
 	"fmt"
 	"math"
 	"testing"
+	"unicode/utf8"
 )
 
 // 布尔类型 bool
@@ -105,7 +106,7 @@ func ExampleDisplayByte() {
 	fmt.Printf("%d - %d - %d\n", ch, ch2, ch3) // integer
 	fmt.Printf("%c - %c - %c\n", ch, ch2, ch3) // character
 	fmt.Printf("%X - %X - %X\n", ch, ch2, ch3) // UTF-8 bytes
-	fmt.Printf("%U - %U - %U", ch, ch2, ch3)   // UTF-8 code point
+	fmt.Printf("%U - %U - %U", ch, ch2, ch3)   // UTF-8 core point
 	// Output: 65 65
 	// 65 - 946 - 1053236
 	// A - β - 􁈴
@@ -167,4 +168,35 @@ func ExampleDisplayArrays() {
 	// 000000000000
 	// 0.001.112.22
 	// 1234
+}
+
+func TestCreateAStringFromSlices(t *testing.T) {
+	var givenString = "Geeks"
+
+	// Creating and initializing a slices of byte
+	mySlice1 := []byte{0x47, 0x65, 0x65, 0x6b, 0x73}
+	// Creating a string from the slices
+	myString1 := string(mySlice1)
+
+	if myString1 != givenString {
+		t.Errorf("%s not equal to %s", myString1, givenString)
+	}
+
+	mySlice2 := []rune{0x0047, 0x0065, 0x0065, 0x006b, 0x0073}
+	myString2 := string(mySlice2)
+
+	if myString2 != givenString {
+		t.Errorf("%s not equal to %s", myString2, givenString)
+	}
+}
+
+func ExampleGetStringLength() {
+	// 6 + 3 * 2 = 12
+	myStr := "Hello 世界"
+	fmt.Printf("len(myStr) = %d\n", len(myStr))
+	fmt.Printf("utf8.RuneCountInString(myStr) = %d", utf8.RuneCountInString(myStr))
+
+	// Output:
+	// len(myStr) = 12
+	// utf8.RuneCountInString(myStr) = 8
 }
