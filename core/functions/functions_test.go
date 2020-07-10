@@ -119,4 +119,3 @@ func TestGetRet(t *testing.T) {
 		t.Error("error")
 	}
 }
-
