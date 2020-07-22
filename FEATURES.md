@@ -8,6 +8,6 @@
 - [x] constants
 - [x] variables
 - [x] data types
-- [x] operators
 - [x] control flows
+- [x] operators
 - [x] functions
