@@ -1,4 +1,4 @@
-# Features
+# ToC
 
 ## Core
 
@@ -11,3 +11,4 @@
 - [x] control flows
 - [x] operators
 - [x] functions
+- [x] arrays and slices

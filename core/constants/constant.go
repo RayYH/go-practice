@@ -39,19 +39,19 @@ const (
 	c = iota // 2
 )
 
-// 可以省略后面的 iota
+// we can omit iota after iota's first occurrence
 const (
 	d = iota // 0
 	e        // 1
 	f        // 2
 )
 
-//  显式赋值并不会中断 iota 自增
+// explicitly assignments will not reset the iota value
 const (
 	g = iota     // g = iota = 0
 	h            // h = iota = 1
 	i = "string" // i = "string", iota = 2
-	j            // iota 中断之后不会继续赋予 iota 的值，而是被赋予上一个自定义的的值 j=0="string"，此时 iota = 3
+	j            // here, iota was 3, but j will be assigned last custom const value: "string"
 	k = iota     // k = iota = 4
 )
 
@@ -63,15 +63,15 @@ const (
 	p        // 4
 )
 
-// 这里 type 关键字的作用是类型别名
+// use type to alias a known type
 type Color int
 
-// 可以使用 _ 跳过一些值
+// The blank identifier can be assigned or declared with any value of any type, with the value discarded harmlessly.
 const (
 	RED    Color = iota // 0
 	ORANGE              // 1
 	YELLOW              // 2
-	_                   // 跳过值
+	_                   // skip some values
 	_                   // ..
 	INDIGO              // 5
 	VIOLET              // 6
@@ -80,7 +80,7 @@ const (
 type ByteSize float64
 
 const (
-	_           = iota             // 忽视掉 0
+	_           = iota             // ignore 0
 	KB ByteSize = 1 << (10 * iota) // 1 << (10*1)
 	MB                             // 1 << (10*2)
 	GB                             // 1 << (10*3)
