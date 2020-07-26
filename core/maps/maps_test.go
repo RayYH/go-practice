@@ -103,7 +103,7 @@ func ExampleSortMap() {
 	// Eve 2
 }
 
-func ExampleInvertMap() {
+func TestInvertMap(t *testing.T) {
 	m := map[string]int{"Alice": 23, "Eve": 2, "Bob": 25}
 	invMap := make(map[int]string)
 
@@ -111,12 +111,9 @@ func ExampleInvertMap() {
 		invMap[v] = k
 	}
 
-	for k, v := range invMap {
-		fmt.Printf("Key: %v, Value: %v\n", k, v)
-	}
-
-	// Output:
-	// Key: 25, Value: Bob
-	// Key: 23, Value: Alice
-	// Key: 2, Value: Eve
+	assert.Equal(t, invMap, map[int]string{
+		23: "Alice",
+		2:  "Eve",
+		25: "Bob",
+	})
 }
