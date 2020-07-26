@@ -12,3 +12,4 @@
 - [x] operators
 - [x] functions
 - [x] arrays and slices
+- [x] maps
