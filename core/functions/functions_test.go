@@ -62,6 +62,9 @@ func ExampleB() {
 	// in a
 	// leaving: a
 	// leaving: b
+	// DEFER 3
+	// DEFER 2
+	// DEFER 1
 }
 
 func TestFibonacci(t *testing.T) {

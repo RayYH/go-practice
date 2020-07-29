@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -9,25 +10,16 @@ func getTrue() bool {
 	return true
 }
 
-func ExampleShowIfStatement() {
-	if getTrue() {
-		fmt.Printf("The value is true")
-	}
-
-	// Output:
-	// The value is true
+func TestIfStatement(t *testing.T) {
+	assert.True(t, getTrue(), "getTrue should returns True")
 }
 
 func TestIsGreater(t *testing.T) {
-	if isGreater(5, 10) {
-		t.Errorf("5 > 10")
-	}
+	assert.True(t, isGreater(10, 5), "10 should be greater than 5")
 }
 
 func TestLessThanTen(t *testing.T) {
-	if lessThanTen(11) {
-		t.Errorf("11 < 10")
-	}
+	assert.False(t, lessThanTen(11), "11 should be greater than 10")
 }
 
 func TestMySqrt(t *testing.T) {
@@ -44,21 +36,19 @@ func TestMySqrt(t *testing.T) {
 }
 
 func TestCheckValue(t *testing.T) {
-	if checkValue(100) != "100" {
-		t.Errorf("wrong: 100 != 100")
-	}
+	assert.Equal(t, "100", checkValue(100), "100 == 100")
 }
 
-func TestCheckValueAdvanced(t *testing.T) {
-	if checkValueAdvanced(1) != "x > 0" {
-		t.Error("wrong: 1 <= 0")
-	}
+func TestCheckValueUseIf(t *testing.T) {
+	assert.Equal(t, "100", checkValueUseIf(100), "100 == 100")
+}
+
+func TestCheckValueExpression(t *testing.T) {
+	assert.Equal(t, "x > 0", checkValueUseExpression(1), "1 should be greater than 0")
 }
 
 func TestFallThroughExample(t *testing.T) {
-	if fallThroughExample(0) != 2 {
-		t.Error("error!")
-	}
+	assert.Equal(t, 2, fallThroughExample(0), "fallthrough will continue execution")
 }
 
 func ExampleShowForStatement() {

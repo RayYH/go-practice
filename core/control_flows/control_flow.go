@@ -24,7 +24,18 @@ func mySqrt(f float64) (v float64, ok bool) {
 	if f < 0 {
 		return
 	}
+
 	return math.Sqrt(f), true
+}
+
+func checkValueUseIf(x int) string {
+	if x == 98 || x == 99 {
+		return "98 or 99"
+	} else if x == 100 {
+		return "100"
+	} else {
+		return "< 98 or > 100"
+	}
 }
 
 func checkValue(x int) string {
@@ -38,7 +49,7 @@ func checkValue(x int) string {
 	}
 }
 
-func checkValueAdvanced(x int) string {
+func checkValueUseExpression(x int) string {
 	switch {
 	case x == 0:
 		return "x == 0"

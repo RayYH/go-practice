@@ -13,3 +13,4 @@
 - [x] functions
 - [x] arrays and slices
 - [x] maps
+- [x] struct

@@ -22,11 +22,12 @@ func getNamedX2AndX3(input int) (x2, x3 int) {
 	return
 }
 
-// this function changes reply:
+// reply can be modified inside this func
 func multiply(a, b int, reply *int) {
 	*reply = a * b
 }
 
+// rest parameters
 func min(s ...int) int {
 	if len(s) == 0 {
 		return 0
@@ -81,11 +82,16 @@ func a() {
 }
 
 func b() {
+	defer fmt.Print("DEFER 1\n")
+	defer fmt.Print("DEFER 2\n")
+	defer fmt.Print("DEFER 3\n")
+	// 这里先执行了 trace 再执行了 defer un();
 	defer un(trace("b"))
 	fmt.Println("in b")
 	a()
 }
 
+// recursion
 func fibonacci(n int) (res int) {
 	if n <= 1 {
 		return 1

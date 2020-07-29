@@ -8,9 +8,12 @@ import (
 
 func TestIterateAnArray(t *testing.T) {
 	var intArr [5]int
+
+	// use [] syntax to access array elements
 	for i := 0; i < 5; i++ {
 		assert.Equal(t, intArr[i], 0, "default value of int type is 0")
 	}
+	// use [] syntax to modify array elements
 	for i := 0; i < 5; i++ {
 		intArr[i] = i * 2
 	}
@@ -18,15 +21,16 @@ func TestIterateAnArray(t *testing.T) {
 	for i := 0; i < len(intArr); i++ {
 		assert.Equal(t, intArr[i], i*2)
 	}
-	// use for range
+	// use for range to access array elements
 	for i, v := range intArr {
 		assert.Equal(t, v, intArr[i])
 	}
 }
 
 func ExampleArrayLiterals() {
+	// 声明指定长度的数组
 	var arr1 = [5]int{18, 20, 15, 22, 16}
-	// ... 可可以忽略, 从技术上说它们其实变化成了切片
+	// 不声明长度，下面的 ... 可以忽略, 从技术上说它们其实变成了切片
 	var arr2 = [...]int{5, 6, 7, 8, 22}
 	var arr3 = []int{5, 6, 7, 8, 22}
 	// 只有索引 3 和 4 被赋予实际的值，其他元素都被设置为空的字符串，数组长度为 5
@@ -38,12 +42,17 @@ func ExampleArrayLiterals() {
 }
 
 func TestSum(t *testing.T) {
-	// here must use [3]float64, cannot be []float64
+	// here must be [3]float64, cannot be []float64 (of slice type)
 	array := [3]float64{1.1, 2.2, 3.3}
-	assert.Equal(t, Sum(&array), 6.6)
+	assert.Equal(t, 6.6, Sum(&array), "Sum of [1.1, 2.2, 3.3] should be 6.6")
+	slice := []float64{1.1, 2.2, 3.3}
+	assert.Equal(t, 6.6, SliceSum(slice), "Sum of [1.1, 2.2, 3.3] should be 6.6")
 }
 
-func f(a [3]int)   { fmt.Println(a) }
+// 参数为一个数组
+func f(a [3]int) { fmt.Println(a) }
+
+// 参数为一个数组指针
 func fp(a *[3]int) { fmt.Println(a) }
 
 func ExampleOutputArrayType() {
@@ -55,9 +64,10 @@ func ExampleOutputArrayType() {
 	//&[0 0 0]
 }
 
+// 10-times small for testing
 const (
-	WIDTH  = 1920
-	HEIGHT = 1080
+	WIDTH  = 192
+	HEIGHT = 108
 )
 
 type pixel int
@@ -71,10 +81,10 @@ func TestMultipleArray(t *testing.T) {
 		}
 	}
 
-	// or use for-range syntax
+	// or use for-range syntax to access elements
 	for row := range screen {
 		for column := range screen[row] {
-			screen[row][column] = 0
+			assert.Equal(t, pixel(0), screen[row][column], "the pixel value should be 0")
 		}
 	}
 }
