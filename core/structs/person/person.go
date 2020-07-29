@@ -12,4 +12,3 @@ func (p *Person) FirstName() string {
 func (p *Person) SetFirstName(newName string) {
 	p.firstName = newName
 }
-
