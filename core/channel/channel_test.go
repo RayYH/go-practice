@@ -34,3 +34,13 @@ func TestChannel(t *testing.T) {
 	assert.Nil(t, ch1)
 	assert.NotNil(t, ch2)
 }
+
+func TestSum(t *testing.T) {
+	values := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	resultChan := make(chan int, 2)
+	go sum(values[:len(values)/2], resultChan)
+	go sum(values[len(values)/2:], resultChan)
+	// sum1 可能是 15 也可能是 40
+	sum1, sum2 := <-resultChan, <-resultChan
+	assert.Equal(t, 55, sum1+sum2)
+}

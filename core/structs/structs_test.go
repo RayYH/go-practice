@@ -79,10 +79,10 @@ func TestStructFactory(t *testing.T) {
 	assert.Equal(t, f.name, "filename")
 }
 
-func ExampleDisplayStructTags() {
+func ExampleRefTag() {
 	tt := TagType{true, "Ray Hong", 1}
 	for i := 0; i < 3; i++ {
-		refTag(tt, i)
+		RefTag(tt, i)
 	}
 	// Output:
 	// An important answer

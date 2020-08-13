@@ -64,7 +64,7 @@ type outerStruct struct {
 	a, c int
 }
 
-func refTag(tt TagType, ix int) {
+func RefTag(tt TagType, ix int) {
 	ttType := reflect.TypeOf(tt)
 	ixField := ttType.Field(ix)
 	fmt.Printf("%v\n", ixField.Tag.Get("description"))
