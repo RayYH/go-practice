@@ -6,11 +6,10 @@ import (
 )
 
 type PersonInfo struct {
-	ID string
-	Name string
+	ID      string
+	Name    string
 	Address string
 }
-
 
 func iterateMap() {
 	// the order of traversal is not certain
