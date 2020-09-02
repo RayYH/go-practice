@@ -46,9 +46,9 @@ func TestIotaUsageSix(t *testing.T) {
 	assert.Equal(t, "0 1 1 1", fmt.Sprint(w, x, y, z))
 }
 
-func Example_iota_with_bitwise_operator() {
-	fmt.Println("size:", KB, MB, GB, TB, PB, EB, ZB, YB)
-	// Output: size: 1024 1.048576e+06 1.073741824e+09 1.099511627776e+12 1.125899906842624e+15 1.152921504606847e+18 1.1805916207174113e+21 1.2089258196146292e+24
+func ExampleDisplaySizes() {
+	DisplaySizes()
+	// Output: sizes: 1024 1.048576e+06 1.073741824e+09 1.099511627776e+12 1.125899906842624e+15 1.152921504606847e+18 1.1805916207174113e+21 1.2089258196146292e+24
 }
 
 func TestDeclareConstInsideAFunc(t *testing.T) {

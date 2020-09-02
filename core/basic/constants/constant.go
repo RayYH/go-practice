@@ -1,5 +1,7 @@
 package constants
 
+import "fmt"
+
 // The type of constants go supported:
 // boolean, rune, integer, floating-point, complex, string
 
@@ -8,12 +10,7 @@ package constants
 // The boolean truth values are represented by the predeclared constants true and false
 // The default type of an untyped constant is bool, rune, int, float64, complex128 or string
 
-// Numeric constants represent exact values of arbitrary precision and do not overflow.
-const HigherPrecisionPi = 3.14159265358979323846264338327950288419716939937510582097494459
-const LessThanOne = 3.141592653589793 / HigherPrecisionPi
-
 // Constant declaration format: const identifier [type] = value
-// Go 支持布尔型、数值型、字符串型常量
 // type can be omitted most of the time, because the compiler can infer its type based on the value of the variable
 const Pi = 3.14159
 
@@ -32,7 +29,7 @@ const (
 const name, age = "Ray", 24
 
 // iota 只能用于常量 (const 关键字) 的声明而不能用于其他地方
-// iota - 从 0 开始，每次换到 **新的一行** 其值都会自动 + 1
+// iota - 从 0 开始，每次换到 新的一行 其值都会自动 + 1
 // 这同时表明位于其前面的一行都必须赋值
 const (
 	a = iota // 0
@@ -98,3 +95,11 @@ const (
 	ZB                             // 1 << (10*7)
 	YB                             // 1 << (10*8)
 )
+
+// Numeric constants represent exact values of arbitrary precision and do not overflow.
+const HigherPrecisionPi = 3.14159265358979323846264338327950288419716939937510582097494459
+const LessThanOne = 3.141592653589793 / HigherPrecisionPi
+
+func DisplaySizes() {
+	fmt.Println("sizes:", KB, MB, GB, TB, PB, EB, ZB, YB)
+}

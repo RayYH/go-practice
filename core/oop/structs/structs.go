@@ -75,6 +75,7 @@ func upPerson(p *Person) {
 	p.lastName = strings.ToUpper(p.lastName)
 }
 
+// 在 Go 语言中没有构造函数的概念，对象的创建通常交由一个全局的创建函数来完成，以 NewXXX 来命名
 func NewFile(fd int, name string) *File {
 	if fd < 0 {
 		return nil

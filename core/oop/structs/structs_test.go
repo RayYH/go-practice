@@ -12,6 +12,9 @@ func TestDeclaringStruct(t *testing.T) {
 	// var s SimpleStruct 会给 s 分配内存，并零值化内存，这个时候 s 是类型 SimpleStructure
 	// 此时 s 被称为 SimpleStruct 的一个实例
 	var s SimpleStruct
+	// 在 Go 语言中，未进行显式初始化的变量都会被初始化为该类型的零值
+	assert.Equal(t, s.a, 0)
+	assert.Equal(t, s.b, 0)
 	s.a = 1
 	s.b = 2
 	assert.Equal(t, s.a, 1)
