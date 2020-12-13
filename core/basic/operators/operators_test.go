@@ -9,7 +9,8 @@ import (
 
 func TestArithmeticOperators(t *testing.T) {
 	// x = q*y + r  and  |r| < |y|
-	// 取余 % 符号始终与被除数一致
+	// % doesn't work for floats
+	// given c = a % b, the sign of c to be the sign of a
 	t.Run("integer operators", func(t *testing.T) {
 		assert.Equal(t, 8, 5+3)
 		assert.Equal(t, 2, 5-3)
@@ -141,14 +142,14 @@ func TestBitwiseOperator(t *testing.T) {
 		assert.Equal(t, ^2, -3)
 		assert.Equal(t, 4>>1, 2)
 		assert.Equal(t, 4>>2, 1)
-		// 继续右移会变成 0
+		// Keep moving will result 0
 		assert.Equal(t, 4>>3, 0)
 		assert.Equal(t, 4>>4, 0)
 		assert.Equal(t, 4<<1, 8)
 		assert.Equal(t, 4<<2, 16)
 		assert.Equal(t, -4>>1, -2)
 		assert.Equal(t, -4>>2, -1)
-		// 符号不会改变
+		// The sign will not be changed
 		assert.Equal(t, -4>>3, -1)
 		assert.Equal(t, -4>>4, -1)
 		assert.Equal(t, -4<<1, -8)

@@ -155,8 +155,9 @@ func Adder(a int) func(int) int {
 
 func SequentialAdder() func(int) int {
 	var x int
-	// 下面是一个闭包函数
-	// 闭包函数保存并积累其中的变量的值，不管外部函数退出与否，它都能够继续操作外部函数中的局部变量
+	// A closure is a function value that references variables from outside its body.
+	// The function may access and assign to the referenced variables;
+	// in this sense the function is "bound" to the variables.
 	return func(i int) int {
 		x += i
 		return x

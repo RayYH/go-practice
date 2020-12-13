@@ -6,6 +6,6 @@ Some Go code. This code may be terrible and buggy, **USE AT YOUR OWN RISK**.
 
 Go version >= `1.13.0`.
 
-## LICENSE
+## License
 
-This project is open-source software licensed under the [MIT License](LICENSE).
+This project is open-sourced software licensed under the [MIT license](LICENSE).

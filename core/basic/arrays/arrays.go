@@ -1,13 +1,17 @@
 package arrays
 
-// Passing a large array to a function will cause a lot of memory consumption,
-// because the array is a value type, and a copy operation will occur when passed as a parameter.
-// There are two ways to avoid this:
-// 1) pass the pointer of the array; 2) pass the slice of the array.
+const (
+	WIDTH  = 192
+	HEIGHT = 108
+)
+
+type pixel int
+
+var screen [WIDTH][HEIGHT]pixel
 
 // Pass a pointer to an array of [3]float64 type
-func Sum(a *[3]float64) (sum float64) {
-	for _, v := range a {
+func Sum(arr *[3]float64) (sum float64) {
+	for _, v := range arr {
 		sum += v
 	}
 
@@ -15,8 +19,8 @@ func Sum(a *[3]float64) (sum float64) {
 }
 
 // Pass a slice of []float64
-func SliceSum(a []float64) (sum float64) {
-	for _, v := range a {
+func SliceSum(arr []float64) (sum float64) {
+	for _, v := range arr {
 		sum += v
 	}
 

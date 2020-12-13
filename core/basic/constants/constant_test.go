@@ -62,3 +62,7 @@ func TestConstantWillNotLosePrecision(t *testing.T) {
 	assert.Equal(t, 3.141592653589793, HigherPrecisionPi)
 	assert.NotEqual(t, LessThanOne, 3.141592653589793/3.141592653589793)
 }
+
+func TestBitsAndMasks(t *testing.T) {
+	assert.Equal(t, "1 0 2 1 8 7", fmt.Sprint(bit0, mask0, bit1, mask1, bit3, mask3))
+}

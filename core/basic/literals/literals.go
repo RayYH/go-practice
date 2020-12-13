@@ -4,16 +4,16 @@ import "fmt"
 
 func DisplayIntegerLiterals() {
 	numbers := []int64{
-		42,                   // 十进制
-		4_2,                  // 下划线会被编译器去除
-		0600,                 // 0 开头代表 8 进制，6*8^2 = 6 * 64 = 384
-		0_600,                // 同上
-		0o600,                // 同上 0o
-		0xBadFace,            // 0x 代表十六进制
-		0xBad_Face,           // 同上
-		0x_67_7a_2f_cc_40_c6, // 下划线会被去除
-		1701411834604692310,  // 普通的十进制
-		170_141183_460469_30, // 带下划线的十进制
+		42,                   // decimal
+		4_2,                  // underscore will be removed by compiler
+		0600,                 // starts with 0 means octal number: 6*8^2 = 6 * 64 = 384
+		0_600,                // same as above
+		0o600,                // same as above
+		0xBadFace,            // 0x means hexadecimal
+		0xBad_Face,           // same as above
+		0x_67_7a_2f_cc_40_c6, // underscores will be removed
+		1701411834604692310,  // normal decimal
+		170_141183_460469_30, // decimal with underscores
 	}
 
 	var num int64
@@ -38,7 +38,7 @@ func DisplayFloatPointLiterals() {
 		.12345e+5,   // 12345.0
 		1_5.,        // 15.0
 		0.15e+0_2,   // 15.0
-		0x1p-2,      // 0.25 - 十六进制的 1 乘 2 的 -2 次方 = 1 * 2^-2 = 0.25
+		0x1p-2,      // 0.25 = 1 * 2^-2 = 0.25
 		0x2.p10,     // 2048.0 - 2 * 2^10 = 2^11 = 2048
 		0x1.Fp+0,    // 1.9375 = (1+15/16) = 1.9375
 		0x.8p-0,     // 0.5 = (0+8/16) = 0.5
