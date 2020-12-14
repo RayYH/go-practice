@@ -8,4 +8,4 @@ Go version >= `1.13.0`.
 
 ## License
 
-This project is open-sourced software licensed under the [MIT license](LICENSE).
+This work is open-sourced and licensed under the [MIT license](LICENSE).
