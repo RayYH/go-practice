@@ -7,7 +7,7 @@ import (
 )
 
 func TestPi(t *testing.T) {
-	assert.Equal(t, 3.14159, Pi)
+	assert.Equal(t, 3.14159, Pi, "Pi should be equal to 3.14159")
 }
 
 func TestDays(t *testing.T) {

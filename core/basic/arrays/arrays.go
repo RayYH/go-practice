@@ -1,11 +1,11 @@
 package arrays
 
+type pixel int
+
 const (
 	WIDTH  = 192
 	HEIGHT = 108
 )
-
-type pixel int
 
 var screen [WIDTH][HEIGHT]pixel
 

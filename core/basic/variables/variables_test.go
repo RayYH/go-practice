@@ -114,3 +114,16 @@ func ExampleIterateOverAString() {
 	// The index number of l is 9
 	// The index number of d is 10
 }
+
+func TestPointers(t *testing.T) {
+	i, j := 42, 2701
+
+	p := &i
+	assert.Equal(t, *p, 42)
+	*p = 21
+	assert.Equal(t, i, 21)
+
+	p = &j
+	*p = *p / 37
+	assert.Equal(t, j, 73)
+}

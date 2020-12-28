@@ -128,13 +128,15 @@ func TestBitwiseOperator(t *testing.T) {
 	})
 	t.Run("unary operator", func(t *testing.T) {
 		/*
-		 * 在几乎所有其他语言的实现中，取反运算符都是 ~，但在 Go 中是 ^
+		 * In other programming languages, the bitwise complement operator is ~
+		 * we should use ^ operator in Go.
+		 *
 		 * Complement
 		 * 4
-		 * 0000 0100 - 原码 (正数的原码即为真值)
-		 * 1111 1011 - 取反，得到的结果在计算机中存储的形式是补码，此补码指示其值是一个负数 (最高位是1)
-		 * 1111 1010 - -1 (负数的补码由其原码取反 +1 而得，因此我们需要 -1 再对符号位之外的各位取反)
-		 * 1000 0101 - 取反 (1 + 4)
+		 * 0000 0100 - original code
+		 * 1111 1011 - inverse code
+		 * 1111 1010 - minus one
+		 * 1000 0101 - inverse all bits except sign bit
 		 *
 		 * There is a simple rule: A + (^A) = -1
 		 */
@@ -157,4 +159,4 @@ func TestBitwiseOperator(t *testing.T) {
 	})
 }
 
-// 这里不再对赋值运算符举例说明：=、+=、-=、*=、/=、%=、&=、^=、|=
+// other assignment operators：=, +=, -=, *=, /=, %=, &=, ^=, |=

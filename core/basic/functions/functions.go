@@ -15,10 +15,14 @@ func getX2AndX3(input int) (int, int) {
 	return 2 * input, 3 * input
 }
 
+// Go's return values may be named.
+// If so, they are treated as variables defined at the top of the function.
 func getNamedX2AndX3(input int) (x2, x3 int) {
 	x2 = input * 2
 	x3 = input * 3
 
+	// A return statement without arguments returns the named return values
+	// Naked return statements should be used only in short functions
 	return
 }
 
@@ -85,7 +89,10 @@ func b() {
 	defer fmt.Print("DEFER 1\n")
 	defer fmt.Print("DEFER 2\n")
 	defer fmt.Print("DEFER 3\n")
-	// 这里先执行了 trace 再执行了 defer un();
+	// exec trace first, then defer un();
+	// so, looks like:
+	// res := fmt.Println("entering:", 'b')
+	// def un(res)
 	defer un(trace("b"))
 	fmt.Println("in b")
 	a()

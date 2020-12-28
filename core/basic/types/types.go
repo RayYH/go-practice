@@ -34,7 +34,7 @@ type (
 // complex128  the set of all complex numbers with float64 real and imaginary parts
 //
 // byte        alias for uint8
-// rune        alias for int32
+// rune        alias for int32, represents a Unicode code point
 //
 // uint        either 32 or 64 bits
 // int         same size as uint
@@ -56,10 +56,10 @@ func DisplayBytes() {
 	var ch int = '\u0041'
 	var ch2 int = '\u03B2'
 	var ch3 int = '\U00101234'
-	// %c - 字符
-	// %d/%v - 整型
-	// %X - 十六进制标识
-	// %U - Unicode格式
+	// %c - character
+	// %d/%v - integer
+	// %X - UTF-8 bytes
+	// %U - UTF-8 core point
 	fmt.Printf("%d - %d - %d\n", ch, ch2, ch3) // integer
 	fmt.Printf("%c - %c - %c\n", ch, ch2, ch3) // character
 	fmt.Printf("%X - %X - %X\n", ch, ch2, ch3) // UTF-8 bytes

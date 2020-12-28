@@ -13,13 +13,11 @@ import (
 // So in Go, there is no uninitialized variable
 var globalString = "This is a string."
 
-// 全局变量可以并行赋值 (因式分解关键字)
 var (
 	myName = "Ray"
 	myAge  = 24
 )
 
-// 声明全局变量时可以调用标准库函数
 var (
 	HOME = os.Getenv("HOME")
 	USER = os.Getenv("USER")

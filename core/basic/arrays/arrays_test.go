@@ -6,49 +6,59 @@ import (
 	"testing"
 )
 
-func TestIterateAnArray(t *testing.T) {
+func TestArrayIteration(t *testing.T) {
+	// declare an array using var keyword
 	var intArr [5]int
 
 	// use [] syntax to access array elements
 	for i := 0; i < 5; i++ {
-		assert.Equal(t, intArr[i], 0, "the zero value of int type is 0")
+		assert.Equal(t, intArr[i], 0, "we can use [] syntax to access items")
 	}
+
 	// use [] syntax to modify array elements
 	for i := 0; i < 5; i++ {
 		intArr[i] = i * 2
 	}
+
 	// len(intArr) will return the length of given array
 	for i := 0; i < len(intArr); i++ {
-		assert.Equal(t, intArr[i], i*2)
+		assert.Equal(t, intArr[i], i*2, "we can use len method to get the length of given array")
 	}
+
 	// use for range to access array elements
 	for i, v := range intArr {
-		assert.Equal(t, v, intArr[i])
+		assert.Equal(t, v, intArr[i], "we can use for-range syntax to iterate an array")
 	}
 }
 
 func TestArrayLiterals(t *testing.T) {
 	// declare an array of the specified length and initialize it
 	var arr1 = [5]int{18, 20, 15, 22, 16}
+
 	// declare first, then initialize
 	var arr2 [5]int
 	arr2 = [5]int{18, 20, 15, 22, 16}
+
 	// do not declare the length, the ... can be ignored
 	// they actually become slices
 	var arr3 = [...]int{5, 6, 7, 8, 22}
 	var arr4 = []int{5, 6, 7, 8, 22}
+
 	assert.Equal(t, 5, cap(arr3))
 	assert.Equal(t, 5, len(arr3))
 	assert.Equal(t, 5, cap(arr4))
 	assert.Equal(t, 5, len(arr4))
+
 	// only indexes 3 and 4 are assigned values
 	//other elements are set to zero value (empty strings), and the array length is 5
 	var arr5 = [5]string{3: "Chris", 4: "Ron"}
 	var arr6 = []string{3: "Chris", 4: "Ron"}
+
 	assert.Equal(t, 5, cap(arr5))
 	assert.Equal(t, 5, len(arr5))
 	assert.Equal(t, 5, cap(arr6))
 	assert.Equal(t, 5, len(arr6))
+
 	assert.Equal(t,
 		"[18 20 15 22 16] [18 20 15 22 16] [5 6 7 8 22] [5 6 7 8 22] [   Chris Ron] [   Chris Ron]",
 		fmt.Sprint(arr1, arr2, arr3, arr4, arr5, arr6))
