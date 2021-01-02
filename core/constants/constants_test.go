@@ -6,17 +6,12 @@ import (
 	"testing"
 )
 
-func TestDeclareConstInsideAFunc(t *testing.T) {
-	const Truth = true
-	assert.True(t, Truth)
-}
-
-func TestSimpleDeclaration(t *testing.T) {
+func TestConstantsCanBeDeclaredInsideFunc(t *testing.T) {
 	const Pi = 3.14159
 	assert.Equal(t, 3.14159, Pi)
 }
 
-func TestFactoringConstants(t *testing.T) {
+func TestConstantsCanBeFactored(t *testing.T) {
 	const (
 		Sunday    = 0
 		Monday    = 1
@@ -30,12 +25,12 @@ func TestFactoringConstants(t *testing.T) {
 	assert.Equal(t, "0 1 2 3 4 5 6", fmt.Sprint(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday))
 }
 
-func TestMultipleConstantsAtOneLine(t *testing.T) {
+func TestConstantsCanBeDeclaredAtOneLine(t *testing.T) {
 	const name, age = "Ray", 24
 	assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
 }
 
-func TestSimpleIotaExample(t *testing.T) {
+func TestIotaBasicUsage(t *testing.T) {
 	const (
 		a = iota // a == 0 (iota == 0)
 		b = iota // b == 1 (iota == 1)

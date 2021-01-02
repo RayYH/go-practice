@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestArrayIteration(t *testing.T) {
+func TestArraysIteration(t *testing.T) {
 	// declare an array using var keyword
 	var intArr [5]int
 
@@ -31,7 +31,7 @@ func TestArrayIteration(t *testing.T) {
 	}
 }
 
-func TestArrayLiterals(t *testing.T) {
+func TestArraysLiterals(t *testing.T) {
 	// declare an array of the specified length and initialize it
 	var arr1 = [5]int{18, 20, 15, 22, 16}
 
@@ -64,7 +64,7 @@ func TestArrayLiterals(t *testing.T) {
 	assert.Equal(t, arr5[0], "")
 }
 
-func TestArrayOrSliceAsArguments(t *testing.T) {
+func TestArraysOrSlicesAsArguments(t *testing.T) {
 	Sum := func(numbers *[3]float64) (sum float64) {
 		for _, v := range numbers {
 			sum += v
@@ -86,7 +86,7 @@ func TestArrayOrSliceAsArguments(t *testing.T) {
 	assert.Equal(t, 6.6, SliceSum(slice))
 }
 
-func TestOutputArrayType(t *testing.T) {
+func TestArraysFormattedAsString(t *testing.T) {
 	// The parameter is an array of [3]int type
 	funcAcceptArray := func(arr [3]int) string {
 		arr[0] = 1
@@ -111,7 +111,7 @@ func TestOutputArrayType(t *testing.T) {
 	assert.Equal(t, [3]int{2, 0, 0}, arr)
 }
 
-func TestNestedArray(t *testing.T) {
+func TestArraysCanBeNested(t *testing.T) {
 	type pixel int
 
 	const (
