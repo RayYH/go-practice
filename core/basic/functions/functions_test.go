@@ -119,7 +119,7 @@ func TestMakeAddSuffix(t *testing.T) {
 func TestCalculateFunctionExecTime(t *testing.T) {
 	start := time.Now()
 	for i := 0; i < 1000; i++ {
-
+		assert.True(t, true)
 	}
 	end := time.Now()
 	delta := end.Sub(start)
