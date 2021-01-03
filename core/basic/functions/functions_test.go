@@ -118,12 +118,12 @@ func TestMakeAddSuffix(t *testing.T) {
 
 func TestCalculateFunctionExecTime(t *testing.T) {
 	start := time.Now()
-	for i := 0; i < 100; i++ {
+	for i := 0; i < 1000; i++ {
 
 	}
 	end := time.Now()
 	delta := end.Sub(start)
-	assert.True(t, delta.Nanoseconds() > 0)
+	assert.Greater(t, delta.Nanoseconds(), int64(0))
 }
 
 func ExampleMyPrintf() {
