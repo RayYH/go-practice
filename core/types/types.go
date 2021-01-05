@@ -2,9 +2,9 @@ package types
 
 import (
 	"fmt"
-	"math"
 )
 
+// alias types
 type (
 	A1 = string
 	A2 = A1
@@ -40,19 +40,9 @@ type (
 // int         same size as uint
 // uintptr     an unsigned integer large enough to store the uninterpreted bits of a pointer value
 
-// 一个安全的从 int 转为 uint 的 func
-func Uint8FromInt(n int) (uint8, error) {
-	if 0 <= n && n <= math.MaxUint8 {
-		return uint8(n), nil
-	}
-
-	return 0, fmt.Errorf("%d is out of the uint8 range", n)
-}
-
 func DisplayBytes() {
 	var chA byte = 65
 	var chB byte = '\x41'
-	fmt.Println(chA, chB)
 	var ch int = '\u0041'
 	var ch2 int = '\u03B2'
 	var ch3 int = '\U00101234'
@@ -60,56 +50,54 @@ func DisplayBytes() {
 	// %d/%v - integer
 	// %X - UTF-8 bytes
 	// %U - UTF-8 core point
-	fmt.Printf("%d - %d - %d\n", ch, ch2, ch3) // integer
-	fmt.Printf("%c - %c - %c\n", ch, ch2, ch3) // character
-	fmt.Printf("%X - %X - %X\n", ch, ch2, ch3) // UTF-8 bytes
-	fmt.Printf("%U - %U - %U", ch, ch2, ch3)   // UTF-8 core point
+	fmt.Println(chA, chB)                      // 65, 65
+	fmt.Printf("%d - %d - %d\n", ch, ch2, ch3) // integer: 65 - 946 - 1053236
+	fmt.Printf("%c - %c - %c\n", ch, ch2, ch3) // character: A - β - 􁈴
+	fmt.Printf("%X - %X - %X\n", ch, ch2, ch3) // UTF-8 bytes: 41 - 3B2 - 101234
+	fmt.Printf("%U - %U - %U", ch, ch2, ch3)   // UTF-8 code point: U+0041 - U+03B2 - U+101234
 }
 
 func DisplayArrays() {
+	// byte array
 	var a [2]byte
 	var byteValue byte
 	for _, byteValue = range a {
-		fmt.Printf("%q", byteValue)
+		fmt.Printf("%q\n", byteValue)
 	}
 
-	const N = 3
+	// struct array
+	const N = 2
 	var b [2 * N]struct {
 		x, y int32
 	}
 	var structValue struct {
 		x, y int32
 	}
-	fmt.Printf("\n")
 	for _, structValue = range b {
-		fmt.Printf("%d%d", structValue.x, structValue.y)
+		fmt.Printf("%d %d\n", structValue.x, structValue.y)
 	}
 
+	// float64 array
 	var c [3]*float64
 	var d = [3]float64{
 		0.00, 1.11, 2.22,
 	}
-	fmt.Printf("\n")
 	var floatValuePointer *float64
 	var index int
 	for index = range d {
 		c[index] = &d[index]
 	}
-
 	for _, floatValuePointer = range c {
-		fmt.Printf("%.2f", *floatValuePointer)
+		fmt.Printf("%.2f\n", *floatValuePointer)
 	}
 
-	fmt.Printf("\n")
-
+	// nested array
 	var e = [2][2]int{
 		{1, 2},
 		{3, 4},
 	}
-
 	var arrayValue [2]int
 	var intValue int
-
 	for _, arrayValue = range e {
 		for _, intValue = range arrayValue {
 			fmt.Print(intValue)
