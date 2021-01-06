@@ -1,6 +1,6 @@
 module github.com/rayyh/go-practice
 
-go 1.14
+go 1.13
 
 require (
 	github.com/stretchr/objx v0.3.0 // indirect
