@@ -5,48 +5,6 @@ import (
 	"strings"
 )
 
-func multiPly3Nums(a int, b int, c int) int {
-	// var product int = a * b * c
-	// return product
-	return a * b * c
-}
-
-func getX2AndX3(input int) (int, int) {
-	return 2 * input, 3 * input
-}
-
-// Go's return values may be named.
-// If so, they are treated as variables defined at the top of the function.
-func getNamedX2AndX3(input int) (x2, x3 int) {
-	x2 = input * 2
-	x3 = input * 3
-
-	// A return statement without arguments returns the named return values
-	// Naked return statements should be used only in short functions
-	return
-}
-
-// reply can be modified inside this func
-func multiply(a, b int, reply *int) {
-	*reply = a * b
-}
-
-// rest parameters
-func min(s ...int) int {
-	if len(s) == 0 {
-		return 0
-	}
-
-	min := s[0]
-	for _, v := range s {
-		if v < min {
-			min = v
-		}
-	}
-
-	return min
-}
-
 func Greet() {
 	fmt.Println("Hello")
 }
@@ -62,11 +20,11 @@ func disconnectFromDB() {
 func DoDBOperations() {
 	connectToDB()
 	fmt.Println("Deferring the database disconnect.")
-	defer disconnectFromDB() //function called here with defer
+	defer disconnectFromDB() // function called here with defer
 	fmt.Println("Doing some DB operations ...")
 	fmt.Println("Oops! some crash or network error ...")
 	fmt.Println("Returning from function here!")
-	return //terminate the program
+	return // terminate the program
 	// deferred function executed here just before actually returning, even if
 	// there is a return or abnormal termination before
 }

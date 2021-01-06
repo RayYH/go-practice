@@ -9,22 +9,45 @@ import (
 )
 
 func TestMultiPly3Nums(t *testing.T) {
+	multiPly3Nums := func(a, b, c int) int {
+		return a * b * c
+	}
+
 	assert.Equal(t, 60, multiPly3Nums(2, 5, 6))
 }
 
 func TestGet2XAnd3X(t *testing.T) {
+	getX2AndX3 := func(n int) (int, int) {
+		return n * 2, n * 3
+	}
+
 	x2, x3 := getX2AndX3(2)
 	assert.Equal(t, 4, x2)
 	assert.Equal(t, 6, x3)
 }
 
 func TestGetNamed2XAnd3X(t *testing.T) {
+	// Go's return values may be named.
+	// If so, they are treated as variables defined at the top of the function.
+	getNamedX2AndX3 := func(n int) (x2, x3 int) {
+		x2 = n * 2
+		x3 = n * 3
+		// A return statement without arguments returns the named return values
+		// Naked return statements should be used only in short functions
+		return
+	}
+
 	x2, x3 := getNamedX2AndX3(2)
 	assert.Equal(t, 4, x2)
 	assert.Equal(t, 6, x3)
 }
 
 func TestMultiply(t *testing.T) {
+	// reply can be modified inside this func
+	multiply := func(a, b int, reply *int) {
+		*reply = a * b
+	}
+
 	n := 0
 	reply := &n
 	multiply(3, 4, reply)
@@ -32,7 +55,26 @@ func TestMultiply(t *testing.T) {
 }
 
 func TestMin(t *testing.T) {
+	// rest parameters
+	min := func(s ...int) int {
+		if len(s) == 0 {
+			return 0
+		}
+
+		minValue := s[0]
+
+		for _, v := range s {
+			if v < minValue {
+				minValue = v
+			}
+		}
+
+		return minValue
+	}
+
 	assert.Equal(t, 1, min(1, 2, 3, 4, 5))
+	assert.Equal(t, 0, min())
+	assert.Equal(t, -5, min(1, 2, -5, 3, 111))
 }
 
 func ExampleGreet() {
