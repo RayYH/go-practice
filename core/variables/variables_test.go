@@ -6,23 +6,26 @@ import (
 	"testing"
 )
 
-func TestGlobalString(t *testing.T) {
+func TestGlobalStringIsVisibleInTheFilesOfCurrentPackage(t *testing.T) {
 	assert.Equal(t, "This is a string.", globalString)
 	assert.Equal(t, 24, myAge)
 	assert.Equal(t, "Ray", myName)
+	// we can also modify global variable
 	myAge = 25
 	assert.Equal(t, 25, myAge)
 }
 
-func TestHomeAndUserNotEmpty(t *testing.T) {
+func TestHomeAndUserAreNotEmpty(t *testing.T) {
 	assert.NotNil(t, HOME)
 	assert.NotNil(t, USER)
 }
 
+// pointers holds the references to the variables
 func TestModifyingValueViaPointers(t *testing.T) {
 	var os = runtime.GOOS
 	assert.NotNil(t, os)
 
+	// q == p --> os
 	var p = &os
 	var q = p
 	assert.Equal(t, p, q)
@@ -32,7 +35,7 @@ func TestModifyingValueViaPointers(t *testing.T) {
 	assert.Equal(t, os, *p)
 }
 
-func TestLocalVariablesOne(t *testing.T) {
+func TestLocalVariables(t *testing.T) {
 	// declare first, then initialize
 	var a, b int
 	var c string
@@ -52,7 +55,8 @@ func TestLocalVariablesOne(t *testing.T) {
 	assert.Equal(t, 7, e)
 	assert.Equal(t, "abc", f)
 
-	// though g has been declared, but h and i were not declared
+	// though g has been declared
+	// h and i were not declared
 	// so we can use := syntax
 	var g int
 	g, h, i := 1, 2, 3

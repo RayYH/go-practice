@@ -10,7 +10,7 @@ import (
 	"unicode/utf8"
 )
 
-func TestCreateAStringFromSlices(t *testing.T) {
+func TestSlicesCanBeConvertedToStrings(t *testing.T) {
 	// string literal
 	var givenString = "Geeks"
 	// Creating and initializing a slices of byte
@@ -26,7 +26,7 @@ func TestCreateAStringFromSlices(t *testing.T) {
 	assert.Equal(t, myString2, givenString)
 }
 
-func TestGetStringLength(t *testing.T) {
+func TestStringsLength(t *testing.T) {
 	// 6 + 3 * 2 = 12
 	myStr := "Hello 世界"
 	assert.Equal(t, 12, len(myStr))
@@ -65,7 +65,7 @@ FROM table
 	assert.Equal(t, "\n    1234567890\n    ~!@#$%^&*()_+|\n    abcABC\n    ", multilineStr)
 }
 
-func TestStringOperations(t *testing.T) {
+func TestStringsOperations(t *testing.T) {
 	s := "a-b-c"
 	// accessing elements
 	assert.Equal(t, "a", string(s[0]))
@@ -91,6 +91,7 @@ func TestStringConversions(t *testing.T) {
 	str := strconv.Itoa(n)
 	assert.Equal(t, "99", str)
 
+	// a can be any type
 	var a interface{}
 	a = "str"
 	str2 := a.(string)
@@ -103,6 +104,7 @@ func BenchmarkStringAdd(b *testing.B) {
 	s := ""
 	for i := 0; i < b.N; i++ {
 		s += "s"
+		s = ""
 	}
 	b.StopTimer()
 }
