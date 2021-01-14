@@ -1,37 +1,6 @@
-package interfaces
+package oop
 
 import "fmt"
-
-type Shaper interface {
-	Area() float64
-}
-
-type Square struct {
-	side float64
-}
-
-func (sq *Square) Area() float64 {
-	return sq.side * sq.side
-}
-
-type Rectangle struct {
-	length, width float64
-}
-
-func (rec *Rectangle) Area() float64 {
-	return rec.width * rec.length
-}
-
-func GetType(shaper Shaper) string {
-	switch shaper.(type) {
-	case *Rectangle:
-		return "Rec"
-	case *Square:
-		return "Squ"
-	default:
-		return "Unknown"
-	}
-}
 
 func Classifier(items ...interface{}) {
 	for i, x := range items {

@@ -1,4 +1,4 @@
-package interfaces
+package oop
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -9,16 +9,16 @@ func TestSquareArea(t *testing.T) {
 	sq := new(Square)
 	sq.side = 5.0
 
-	var areaInterface Shaper
-	areaInterface = sq
-	assert.Equal(t, 25.0, areaInterface.Area())
+	var box Shaper
+	box = sq
+	assert.Equal(t, 25.0, box.Area())
 }
 
 func TestArea(t *testing.T) {
-	r := &Square{5.0}
-	q := &Rectangle{length: 5.0, width: 5.0}
+	s := &Square{5.0}
+	r := &Rectangle{length: 5.0, width: 5.0}
 
-	shapes := []Shaper{r, q}
+	shapes := []Shaper{s, r}
 
 	for _, shape := range shapes {
 		assert.Equal(t, shape.Area(), 25.0)
@@ -42,15 +42,4 @@ func TestGetType(t *testing.T) {
 	s2 = &Square{side: 1}
 	assert.Equal(t, "Rec", GetType(s1))
 	assert.Equal(t, "Squ", GetType(s2))
-}
-
-func ExampleClassifierCaller() {
-	ClassifierCaller()
-	// Output:
-	// Param #0 is a int
-	// Param #1 is a float64
-	// Param #2 is a string
-	// Param #3 is unknown
-	// Param #4 is a nil
-	// Param #5 is a bool
 }
