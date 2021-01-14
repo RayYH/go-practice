@@ -8,7 +8,7 @@ import (
 )
 
 func TestBasicUsagesOfSlices(t *testing.T) {
-	// will produce an anonymous array for this slice
+	// this declaration will produce an anonymous array
 	b := []byte{'g', 'o', 'l', 'a', 'n', 'g'}
 	assert.Equal(t, "[111 108 97]", fmt.Sprint(b[1:4]))
 	assert.Equal(t, "[103 111]", fmt.Sprint(b[:2]))
@@ -19,9 +19,13 @@ func TestBasicUsagesOfSlices(t *testing.T) {
 // make only makes slices, maps, and channels
 // new only returns pointers to initialised memory
 func TestSlicesInitialization(t *testing.T) {
+	// literal
 	names := []string{"leo", "jessica", "paul"}
+	// capacity=length=10
 	checks := make([]bool, 10)
+	// capacity=2, length=20
 	scores := make([]int, 2, 20)
+	// if we don't specified [0:2], numbers will be an array instead of a slice
 	numbers := new([20]int)[0:2]
 	assert.Equal(t, "[leo jessica paul]", fmt.Sprint(names))
 	assert.Equal(t, "[false false false false false false false false false false]", fmt.Sprint(checks))
@@ -29,17 +33,15 @@ func TestSlicesInitialization(t *testing.T) {
 	assert.Equal(t, "[0 0]", fmt.Sprint(numbers))
 }
 
-func TestSliceUsage(t *testing.T) {
+func TestSlicesBasicOperation(t *testing.T) {
 	var arr [6]int
 	assert.Equal(t, len(arr), 6)
 
-	// slice from arr
-	var slice = arr[2:5]
+	slice := arr[2:5]
 
 	for i := 0; i < len(arr); i++ {
 		arr[i] = i * 2
 	}
-
 	for i := 0; i < len(slice); i++ {
 		assert.Equal(t, slice[i], (i+2)*2)
 	}
@@ -64,52 +66,13 @@ func TestSlicesShareCommonData(t *testing.T) {
 }
 
 func TestSliceMovement(t *testing.T) {
-	array := []int{1, 2, 3, 4, 5, 6}
-	slice := array[:]
+	slice := []int{1, 2, 3, 4, 5, 6}
+	slice = slice[:]
+	assert.Equal(t, len(slice), 6)
+	assert.Equal(t, slice[0], 1)
 	slice = slice[1:]
 	assert.Equal(t, len(slice), 5)
-}
-
-func ExampleSliceForRange() {
-	SliceForRange()
-	// Output:
-	// Season 0 is Spring
-	// Season 1 is Summer
-	// Season 2 is Autumn
-	// Season 3 is Winter
-	// Spring
-	// Summer
-	// Autumn
-	// Winter
-	// 0
-	// 1
-	// 2
-	// 3
-}
-
-func ExampleReSlice() {
-	ReSlice()
-	// Output:
-	// The length of slice[0:1] is 1
-	// The length of slice[0:2] is 2
-	// The length of slice[0:3] is 3
-	// The length of slice[0:4] is 4
-	// The length of slice[0:5] is 5
-	// The length of slice[0:6] is 6
-	// The length of slice[0:7] is 7
-	// The length of slice[0:8] is 8
-	// The length of slice[0:9] is 9
-	// The length of slice[0:10] is 10
-	// Slice at 0 is 0
-	// Slice at 1 is 1
-	// Slice at 2 is 2
-	// Slice at 3 is 3
-	// Slice at 4 is 4
-	// Slice at 5 is 5
-	// Slice at 6 is 6
-	// Slice at 7 is 7
-	// Slice at 8 is 8
-	// Slice at 9 is 9
+	assert.Equal(t, slice[0], 2)
 }
 
 func TestReSlice(t *testing.T) {
@@ -133,6 +96,7 @@ func TestSlicesDuplication(t *testing.T) {
 	n := copy(slTo, slFrom) // copy func returned copied elements
 	assert.Equal(t, 3, n)
 	assert.Equal(t, slTo, []int{1, 2, 3, 0, 0, 0, 0, 0, 0, 0})
+
 	// use append
 	slice := []int{1, 2, 3}
 	slice = append(slice, 4, 5, 6)
@@ -160,6 +124,7 @@ func TestAppendStringsToByteArray(t *testing.T) {
 
 func TestStringsAreImmutable(t *testing.T) {
 	s := "Hello"
+	// you cannot modify chars inside a string
 	c := []byte(s)
 	c[0] = 'c'
 	assert.Equal(t, string(c), "cello")
@@ -191,11 +156,12 @@ func TestCompareSlices(t *testing.T) {
 	assert.Equal(t, compare([]byte{1, 2, 3}, []byte{1, 2, 3, 4}), -1)
 }
 
-func TestAppend(t *testing.T) {
+func TestAppendSlices(t *testing.T) {
 	var i, j int
 	var x int
 	a := []int{1, 2, 3}
 	b := []int{4, 5, 6}
+
 	// append all elements of b
 	a = append(a, b...)
 	assert.Equal(t, a, []int{1, 2, 3, 4, 5, 6})
@@ -230,7 +196,7 @@ func TestAppend(t *testing.T) {
 	a = append(a[:i], append([]int{x}, a[i:]...)...)
 	assert.Equal(t, a, []int{1, 2, 3, 4, 5, 6})
 
-	// insert a new empty slice at index i
+	// insert a new empty slice with j elements at index i
 	a = []int{1, 2, 5, 6}
 	i = 2
 	j = 3

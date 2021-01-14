@@ -8,24 +8,18 @@ import (
 
 func TestArraysIteration(t *testing.T) {
 	// declare an array using var keyword
+	// each element in intArr has the zero value 0
 	var intArr [5]int
 
-	// use [] to access array elements
-	for i := 0; i < 5; i++ {
+	// we can use C-style for loop to iterate an array
+	// len(intArr) will return the length of given array
+	for i := 0; i < len(intArr); i++ {
+		// we can access and modify elements via [] syntax
 		assert.Equal(t, intArr[i], 0)
-	}
-
-	// use [] to modify array elements
-	for i := 0; i < 5; i++ {
 		intArr[i] = i * 2
 	}
 
-	// len(intArr) will return the length of given array
-	for i := 0; i < len(intArr); i++ {
-		assert.Equal(t, intArr[i], i*2)
-	}
-
-	// use for range to access array elements
+	// use for range to access array elements (key-value pairs)
 	for i, v := range intArr {
 		assert.Equal(t, v, intArr[i])
 	}
@@ -35,33 +29,41 @@ func TestArraysLiterals(t *testing.T) {
 	// declare an array of the specified length and initialize it
 	var arr1 = [5]int{18, 20, 15, 22, 16}
 
-	// declare first, then initialize
+	// separate declaration and initialization
 	var arr2 [5]int
 	arr2 = [5]int{18, 20, 15, 22, 16}
 
 	assert.Equal(t, arr1, arr2)
 
-	// arr3 is array, arr4 is slices
-	var arr3 = [...]int{5, 6, 7, 8, 22}
-	var arr4 = []int{5, 6, 7, 8, 22}
-
-	assert.Equal(t, 5, cap(arr3))
-	assert.Equal(t, 5, len(arr3))
-	assert.Equal(t, 5, cap(arr4))
-	assert.Equal(t, 5, len(arr4))
-	assert.NotEqual(t, arr3, arr4)
+	// arr3 is array, sli3 is slices
+	// when use ..., the compiler will count the array elements for you
+	var arr3 = [...]int{5, 6, 7, 8, 22} // array
+	var sli3 = []int{5, 6, 7, 8, 22}    // slice
+	assert.NotEqual(t, arr3, sli3)
 
 	// only indexes 3 and 4 are assigned values
-	// other elements are set to zero value (empty strings), and the array length is 5
-	var arr5 = [5]string{3: "Chris", 4: "Ron"} // array
-	var arr6 = []string{3: "Chris", 4: "Ron"}  // slice
+	// other elements are set to zero value "" (empty strings)
+	// the array length is 5
+	var arr4 = [5]string{3: "Chris", 4: "Ron"} // array
+	var sli4 = []string{3: "Chris", 4: "Ron"}  // slice
 
-	assert.Equal(t, 5, cap(arr5))
-	assert.Equal(t, 5, len(arr5))
-	assert.Equal(t, 5, cap(arr6))
-	assert.Equal(t, 5, len(arr6))
-	assert.NotEqual(t, arr5, arr6)
-	assert.Equal(t, arr5[0], "")
+	assert.Equal(t, 5, cap(arr4))
+	assert.Equal(t, 5, len(arr4))
+	assert.Equal(t, 5, cap(sli4))
+	assert.Equal(t, 5, len(sli4))
+	assert.NotEqual(t, arr4, sli4)
+	// summary, [num] or [...] means arrays while [] means slices
+}
+
+func TestArraysCapMethod(t *testing.T) {
+	// cap tells you the capacity of the underlying array
+	// so both slices and arrays can call cap method
+	var arr1 = [...]int{5, 6, 7, 8, 22} // array
+	var arr2 = [5]int{5, 6, 7, 8, 22}   // array
+	var sli = []int{5, 6, 7, 8, 22}     // slice
+	assert.Equal(t, 5, cap(arr1))
+	assert.Equal(t, 5, cap(arr2))
+	assert.Equal(t, 5, cap(sli))
 }
 
 func TestArraysOrSlicesAsArguments(t *testing.T) {
@@ -99,15 +101,14 @@ func TestArraysFormattedAsString(t *testing.T) {
 		return fmt.Sprint(arr)
 	}
 
-	// declare an array
 	var arr [3]int
-	// passes a copy of arr
+
+	// passes a copy of arr, arr was not modified
 	assert.Equal(t, "[1 0 0]", funcAcceptArray(arr))
-	// arr was not modified
 	assert.Equal(t, [3]int{0, 0, 0}, arr)
-	// passes a pointer to arr
+
+	// passes a pointer to arr, arr was modified
 	assert.Equal(t, "&[2 0 0]", funcAcceptArrayPointer(&arr))
-	// arr was modified
 	assert.Equal(t, [3]int{2, 0, 0}, arr)
 }
 
@@ -123,15 +124,14 @@ func TestArraysCanBeNested(t *testing.T) {
 
 	for y := 0; y < HEIGHT; y++ {
 		for x := 0; x < WIDTH; x++ {
-			// nested loop to access elements of two-dimensional array
-			screen[x][y] = 0
+			screen[x][y] = 1
 		}
 	}
 
 	// use for-range syntax to access elements
 	for row := range screen {
 		for column := range screen[row] {
-			assert.Equal(t, pixel(0), screen[row][column], "the pixel value should be the zero value 0")
+			assert.Equal(t, pixel(1), screen[row][column])
 		}
 	}
 }

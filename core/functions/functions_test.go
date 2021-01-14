@@ -1,22 +1,19 @@
 package functions
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
-	"runtime"
 	"testing"
-	"time"
 )
 
-func TestMultiPly3Nums(t *testing.T) {
-	multiPly3Nums := func(a, b, c int) int {
+func TestFunctionDeclaration(t *testing.T) {
+	multiply3Nums := func(a, b, c int) int {
 		return a * b * c
 	}
 
-	assert.Equal(t, 60, multiPly3Nums(2, 5, 6))
+	assert.Equal(t, 60, multiply3Nums(2, 5, 6))
 }
 
-func TestGet2XAnd3X(t *testing.T) {
+func TestFunctionCanReturnMultiValues(t *testing.T) {
 	getX2AndX3 := func(n int) (int, int) {
 		return n * 2, n * 3
 	}
@@ -26,7 +23,7 @@ func TestGet2XAnd3X(t *testing.T) {
 	assert.Equal(t, 6, x3)
 }
 
-func TestGetNamed2XAnd3X(t *testing.T) {
+func TestReturnValuesCanBeNamed(t *testing.T) {
 	// Go's return values may be named.
 	// If so, they are treated as variables defined at the top of the function.
 	getNamedX2AndX3 := func(n int) (x2, x3 int) {
@@ -42,7 +39,7 @@ func TestGetNamed2XAnd3X(t *testing.T) {
 	assert.Equal(t, 6, x3)
 }
 
-func TestMultiply(t *testing.T) {
+func TestParasCanBeModifiedInsideFuncByPassingRefs(t *testing.T) {
 	// reply can be modified inside this func
 	multiply := func(a, b int, reply *int) {
 		*reply = a * b
@@ -54,7 +51,7 @@ func TestMultiply(t *testing.T) {
 	assert.Equal(t, 12, *reply)
 }
 
-func TestMin(t *testing.T) {
+func TestRestParameters(t *testing.T) {
 	// rest parameters
 	min := func(s ...int) int {
 		if len(s) == 0 {
@@ -77,40 +74,14 @@ func TestMin(t *testing.T) {
 	assert.Equal(t, -5, min(1, 2, -5, 3, 111))
 }
 
-func ExampleGreet() {
-	defer Greet()
-	fmt.Println("DEFER")
-	// Output:
-	// DEFER
-	// Hello
+func fibonacci(n int) int {
+	if n <= 1 {
+		return 1
+	}
+	return fibonacci(n-1) + fibonacci(n-2)
 }
 
-func ExampleDoDBOperations() {
-	DoDBOperations()
-	// Output:
-	// ok, connected to db
-	// Deferring the database disconnect.
-	// Doing some DB operations ...
-	// Oops! some crash or network error ...
-	// Returning from function here!
-	// ok, disconnected from db
-}
-
-func ExampleB() {
-	b()
-	// Output:
-	// entering: b
-	// in b
-	// entering: a
-	// in a
-	// leaving: a
-	// leaving: b
-	// DEFER 3
-	// DEFER 2
-	// DEFER 1
-}
-
-func TestFibonacci(t *testing.T) {
+func TestRecursion(t *testing.T) {
 	result := 0
 	nums := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}
 	for i := 0; i <= 10; i++ {
@@ -119,68 +90,30 @@ func TestFibonacci(t *testing.T) {
 	}
 }
 
-func TestEvenAndOdd(t *testing.T) {
-	assert.True(t, odd(17))
-	assert.True(t, even(18))
-}
-
-func TestCallback(t *testing.T) {
-	assert.Equal(t, 3, callback(1, 2, add))
-}
-
-func ExampleClosure() {
-	Closure()
-	// Output:
-	// 0123
-}
-
-func TestGetRet(t *testing.T) {
-	assert.Equal(t, 2, getRet())
-}
-
-func TestAdder(t *testing.T) {
-	plusTwo := AddTwo()
-	assert.Equal(t, 5, plusTwo(3))
-	plus := Adder(4)
-	assert.Equal(t, 9, plus(5))
-}
-
-func TestSequentialAdder(t *testing.T) {
-	var f = SequentialAdder()
-	assert.Equal(t, 1, f(1))
-	assert.Equal(t, 21, f(20))
-	assert.Equal(t, 321, f(300))
-}
-
-func TestMakeAddSuffix(t *testing.T) {
-	addBmp := MakeAddSuffix(".bmp")
-	addJpeg := MakeAddSuffix(".jpeg")
-	assert.Equal(t, "file.bmp", addBmp("file"))
-	assert.Equal(t, "file.jpeg", addJpeg("file"))
-}
-
-func TestCalculateFunctionExecTime(t *testing.T) {
-	start := time.Now()
-	for i := 0; i < 1000; i++ {
-		assert.True(t, true)
+// empty interface accept params of any types
+func getType(args ...interface{}) string {
+	for _, arg := range args {
+		switch arg.(type) {
+		case int:
+			return "int"
+		case string:
+			return "string"
+		case int64:
+			return "int64"
+		default:
+			return "unknown"
+		}
 	}
-	end := time.Now()
-	delta := end.Sub(start)
-	// TODO: weird bug on windows platform
-	if runtime.GOOS != "windows" {
-		assert.Greater(t, delta.Nanoseconds(), int64(0))
-	}
+	return ""
 }
 
-func ExampleMyPrintf() {
+func TestGetType(t *testing.T) {
 	var v1 = 1 // inferred int
 	var v2 int64 = 234
 	var v3 = "Hello" // inferred string
 	var v4 float32 = 1.234
-	MyPrintf(v1, v2, v3, v4)
-	// Output:
-	// 1 is an int value.
-	// 234 is an int64 value.
-	// Hello is a string value.
-	// 1.234 is an unknown type.
+	assert.Equal(t, getType(v1), "int")
+	assert.Equal(t, getType(v2), "int64")
+	assert.Equal(t, getType(v3), "string")
+	assert.Equal(t, getType(v4), "unknown")
 }

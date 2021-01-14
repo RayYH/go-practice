@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestSimpleIfStatement(t *testing.T) {
+func TestIfStatement(t *testing.T) {
 	isGreaterThan := func(x, y int) bool {
 		if x > y {
 			return true
@@ -18,19 +18,7 @@ func TestSimpleIfStatement(t *testing.T) {
 	assert.False(t, isGreaterThan(4, 4))
 }
 
-func TestIfWithAssignment(t *testing.T) {
-	isLessThanTen := func(x int) bool {
-		if val := 10; val > x {
-			return true
-		}
-
-		return false
-	}
-	assert.True(t, isLessThanTen(9))
-	assert.False(t, isLessThanTen(11))
-}
-
-func TestIfElseIfStatement(t *testing.T) {
+func TestIfElseStatement(t *testing.T) {
 	compareToZero := func(n int) string {
 		if n < 0 {
 			return "less than"
@@ -46,7 +34,19 @@ func TestIfElseIfStatement(t *testing.T) {
 	assert.Equal(t, "greater than", compareToZero(1))
 }
 
-func TestSwitchCase(t *testing.T) {
+func TestIfWithAssignment(t *testing.T) {
+	isLessThanTen := func(x int) bool {
+		if val := 10; val > x {
+			return true
+		}
+
+		return false
+	}
+	assert.True(t, isLessThanTen(9))
+	assert.False(t, isLessThanTen(11))
+}
+
+func TestSwitchCaseUsingLiterals(t *testing.T) {
 	checkValue := func(x int) string {
 		switch x {
 		case 98, 99:
@@ -99,7 +99,7 @@ func TestFallThroughInsideSwitchCase(t *testing.T) {
 	assert.Equal(t, -1, minusOneOrTwo(3))
 }
 
-func TestNormalForLoop(t *testing.T) {
+func TestCStyleForLoop(t *testing.T) {
 	j := 0
 	for i := 0; i < 5; i++ {
 		assert.Equal(t, i, j)
@@ -107,7 +107,7 @@ func TestNormalForLoop(t *testing.T) {
 	}
 }
 
-func TestForUsedAsWhileStatement(t *testing.T) {
+func TestForUsedAsWhileLoop(t *testing.T) {
 	i := 0
 	j := 0
 	for i < 5 {
