@@ -50,6 +50,7 @@ func TestComplexType(t *testing.T) {
 	assert.Equal(t, 2.2, imag(comp))
 }
 
+// The expression `T(v)` converts the value `v` to the type `T`.
 func TestTypeConversions(t *testing.T) {
 	var n int16 = 34
 	var m int32
@@ -58,11 +59,9 @@ func TestTypeConversions(t *testing.T) {
 	assert.NotEqual(t, reflect.TypeOf(n), reflect.TypeOf(m))
 	// int32(n) and m are of the same type and same value
 	assert.Equal(t, reflect.TypeOf(int32(n)), reflect.TypeOf(m))
-	// x, y int
+
 	var x, y = 3, 4
-	// f float64
 	var f = math.Sqrt(float64(x*x + y*y))
-	// z uint
 	var z = uint(f)
 	var r uint = 5
 	assert.Equal(t, r, z)

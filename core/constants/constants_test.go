@@ -127,8 +127,9 @@ func TestSizeConstantsViaIota(t *testing.T) {
 }
 
 func TestConstantWillNotLosePrecision(t *testing.T) {
-	// Numeric constants represent exact values of arbitrary precision and do not overflow.
+	// numeric constants represent exact values of arbitrary precision and do not overflow.
 	const HigherPrecisionPi = 3.14159265358979323846264338327950288419716939937510582097494459
+	// if HigherPrecisionPi lose precision, below expression on the right side should be equivalent to 1.00000000...
 	const LessThanOne = 3.141592653589793 / HigherPrecisionPi
 	assert.Equal(t, float32(3.1415927), float32(HigherPrecisionPi))
 	// default is float64

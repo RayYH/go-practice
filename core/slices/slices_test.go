@@ -65,6 +65,30 @@ func TestSlicesShareCommonData(t *testing.T) {
 	assert.Equal(t, slice2[0], 9)
 }
 
+func TestSliceCapacityAndLength(t *testing.T) {
+	s := []int{2, 3, 5, 7, 11, 13}
+
+	s = s[:0]
+	assert.Equal(t, cap(s), 6)
+	assert.Equal(t, len(s), 0)
+
+	s = s[:4]
+	assert.Equal(t, cap(s), 6)
+	assert.Equal(t, len(s), 4)
+
+	s = s[2:]
+	// notice here, first two values has been dropped
+	assert.Equal(t, cap(s), 4)
+	assert.Equal(t, len(s), 2)
+}
+
+func TestNilSlice(t *testing.T) {
+	var s []int
+	assert.Equal(t, cap(s), 0)
+	assert.Equal(t, len(s), 0)
+	assert.Nil(t, s)
+}
+
 func TestSliceMovement(t *testing.T) {
 	slice := []int{1, 2, 3, 4, 5, 6}
 	slice = slice[:]
@@ -154,6 +178,15 @@ func TestCompareSlices(t *testing.T) {
 	assert.Equal(t, compare([]byte{1, 2, 3}, []byte{1, 2, 4}), -1)
 	assert.Equal(t, compare([]byte{1, 2, 3, 4}, []byte{1, 2, 3}), 1)
 	assert.Equal(t, compare([]byte{1, 2, 3}, []byte{1, 2, 3, 4}), -1)
+}
+
+func TestAppendToASlice(t *testing.T) {
+	var s []int
+	assert.Nil(t, s)
+	s = append(s, 0)
+	assert.Equal(t, s, []int{0})
+	s = append(s, 1, 2, 3)
+	assert.Equal(t, s, []int{0, 1, 2, 3})
 }
 
 func TestAppendSlices(t *testing.T) {

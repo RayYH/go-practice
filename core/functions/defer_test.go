@@ -10,7 +10,9 @@ func greet() {
 	fmt.Println("Hello")
 }
 
-// function invocation can be deferred
+// A defer statement defers the execution of a function until the surrounding function returns.
+// The deferred call's arguments are evaluated immediately, but the function call
+// is not executed until the surrounding function returns.
 func Example_greet() {
 	defer greet()
 	fmt.Println("DEFER")
@@ -19,8 +21,8 @@ func Example_greet() {
 	// Hello
 }
 
-// A defer statement pushes a function call onto a list.
-// The list of saved calls is executed after the surrounding function returns.
+// Deferred function calls are pushed onto a stack.
+// When a function returns, its deferred calls are executed in last-in-first-out order.
 func getValue() (ret int) {
 	defer func() {
 		ret++

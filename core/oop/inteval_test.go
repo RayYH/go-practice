@@ -7,19 +7,20 @@ import (
 )
 
 func TestStructsDeclaration(t *testing.T) {
-	// declare a struct through var keyword
-	// allocate memory and initialize members with zero values!
+	// Declare a struct through var keyword.
+	// Allocate memory and initialize members with zero values!
 	var i1 Interval
+	// Struct fields are accessed using a dot.
 	assert.Equal(t, i1.start, 0)
 	assert.Equal(t, i1.end, 0)
-	// modify values
+
 	i1.start = 1
 	i1.end = 100
 	assert.Equal(t, i1.start, 1)
 	assert.Equal(t, i1.end, 100)
 	assert.Equal(t, "{1 100}", fmt.Sprintf("%v", i1))
 
-	// since struct is a value type, we can use new keyword
+	// Since struct is a value type, we can use `new` keyword.
 	i2 := new(Interval)
 	i2.start = 1
 	i2.end = 100

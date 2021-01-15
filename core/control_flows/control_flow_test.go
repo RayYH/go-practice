@@ -34,13 +34,16 @@ func TestIfElseStatement(t *testing.T) {
 	assert.Equal(t, "greater than", compareToZero(1))
 }
 
-func TestIfWithAssignment(t *testing.T) {
+func TestIfWithAShortStatement(t *testing.T) {
+	// Variables declared by the statement are only in scope until the end of the if.
 	isLessThanTen := func(x int) bool {
 		if val := 10; val > x {
 			return true
+		} else {
+			// Variables declared inside an if short statement are also available inside any of the else blocks.
+			assert.NotNil(t, val)
+			return false
 		}
-
-		return false
 	}
 	assert.True(t, isLessThanTen(9))
 	assert.False(t, isLessThanTen(11))
@@ -65,6 +68,7 @@ func TestSwitchCaseUsingLiterals(t *testing.T) {
 }
 
 func TestSwitchCaseUsingExpressions(t *testing.T) {
+	// This construct can be a clean way to write long if-then-else chains.
 	compareToZero := func(x int) string {
 		switch {
 		case x < 0:
