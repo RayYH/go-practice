@@ -23,3 +23,12 @@ func TestSimple(t *testing.T) {
 	time.Sleep(1500 * time.Millisecond)
 	assert.Equal(t, array, [1]int{1})
 }
+
+func TestSafeCounter(t *testing.T) {
+	c := SafeCounter{v: make(map[string]int)}
+	for i := 0; i < 1000; i++ {
+		go c.Inc("some key")
+	}
+	time.Sleep(2 * time.Second)
+	assert.Equal(t, c.Value("some key"), 1000)
+}

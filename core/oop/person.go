@@ -1,6 +1,9 @@
 package oop
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type Person struct {
 	firstName string
@@ -26,4 +29,8 @@ func (p *Person) SetLastName(aLastName string) {
 func upperPerson(p *Person) {
 	p.firstName = strings.ToUpper(p.firstName)
 	p.lastName = strings.ToUpper(p.lastName)
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("%s %s", p.firstName, p.lastName)
 }

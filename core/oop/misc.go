@@ -4,6 +4,7 @@ import "fmt"
 
 func Classifier(items ...interface{}) {
 	for i, x := range items {
+		// A type switch is a construct that permits several type assertions in series.
 		switch x.(type) {
 		case bool:
 			fmt.Printf("Param #%d is a bool\n", i)

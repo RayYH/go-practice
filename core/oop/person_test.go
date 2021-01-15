@@ -1,6 +1,7 @@
 package oop
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -27,4 +28,9 @@ func TestPersonStruct(t *testing.T) {
 	upperPerson(person3)
 	assert.Equal(t, person3.firstName, "RAY")
 	assert.Equal(t, person3.lastName, "HONG")
+}
+
+func TestPersonString(t *testing.T) {
+	person := &Person{firstName: "Ray", lastName: "Hong"}
+	assert.Equal(t, fmt.Sprint(person), "Ray Hong")
 }
