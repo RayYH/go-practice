@@ -20,6 +20,6 @@ func TestSimple(t *testing.T) {
 	array := [1]int{0}
 	go modifyArray(&array)
 	assert.Equal(t, array, [1]int{0})
-	time.Sleep(400 * time.Millisecond)
+	time.Sleep(1500 * time.Millisecond)
 	assert.Equal(t, array, [1]int{1})
 }
