@@ -24,7 +24,6 @@ func (p *Person) SetFirstName(aFirstName string) {
 	p.firstName = aFirstName
 }
 
-
 func (p *Person) SetLastName(aLastName string) {
 	p.lastName = aLastName
 }
