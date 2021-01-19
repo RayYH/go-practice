@@ -253,3 +253,19 @@ func TestAppendSlices(t *testing.T) {
 	a = append(a, 6)
 	assert.Equal(t, a, []int{1, 2, 3, 4, 5, 6})
 }
+
+func TestResizeSlices(t *testing.T) {
+	scores := make([]int, 5)
+	assert.Equal(t, cap(scores), 5)
+	// To a compiler, you're telling it to append a value to a slice that already holds 5 values.
+	scores = append(scores, 9332)
+	scores = append(scores, 9331)
+	assert.Equal(t, scores, []int{0, 0, 0, 0, 0, 9332, 9331})
+
+	lists := make([]int, 5)
+	for i := 0; i < 25; i++ {
+		lists = append(lists, i)
+	}
+	// 5 --> 10 --> 20 --> 40
+	assert.Equal(t, cap(lists), 40)
+}

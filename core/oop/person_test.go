@@ -16,7 +16,7 @@ func TestPersonStruct(t *testing.T) {
 	assert.Equal(t, person1.lastName, "HONG")
 
 	// struct as a pointer
-	person2 := new(Person)
+	person2 := new(Person) // new allocates the memory required by a type
 	person2.firstName = "Ray"
 	person2.lastName = "Hong"
 	upperPerson(person2)
@@ -28,6 +28,12 @@ func TestPersonStruct(t *testing.T) {
 	upperPerson(person3)
 	assert.Equal(t, person3.firstName, "RAY")
 	assert.Equal(t, person3.lastName, "HONG")
+
+	// pre-defined constructor
+	person4 := NewPerson("Ray", "Hong")
+	upperPerson(person4)
+	assert.Equal(t, person4.firstName, "RAY")
+	assert.Equal(t, person4.lastName, "HONG")
 }
 
 func TestPersonString(t *testing.T) {

@@ -6,12 +6,12 @@ import (
 	"time"
 )
 
-// A goroutine is a lightweight thread managed by the Go runtime.
+// A goroutine is a lightweight thread managed by the Go runtime, not the OS.
 // `go f(x, y, z)` starts a new goroutine running `f(x, y, z)`
 // The evaluation of f, x, y, and z happens in the current goroutine
 // and the execution of f happens in the new goroutine.
 
-func TestSimple(t *testing.T) {
+func TestGoroutineViaGoKeyword(t *testing.T) {
 	modifyArray := func(arr *[1]int) {
 		time.Sleep(300 * time.Millisecond)
 		arr[0] = 1
