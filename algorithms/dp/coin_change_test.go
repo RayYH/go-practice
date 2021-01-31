@@ -11,7 +11,7 @@ type testCase struct {
 	ans    int
 }
 
-func TestMinimumCoinChangeMemoization(t *testing.T) {
+func TestMinimumCoins(t *testing.T) {
 	testCases := make([]testCase, 5)
 	testCases[0] = testCase{
 		coins:  []int{1, 2, 5},
@@ -40,7 +40,30 @@ func TestMinimumCoinChangeMemoization(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		assert.Equal(t, minimumCoinChangeMemoization(testCase.coins, testCase.amount), testCase.ans)
-		assert.Equal(t, minimumCoinChangeTabulation(testCase.coins, testCase.amount), testCase.ans)
+		assert.Equal(t, minimumCoinsMemoization(testCase.coins, testCase.amount), testCase.ans)
+		assert.Equal(t, minimumCoinsTabulation(testCase.coins, testCase.amount), testCase.ans)
+	}
+}
+
+func TestTotalCombinationsTabulation(t *testing.T) {
+	testCases := make([]testCase, 3)
+	testCases[0] = testCase{
+		coins:  []int{1, 2, 5},
+		amount: 5,
+		ans:    4,
+	}
+	testCases[1] = testCase{
+		coins:  []int{2},
+		amount: 3,
+		ans:    0,
+	}
+	testCases[2] = testCase{
+		coins:  []int{10},
+		amount: 10,
+		ans:    1,
+	}
+
+	for _, testCase := range testCases {
+		assert.Equal(t, totalCombinationsTabulation(testCase.coins, testCase.amount), testCase.ans)
 	}
 }

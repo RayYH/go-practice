@@ -11,12 +11,12 @@ func min(a, b int) int {
 	return b
 }
 
-func minimumCoinChangeMemoization(coins []int, amount int) int {
+func minimumCoinsMemoization(coins []int, amount int) int {
 	memo := make(map[int]int, amount+1)
-	return minimumCoinChangeMemo(coins, amount, memo)
+	return minimumCoinsMemo(coins, amount, memo)
 }
 
-func minimumCoinChangeMemo(coins []int, amount int, memo map[int]int) int {
+func minimumCoinsMemo(coins []int, amount int, memo map[int]int) int {
 	// check memo
 	ans, ok := memo[amount]
 	if ok {
@@ -36,7 +36,7 @@ func minimumCoinChangeMemo(coins []int, amount int, memo map[int]int) int {
 	res := math.MaxInt32
 	for i := 0; i <= amount; i++ {
 		for _, v := range coins {
-			subSolution := minimumCoinChangeMemo(coins, amount-v, memo)
+			subSolution := minimumCoinsMemo(coins, amount-v, memo)
 			if subSolution == -1 {
 				continue
 			}
@@ -53,7 +53,7 @@ func minimumCoinChangeMemo(coins []int, amount int, memo map[int]int) int {
 	return memo[amount]
 }
 
-func minimumCoinChangeTabulation(coins []int, amount int) int {
+func minimumCoinsTabulation(coins []int, amount int) int {
 	// param validation
 	if amount < 0 {
 		return -1
@@ -84,5 +84,28 @@ func minimumCoinChangeTabulation(coins []int, amount int) int {
 		return -1
 	}
 
+	return tables[amount]
+}
+
+func totalCombinationsTabulation(coins []int, amount int) int {
+	// params validation
+	if amount < 0 {
+		return 0
+	}
+
+	// init tables
+	tables := make([]int, amount+1)
+
+	// base case
+	tables[0] = 1
+
+	// update tables
+	for _, coin := range coins {
+		for i := coin; i <= amount; i++ {
+			tables[i] += tables[i-coin]
+		}
+	}
+
+	// return solution stored in tables
 	return tables[amount]
 }
