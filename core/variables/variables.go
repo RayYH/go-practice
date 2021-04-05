@@ -5,8 +5,7 @@ import (
 	"os"
 )
 
-// global variables
-// It's visible in all files of the package to which it belongs
+// global variables are visible in all files belong to the same package
 var globalString = "This is a string."
 var (
 	myName = "Ray"
