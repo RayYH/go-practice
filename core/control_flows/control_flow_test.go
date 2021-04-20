@@ -28,7 +28,6 @@ func TestIfElseStatement(t *testing.T) {
 			return "greater than"
 		}
 	}
-
 	assert.Equal(t, "less than", compareToZero(-1))
 	assert.Equal(t, "equal", compareToZero(0))
 	assert.Equal(t, "greater than", compareToZero(1))
