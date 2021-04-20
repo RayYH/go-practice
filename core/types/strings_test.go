@@ -10,6 +10,13 @@ import (
 	"unicode/utf8"
 )
 
+func TestStringDeclarations(t *testing.T) {
+	var str string
+	str = "Hello World"
+	assert.Equal(t, "Hello World", str)
+	assert.Equal(t, str[0], uint8('H'))
+}
+
 func TestSlicesCanBeConvertedToStrings(t *testing.T) {
 	// string literal
 	var givenString = "Geeks"

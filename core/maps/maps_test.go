@@ -45,7 +45,7 @@ func TestDeclarationsOfMaps(t *testing.T) {
 	})
 	assert.Equal(t, mapList, mapAssigned)
 
-	// reference type can be declared via make keyword, DO NOT use new keyword
+	// reference type can be declared via `make` keyword, DO NOT use `new` keyword
 	mapCreated := make(map[string]float64)
 	// dynamically add items
 	mapCreated["key1"] = 4.5

@@ -74,6 +74,7 @@ func DisplayImaginaryLiterals() {
 	}
 }
 
+// DisplayRuneLiterals
 // \a   U+0007 alert or bell
 // \b   U+0008 backspace
 // \f   U+000C form feed

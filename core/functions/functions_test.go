@@ -39,7 +39,7 @@ func TestReturnValuesCanBeNamed(t *testing.T) {
 	assert.Equal(t, 6, x3)
 }
 
-func TestParasCanBeModifiedInsideFuncByPassingRefs(t *testing.T) {
+func TestParamsCanBeModifiedInsideFuncByPassingRefs(t *testing.T) {
 	// reply can be modified inside this func
 	multiply := func(a, b int, reply *int) {
 		*reply = a * b
@@ -70,15 +70,10 @@ func TestRestParameters(t *testing.T) {
 	}
 
 	assert.Equal(t, 1, min(1, 2, 3, 4, 5))
+	assert.Equal(t, 1, min([]int{1, 2, 3, 4, 5}...))
+	assert.Equal(t, 2, min([]int{1, 2, 3, 4, 5}[1:]...))
 	assert.Equal(t, 0, min())
 	assert.Equal(t, -5, min(1, 2, -5, 3, 111))
-}
-
-func fibonacci(n int) int {
-	if n <= 1 {
-		return 1
-	}
-	return fibonacci(n-1) + fibonacci(n-2)
 }
 
 func TestRecursion(t *testing.T) {
@@ -90,24 +85,23 @@ func TestRecursion(t *testing.T) {
 	}
 }
 
-// empty interface accept params of any types
-func getType(args ...interface{}) string {
-	for _, arg := range args {
-		switch arg.(type) {
-		case int:
-			return "int"
-		case string:
-			return "string"
-		case int64:
-			return "int64"
-		default:
-			return "unknown"
+func TestEmptyInterfaceCanAcceptParamsOfAnyTypes(t *testing.T) {
+	getType := func(args ...interface{}) string {
+		for _, arg := range args {
+			switch arg.(type) {
+			case int:
+				return "int"
+			case string:
+				return "string"
+			case int64:
+				return "int64"
+			default:
+				return "unknown"
+			}
 		}
+		return ""
 	}
-	return ""
-}
 
-func TestGetType(t *testing.T) {
 	var v1 = 1 // inferred int
 	var v2 int64 = 234
 	var v3 = "Hello" // inferred string

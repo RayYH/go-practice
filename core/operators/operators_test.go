@@ -114,8 +114,7 @@ func TestBitwiseOperator(t *testing.T) {
 	t.Run("bit clear (AND NOT)", func(t *testing.T) {
 		// The C equivalent of the Go expression x &^ y is just x & ~y. That is literally "x AND (bitwise NOT of y)".
 		// if you think of x | y as a way to turn on certain bits of x based on a mask constant y, then x &^ y is
-		// doing the opposite and turns those same bits off
-		// KEEP the different bits and clear the same bits
+		// doing the opposite and turns those same bits off (KEEP the different bits and clear the same bits)
 		assert.Equal(t, 1&^1, 0) // 1 & 0 = 0
 		assert.Equal(t, 1&^0, 1) // 1 & 1 = 1
 		assert.Equal(t, 0&^1, 0) // 0 & 0 = 0

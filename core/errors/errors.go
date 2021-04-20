@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// MyError custom error struct
 type MyError struct {
 	when string
 	what string

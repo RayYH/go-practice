@@ -21,12 +21,24 @@ func TestBasicUsagesOfSlices(t *testing.T) {
 func TestSlicesInitialization(t *testing.T) {
 	// literal
 	names := []string{"leo", "jessica", "paul"}
+	assert.Equal(t, len(names), 3)
+	assert.Equal(t, cap(names), 3)
+
 	// capacity=length=10
 	checks := make([]bool, 10)
+	assert.Equal(t, len(checks), 10)
+	assert.Equal(t, cap(checks), 10)
+
 	// capacity=2, length=20
 	scores := make([]int, 2, 20)
+	assert.Equal(t, len(scores), 2)
+	assert.Equal(t, cap(scores), 20)
+
 	// if we don't specified [0:2], numbers will be an array instead of a slice
 	numbers := new([20]int)[0:2]
+	assert.Equal(t, len(numbers), 2)
+	assert.Equal(t, cap(numbers), 20)
+
 	assert.Equal(t, "[leo jessica paul]", fmt.Sprint(names))
 	assert.Equal(t, "[false false false false false false false false false false]", fmt.Sprint(checks))
 	assert.Equal(t, "[0 0]", fmt.Sprint(scores))
@@ -180,7 +192,7 @@ func TestCompareSlices(t *testing.T) {
 	assert.Equal(t, compare([]byte{1, 2, 3}, []byte{1, 2, 3, 4}), -1)
 }
 
-func TestAppendToASlice(t *testing.T) {
+func TestAppendToSlicesBasic(t *testing.T) {
 	var s []int
 	assert.Nil(t, s)
 	s = append(s, 0)

@@ -13,6 +13,7 @@ func TestConstantsCanBeDeclaredInsideFunc(t *testing.T) {
 }
 
 func TestConstantsCanBeFactored(t *testing.T) {
+	// Go does not support `enum` keyword, but we can use const to define some enums
 	const (
 		Sunday    = 0
 		Monday    = 1
@@ -29,6 +30,23 @@ func TestConstantsCanBeFactored(t *testing.T) {
 func TestConstantsCanBeDeclaredAtOneLine(t *testing.T) {
 	const name, age = "Ray", 24
 	assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
+}
+
+func TestConstantsDeclarationsWithType(t *testing.T) {
+	const Pi float64 = 3.14
+	const size int64 = 1024
+	const u, v float32 = 0, 3
+	assert.Equal(t, Pi, 3.14)
+	assert.Equal(t, size, int64(1024))
+	assert.Equal(t, u, float32(0))
+	assert.Equal(t, v, float32(3))
+}
+
+func TestPredefinedConstants(t *testing.T) {
+	assert.True(t, true)
+	assert.False(t, false)
+	const a = iota
+	assert.Equal(t, 0, a)
 }
 
 func TestIotaBasicUsage(t *testing.T) {

@@ -39,6 +39,14 @@ func TestFloatType(t *testing.T) {
 	assert.Equal(t, "0 0", fmt.Sprint(aFloat32, aFloat64))
 }
 
+func TestComparingFloatVariables(t *testing.T) {
+	isEqual := func(f1, f2, p float64) bool {
+		return math.Abs(f1-f2) < p
+	}
+	assert.True(t, isEqual(3.000001, 3.000002, 0.0001))
+	assert.False(t, isEqual(3.000001, 3.000002, 0.000000001))
+}
+
 func TestComplexType(t *testing.T) {
 	var defaultComplexValue complex128
 	assert.Equal(t, "(0+0i)", fmt.Sprint(defaultComplexValue))
@@ -55,7 +63,6 @@ func TestTypeConversions(t *testing.T) {
 	var n int16 = 34
 	var m int32
 	m = int32(n)
-	// not same type - though used int32() method
 	assert.NotEqual(t, reflect.TypeOf(n), reflect.TypeOf(m))
 	// int32(n) and m are of the same type and same value
 	assert.Equal(t, reflect.TypeOf(int32(n)), reflect.TypeOf(m))
@@ -72,7 +79,6 @@ func TestUint8FromInt(t *testing.T) {
 		if 0 <= n && n <= math.MaxUint8 {
 			return uint8(n), nil
 		}
-
 		return 0, fmt.Errorf("%d is out of the uint8 range", n)
 	}
 
