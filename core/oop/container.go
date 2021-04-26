@@ -22,8 +22,8 @@ type MixinContainer struct {
 	IntValue    int    `description:"an int value"`
 }
 
-func inspectField(mc MixinContainer, i int) string {
+func inspectField(mc MixinContainer, index int) string {
 	r := reflect.TypeOf(mc)
-	field := r.Field(i)
+	field := r.Field(index)
 	return fmt.Sprintf("%v", field.Tag.Get("description"))
 }

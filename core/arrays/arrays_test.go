@@ -8,7 +8,7 @@ import (
 
 func TestArraysIteration(t *testing.T) {
 	// declare an array using var keyword
-	// each element in intArr has the zero value 0
+	// each element in intArr has the zero value (0) of int type
 	var intArr [5]int
 
 	// we can use C-style for loop to iterate an array
@@ -35,7 +35,7 @@ func TestArraysLiterals(t *testing.T) {
 
 	assert.Equal(t, arr1, arr2)
 
-	// arr3 is array, sli3 is slices
+	// arr3 is an array, sli3 is a slice
 	// when use ..., the compiler will count the array elements for you
 	var arr3 = [...]int{5, 6, 7, 8, 22} // array
 	var sli3 = []int{5, 6, 7, 8, 22}    // slice
@@ -66,7 +66,7 @@ func TestArraysCapMethod(t *testing.T) {
 	assert.Equal(t, 5, cap(sli))
 }
 
-func TestArraysOrSlicesAsArguments(t *testing.T) {
+func TestArraysPointerOrSlicesAsArguments(t *testing.T) {
 	Sum := func(numbers *[3]float64) (sum float64) {
 		for _, v := range numbers {
 			sum += v

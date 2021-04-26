@@ -1,6 +1,6 @@
 # Go-Practice
 
-Some Go code. This code may be terrible and buggy, **USE AT YOUR OWN RISK**.
+Some code written in Golang which may be terrible and buggy, **USE AT YOUR OWN RISK**.
 
 ## Prerequisite
 

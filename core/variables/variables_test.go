@@ -1,68 +1,82 @@
 package variables
 
 import (
+	"fmt"
 	"github.com/stretchr/testify/assert"
+	"reflect"
 	"runtime"
 	"testing"
 )
 
-func TestGlobalStringIsVisibleInTheFilesOfCurrentPackage(t *testing.T) {
-	assert.Equal(t, "This is a string.", globalString)
-	assert.Equal(t, 24, myAge)
-	assert.Equal(t, "Ray", myName)
-	// we can also modify global variable
-	myAge = 25
-	assert.Equal(t, 25, myAge)
+func TestGlobalVariablesInitializationAndScope(t *testing.T) {
+	t.Run("global variables are visible to other files", func(t *testing.T) {
+		assert.Equal(t, "This is a string.", globalString)
+		assert.Equal(t, "This is also a string.", GlobalString)
+	})
+
+	t.Run("global variables can be modified", func(t *testing.T) {
+		assert.Equal(t, 24, myAge)
+		assert.Equal(t, "Ray", myName)
+		myAge = 25
+		myName = "Ray Hong"
+		assert.Equal(t, 25, myAge)
+		assert.Equal(t, "Ray Hong", myName)
+	})
+
+	t.Run("home and user are not empty", func(t *testing.T) {
+		assert.NotNil(t, HOME)
+		assert.NotNil(t, USER)
+	})
 }
 
-func TestHomeAndUserAreNotEmpty(t *testing.T) {
-	assert.NotNil(t, HOME)
-	assert.NotNil(t, USER)
-}
-
-// pointers holds the references to the variables
-func TestModifyingValueViaPointers(t *testing.T) {
+func TestContentOfVariablesCanBeModifiedThroughPointers(t *testing.T) {
 	var os = runtime.GOOS
 	assert.NotNil(t, os)
 
-	// q == p --> os
+	// q == p --> os (p and q are both pointers)
+	// pointers holds the references to the variables
 	var p = &os
 	var q = p
 	assert.Equal(t, p, q)
+	assert.Equal(t, "*string", fmt.Sprint(reflect.TypeOf(p)))
 	assert.Equal(t, *p, *q)
+	assert.Equal(t, "string", fmt.Sprint(reflect.TypeOf(*q)))
 
 	*p = "new string"
-	assert.Equal(t, os, *p)
+	assert.Equal(t, os, "new string")
 }
 
-func TestLocalVariables(t *testing.T) {
-	// declare first, then initialize
-	var a, b int
-	var c string
-	a, b, c = 5, 7, "abc"
-	assert.Equal(t, 5, a)
-	assert.Equal(t, 7, b)
-	assert.Equal(t, "abc", c)
+func TestVariablesDeclarationAndInitialization(t *testing.T) {
+	t.Run("declare first, then initialize", func(t *testing.T) {
+		var a, b int
+		var c string
+		a, b, c = 5, 7, "abc"
+		assert.Equal(t, 5, a)
+		assert.Equal(t, 7, b)
+		assert.Equal(t, "abc", c)
+	})
 
-	// swap a and b
-	a, b = b, a
-	assert.Equal(t, 7, a)
-	assert.Equal(t, 5, b)
+	t.Run(":= short assignment statement", func(t *testing.T) {
+		d, e, f := 5, 7, "abc"
+		assert.Equal(t, 5, d)
+		assert.Equal(t, 7, e)
+		assert.Equal(t, "abc", f)
 
-	// use := syntax, d, e, f has not been declared yet
-	d, e, f := 5, 7, "abc"
-	assert.Equal(t, 5, d)
-	assert.Equal(t, 7, e)
-	assert.Equal(t, "abc", f)
+		// though g has been declared, h and i were not declared, so we can use := syntax
+		var g int
+		g, h, i := 1, 2, 3
+		assert.Equal(t, 1, g)
+		assert.Equal(t, 2, h)
+		assert.Equal(t, 3, i)
+	})
 
-	// though g has been declared
-	// h and i were not declared
-	// so we can use := syntax
-	var g int
-	g, h, i := 1, 2, 3
-	assert.Equal(t, 1, g)
-	assert.Equal(t, 2, h)
-	assert.Equal(t, 3, i)
+	t.Run("swap two variables' value", func(t *testing.T) {
+		a := 5
+		b := 7
+		a, b = b, a
+		assert.Equal(t, 7, a)
+		assert.Equal(t, 5, b)
+	})
 }
 
 func TestVariableInitializedInsideInitFunc(t *testing.T) {

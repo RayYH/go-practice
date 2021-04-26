@@ -3,6 +3,7 @@ package constants
 import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"reflect"
 	"testing"
 )
 
@@ -73,7 +74,7 @@ func TestOmitIotasAfterFirstOccurrenceOfIota(t *testing.T) {
 }
 
 // explicitly assignments will not reset the iota value
-func TestIotaWillNotBeResetWhenEncounterExplicitlyAssignments(t *testing.T) {
+func TestIotaWillNotResetWhenEncounterExplicitAssignments(t *testing.T) {
 	const (
 		g = iota     // g == 0              (iota == 0)
 		h            // h == 1              (iota == 1)
@@ -123,6 +124,9 @@ func TestColorConstantsViaIota(t *testing.T) {
 	)
 
 	assert.Equal(t, "0 1 2 5 6", fmt.Sprint(RED, ORANGE, YELLOW, INDIGO, VIOLET))
+
+	var c Color
+	assert.Equal(t, "constants.Color", fmt.Sprint(reflect.TypeOf(c)))
 }
 
 func TestSizeConstantsViaIota(t *testing.T) {
@@ -145,7 +149,7 @@ func TestSizeConstantsViaIota(t *testing.T) {
 }
 
 func TestConstantWillNotLosePrecision(t *testing.T) {
-	// numeric constants represent exact values of arbitrary precision and do not overflow.
+	// numeric constants represent exact values of arbitrary precision and do not overflow
 	const HigherPrecisionPi = 3.14159265358979323846264338327950288419716939937510582097494459
 	// if HigherPrecisionPi lose precision, below expression on the right side should be equivalent to 1.00000000...
 	const LessThanOne = 3.141592653589793 / HigherPrecisionPi
