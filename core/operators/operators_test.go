@@ -142,11 +142,15 @@ func TestBitwiseOperator(t *testing.T) {
 		 */
 		assert.Equal(t, ^4, -5)
 		assert.Equal(t, ^2, -3)
+	})
+
+	t.Run("bitwise shift operator", func(t *testing.T) {
 		assert.Equal(t, 4>>1, 2)
 		assert.Equal(t, 4>>2, 1)
 		// Keep moving will result 0
 		assert.Equal(t, 4>>3, 0)
 		assert.Equal(t, 4>>4, 0)
+
 		assert.Equal(t, 4<<1, 8)
 		assert.Equal(t, 4<<2, 16)
 		assert.Equal(t, -4>>1, -2)
@@ -159,4 +163,27 @@ func TestBitwiseOperator(t *testing.T) {
 	})
 }
 
-// other assignment operators：=, +=, -=, *=, /=, %=, &=, ^=, |=
+func TestAssignmentOperators(t *testing.T) {
+	a := 1
+	assert.Equal(t, a, 1)
+	a += 1
+	assert.Equal(t, a, 2)
+	a -= 1
+	assert.Equal(t, a, 1)
+	a *= 3
+	assert.Equal(t, a, 3)
+	a /= 3
+	assert.Equal(t, a, 1)
+
+	b := 3
+	b %= 2
+	assert.Equal(t, b, 1)
+
+	c := 0b00010100
+	c &= 0b00000100
+	assert.Equal(t, c, 4)
+	c |= 0b00010000
+	assert.Equal(t, c, 20)
+	c ^= 0b00010101
+	assert.Equal(t, c, 1)
+}

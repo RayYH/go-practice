@@ -48,6 +48,7 @@ func TestContentOfVariablesCanBeModifiedThroughPointers(t *testing.T) {
 
 func TestVariablesDeclarationAndInitialization(t *testing.T) {
 	t.Run("declare first, then initialize", func(t *testing.T) {
+		// var declares 1 or more variables
 		var a, b int
 		var c string
 		a, b, c = 5, 7, "abc"
@@ -76,6 +77,17 @@ func TestVariablesDeclarationAndInitialization(t *testing.T) {
 		a, b = b, a
 		assert.Equal(t, 7, a)
 		assert.Equal(t, 5, b)
+	})
+
+	t.Run("Variables declared without a corresponding initialization are zero-valued.", func(t *testing.T) {
+		var v1 int
+		var v2 float64
+		var v3 string
+		var v4 []int
+		assert.Equal(t, v1, 0)
+		assert.Equal(t, v2, 0.0)
+		assert.Equal(t, v3, "")
+		assert.Nil(t, v4)
 	})
 }
 
