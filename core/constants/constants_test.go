@@ -43,6 +43,7 @@ func TestConstantsDeclarationsWithType(t *testing.T) {
 	assert.Equal(t, v, float32(3))
 }
 
+// predefined constants: true false iota
 func TestPredefinedConstants(t *testing.T) {
 	assert.True(t, true)
 	assert.False(t, false)
@@ -68,9 +69,13 @@ func TestOmitIotasAfterFirstOccurrenceOfIota(t *testing.T) {
 		e        // e == 1 (iota == 1)
 		f        // f == 2 (iota == 2)
 	)
+	const v1 = iota
+	const v2 = iota
 	assert.Equal(t, 0, d)
 	assert.Equal(t, 1, e)
 	assert.Equal(t, 2, f)
+	assert.Equal(t, 0, v1)
+	assert.Equal(t, 0, v2)
 }
 
 // explicitly assignments will not reset the iota value

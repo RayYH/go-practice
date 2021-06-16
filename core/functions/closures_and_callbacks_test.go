@@ -4,9 +4,10 @@ package functions
 // The function may access and assign to the referenced variables;
 // in this sense the function is "bound" to the variables.
 import (
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCallbacksAcceptFuncAsAParam(t *testing.T) {
@@ -22,17 +23,38 @@ func TestCallbacksAcceptFuncAsAParam(t *testing.T) {
 }
 
 func TestClosureCanAccessOutsideVariables(t *testing.T) {
-	multiplier := 2
-	multiplyClosure := func(i int) int {
-		return i * multiplier
-	}
+	t.Run("example 1", func(t *testing.T) {
+		multiplier := 2
+		multiplyClosure := func(i int) int {
+			return i * multiplier
+		}
 
-	total := 0
-	for i := 0; i < 5; i++ {
-		total += multiplyClosure(i)
-	}
+		total := 0
+		for i := 0; i < 5; i++ {
+			total += multiplyClosure(i)
+		}
 
-	assert.Equal(t, total, 20)
+		assert.Equal(t, total, 20)
+	})
+
+	t.Run("example 2", func(t *testing.T) {
+		j := 5
+		f := func() func() (int, int) {
+			i := 10
+			return func() (int, int) {
+				return i, j
+			}
+		}()
+
+		r1, r2 := f()
+		assert.Equal(t, r1, 10)
+		assert.Equal(t, r2, 5)
+
+		j *= 2
+		r1, r2 = f()
+		assert.Equal(t, r1, 10)
+		assert.Equal(t, r2, 10)
+	})
 }
 
 func TestAdder(t *testing.T) {

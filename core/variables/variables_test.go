@@ -2,10 +2,11 @@ package variables
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"reflect"
 	"runtime"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGlobalVariablesInitializationAndScope(t *testing.T) {
@@ -57,6 +58,11 @@ func TestVariablesDeclarationAndInitialization(t *testing.T) {
 		assert.Equal(t, "abc", c)
 	})
 
+	t.Run("declaration and initialization at the same time", func(t *testing.T) {
+		var v = 10
+		assert.Equal(t, v, 10)
+	})
+
 	t.Run(":= short assignment statement", func(t *testing.T) {
 		d, e, f := 5, 7, "abc"
 		assert.Equal(t, 5, d)
@@ -89,12 +95,29 @@ func TestVariablesDeclarationAndInitialization(t *testing.T) {
 		assert.Equal(t, v3, "")
 		assert.Nil(t, v4)
 	})
+
+	t.Run("Advanced variables declaration", func(t *testing.T) {
+		var v5 struct {
+			f int
+		}                      // struct
+		var v6 struct{}        // empty struct
+		var v7 *int            // pointer to int type
+		var v8 map[string]int  // map
+		var v9 func(a int) int // func
+		assert.NotNil(t, v5)
+		assert.NotNil(t, v6)
+		assert.Zero(t, v5.f)
+		assert.Nil(t, v7)
+		assert.Nil(t, v8)
+		assert.Nil(t, v9)
+	})
 }
 
 func TestVariableInitializedInsideInitFunc(t *testing.T) {
 	assert.Equal(t, 0.7853981633974483, declaredVariable)
 }
 
+// anonymous variables
 func TestUsingBlankIdentifierToDiscardValues(t *testing.T) {
 	var _, age = "Ray", 24
 	assert.Equal(t, 24, age)

@@ -2,8 +2,9 @@ package arrays
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestArraysIteration(t *testing.T) {
@@ -103,11 +104,11 @@ func TestArraysFormattedAsString(t *testing.T) {
 
 	var arr [3]int
 
-	// passes a copy of arr, arr was not modified
+	// passes a copy of arr, arr has not been modified
 	assert.Equal(t, "[1 0 0]", funcAcceptArray(arr))
 	assert.Equal(t, [3]int{0, 0, 0}, arr)
 
-	// passes a pointer to arr, arr was modified
+	// passes a pointer to arr, arr has been modified
 	assert.Equal(t, "&[2 0 0]", funcAcceptArrayPointer(&arr))
 	assert.Equal(t, [3]int{2, 0, 0}, arr)
 }

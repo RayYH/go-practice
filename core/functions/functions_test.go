@@ -86,20 +86,17 @@ func TestRecursion(t *testing.T) {
 }
 
 func TestEmptyInterfaceCanAcceptParamsOfAnyTypes(t *testing.T) {
-	getType := func(args ...interface{}) string {
-		for _, arg := range args {
-			switch arg.(type) {
-			case int:
-				return "int"
-			case string:
-				return "string"
-			case int64:
-				return "int64"
-			default:
-				return "unknown"
-			}
+	getType := func(arg interface{}) string {
+		switch arg.(type) {
+		case int:
+			return "int"
+		case string:
+			return "string"
+		case int64:
+			return "int64"
+		default:
+			return "unknown"
 		}
-		return ""
 	}
 
 	var v1 = 1 // inferred int

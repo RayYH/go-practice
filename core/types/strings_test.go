@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"reflect"
 	"strconv"
 	"strings"
 	"testing"
@@ -38,6 +39,27 @@ func TestStringsLength(t *testing.T) {
 	myStr := "Hello 世界"
 	assert.Equal(t, 12, len(myStr))
 	assert.Equal(t, 8, utf8.RuneCountInString(myStr))
+}
+
+func TestStringIteration(t *testing.T) {
+	str := "Hello,世界"
+	n := len(str)
+	// byte
+	for i := 0; i < n; i++ {
+		ch := str[i]
+		assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "uint8")
+	}
+	// char (rune)
+	for _, ch := range str {
+		assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "int32")
+	}
+
+	// rune
+	str2 := []rune(str)
+	for i := 0; i < len(str2); i++ {
+		ch := str2[i]
+		assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "int32")
+	}
 }
 
 func TestMultiLineStrings(t *testing.T) {

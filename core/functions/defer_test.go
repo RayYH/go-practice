@@ -2,8 +2,9 @@ package functions
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // A defer statement defers the execution of a function until the surrounding function returns.

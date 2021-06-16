@@ -3,8 +3,9 @@ package errors
 import (
 	"errors"
 	"fmt"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBasicGolangExceptionModel(t *testing.T) {
@@ -39,7 +40,7 @@ func TestMyError(t *testing.T) {
 // recover is a builtin function that is used to regain control of a panicking program.
 func recoverFullName() {
 	if r := recover(); r != nil {
-		fmt.Println("recovered from ", r)
+		fmt.Println("recovered from", r)
 		// debug.PrintStack()
 	}
 }
@@ -67,7 +68,7 @@ func Example_panicAndRecover() {
 	fullName(&firstName, nil)
 	fmt.Println("returned normally from main")
 	// Output:
-	// recovered from  runtime error: last name cannot be nil
+	// recovered from runtime error: last name cannot be nil
 	// returned normally from main
 	// deferred call in main
 }
