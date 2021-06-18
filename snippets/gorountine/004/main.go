@@ -21,5 +21,5 @@ func main() {
 	ch := make(chan int)
 	go pump(ch)
 	go suck(ch)
-	time.Sleep(1e9)
+	time.Sleep(time.Second)
 }
