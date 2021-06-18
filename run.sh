@@ -5,7 +5,7 @@ WORKING_DIR=$(cd "$WORKING_DIR" && pwd)
 
 function run() {
   [ -d "$WORKING_DIR/$1" ] || return
-  cd "$1" && go run .
+  cd "$1" && shift && go run . "$@"
   cd "$WORKING_DIR" || return
 }
 
