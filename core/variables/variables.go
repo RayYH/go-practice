@@ -5,12 +5,13 @@ import (
 	"os"
 )
 
-// Global variables have a global scope, they are visible from
-// anywhere within the application (or package).
 // globalString is visible within current package.
-// GlobalString is also visible to other application which imported this package.
 var globalString = "This is a string."
+
+// GlobalString is also visible to other application which imported this package.
 var GlobalString = "This is also a string."
+
+// group of global variables.
 var (
 	myName = "Ray"
 	myAge  = 24

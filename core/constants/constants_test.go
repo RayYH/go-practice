@@ -51,6 +51,17 @@ func TestPredefinedConstants(t *testing.T) {
 	assert.Equal(t, 0, a)
 }
 
+func TestEmptyConstantInGroups(t *testing.T) {
+	const (
+		a = 16
+		b // same as a
+		c = "char"
+		d // same as d
+	)
+	assert.Equal(t, a, b)
+	assert.Equal(t, c, d)
+}
+
 func TestIotaBasicUsage(t *testing.T) {
 	const (
 		a = iota // a == 0 (iota == 0)
