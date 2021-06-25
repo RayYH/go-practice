@@ -1,4 +1,4 @@
-package types
+package basic_types
 
 import (
 	"bytes"

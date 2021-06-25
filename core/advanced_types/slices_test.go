@@ -1,4 +1,4 @@
-package slices
+package advanced_types
 
 import (
 	"fmt"

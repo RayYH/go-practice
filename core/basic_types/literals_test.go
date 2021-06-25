@@ -1,4 +1,4 @@
-package types
+package basic_types
 
 // https://golang.org/ref/spec#Integer_literals
 

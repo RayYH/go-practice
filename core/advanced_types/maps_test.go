@@ -1,4 +1,4 @@
-package maps
+package advanced_types
 
 import (
 	"github.com/stretchr/testify/assert"

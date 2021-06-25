@@ -1,4 +1,4 @@
-package arrays
+package advanced_types
 
 import (
 	"fmt"
