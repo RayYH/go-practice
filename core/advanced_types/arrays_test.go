@@ -136,3 +136,17 @@ func TestArraysCanBeNested(t *testing.T) {
 		}
 	}
 }
+
+func ExampleDisplayArrays() {
+	DisplayArrays()
+	// Output: '\x00'
+	// '\x00'
+	// 0 0
+	// 0 0
+	// 0 0
+	// 0 0
+	// 0.00
+	// 1.11
+	// 2.22
+	// 1234
+}

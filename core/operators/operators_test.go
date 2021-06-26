@@ -1,9 +1,10 @@
 package operators
 
 import (
-	"github.com/stretchr/testify/assert"
 	"math/rand"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestArithmeticOperators(t *testing.T) {
@@ -24,6 +25,15 @@ func TestArithmeticOperators(t *testing.T) {
 		assert.Equal(t, -1, -5/3)
 		assert.Equal(t, -1, 5/(-3))
 		assert.Equal(t, 1, -5/(-3))
+		// 浮点数除法，只要除数和被除数中有一个为浮点数，那么结果仍为浮点数
+		a, b := 7.0, 3.0
+		assert.Equal(t, a/b, 2.3333333333333335)
+		a, b = 7.0, 3
+		assert.Equal(t, a/b, 2.3333333333333335)
+		// 只有两个类型相同的值才可以和二元运算符结合，Go 是强类型语言，因此不会进行隐式转换
+		// 如果你使用 float64(7) / int(3.0)，编译器会报错
+		// 但是如果你使用字面量 (常量) 来直接进行除法，编译是可以通过的
+		assert.Equal(t, 7/3.0, 2.3333333333333335)
 	})
 
 	t.Run("% operator", func(t *testing.T) {
