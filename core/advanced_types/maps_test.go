@@ -1,9 +1,10 @@
 package advanced_types
 
 import (
-	"github.com/stretchr/testify/assert"
 	"sort"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBasicOperationsOnMaps(t *testing.T) {
