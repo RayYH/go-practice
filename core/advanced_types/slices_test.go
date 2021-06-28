@@ -330,7 +330,9 @@ func TestCapacityGrows(t *testing.T) {
 			bytes := make([]byte, 8) // 8*8=64
 			assert.Equal(t, cap(bytes), 8)
 			bytes = append(bytes, make([]byte, 9)...) // 8*3=24 > 8+9=17
-			assert.Equal(t, cap(bytes), 24)
+			// 1.16 -> 24
+			// 1.13-1.15 -> 32
+			assert.GreaterOrEqual(t, cap(bytes), 24)
 		}
 	})
 
