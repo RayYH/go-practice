@@ -292,6 +292,7 @@ func TestAppendSlices(t *testing.T) {
 	})
 }
 
+// 切片容量增长与实现有关，网上的相关资料也较少，这里暂不深入研究
 func TestCapacityGrows(t *testing.T) {
 	const is64Bit = uint64(^uintptr(0)) == ^uint64(0)
 
@@ -330,6 +331,7 @@ func TestCapacityGrows(t *testing.T) {
 			bytes := make([]byte, 8) // 8*8=64
 			assert.Equal(t, cap(bytes), 8)
 			bytes = append(bytes, make([]byte, 9)...) // 8*3=24 > 8+9=17
+			// TODO: 不同版本实现不同
 			// 1.16 -> 24
 			// 1.13-1.15 -> 32
 			assert.GreaterOrEqual(t, cap(bytes), 24)
