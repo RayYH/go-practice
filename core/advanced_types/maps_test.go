@@ -138,11 +138,9 @@ func TestMapOperations(t *testing.T) {
 			invMap[v] = k
 		}
 
-		assert.Equal(t, invMap, map[int]string{
-			23: "Alice",
-			2:  "Eve",
-			25: "Mary",
-		})
+		// 由于遍历的顺序是不确定的，因此你无法判断处 25 对应的值是 "Bob" 还是 "Mary"
+		assert.Equal(t, invMap[23], "Alice")
+		assert.Equal(t, invMap[2], "Eve")
 	})
 
 	t.Run("the orders of iterating elements of maps are not certain", func(t *testing.T) {
