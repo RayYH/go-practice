@@ -1,5 +1,7 @@
 package advanced_types
 
+// map 类型是非线程安全的，当并行访问一个共享的 map 类型的数据，map 数据将会出错
+
 import (
 	"log"
 	"sort"
