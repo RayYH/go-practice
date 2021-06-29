@@ -69,7 +69,7 @@ func TestVariablesDeclarationAndInitialization(t *testing.T) {
 	t.Run("declaration of variables holding advance types", func(t *testing.T) {
 		var v5 struct {
 			f int
-		}                      // struct
+		} // struct
 		var v6 struct{}        // empty struct
 		var v7 *int            // pointer to int type
 		var v8 map[string]int  // map
