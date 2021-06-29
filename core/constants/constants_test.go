@@ -1,5 +1,3 @@
-// 常量一般都在包的声明处定义，这里为了代码的整洁，将常量直接定义在函数内部
-// 常量的类型只能是布尔型、数值型、字符串型
 package constants
 
 import (
@@ -10,16 +8,25 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// 可以在函数内部声明常量，一旦函数退出，常量就会被释放
-func TestConstantsCanBeDeclaredInsideFunc(t *testing.T) {
-	const Pi = 3.14159
-	assert.Equal(t, 3.14159, Pi)
-}
+func TestDeclarations(t *testing.T) {
+	// 可以在函数内部声明常量，一旦函数退出，常量就会被释放
+	t.Run("minimal example", func(t *testing.T) {
+		// 常量的类型只能是布尔型、数值型、字符串型
+		const Pi = 3.14159
+		assert.Equal(t, 3.14159, Pi)
+	})
 
-// 可以在一行定义多个常量
-func TestConstantsCanBeDeclaredAtOneLine(t *testing.T) {
-	const name, age = "Ray", 24
-	assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
+	// 可以在一行同时定义多个常量
+	t.Run("constants can be declared at one line", func(t *testing.T) {
+		const name, age = "Ray", 24
+		assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
+	})
+
+	// 在编译期间自定义函数均属于未知，因此无法用于常量的赋值，但内置函数可以使用
+	t.Run("when declaring constants, we can use built-in functions", func(t *testing.T) {
+		const strLen = len("string")
+		assert.Equal(t, 6, strLen)
+	})
 }
 
 // Go 并不支持 Java 中的 `enum` 关键字，但是我们可以用 `const` 关键字来达到相同的效果
@@ -42,10 +49,10 @@ func TestConstantsDeclarationsWithType(t *testing.T) {
 	const Pi float64 = 3.14
 	const size int64 = 1024
 	const u, v float32 = 0, 3
-	assert.Equal(t, Pi, 3.14)
-	assert.Equal(t, size, int64(1024))
-	assert.Equal(t, u, float32(0))
-	assert.Equal(t, v, float32(3))
+	assert.Equal(t, 3.14, Pi)
+	assert.Equal(t, int64(1024), size)
+	assert.Equal(t, float32(0), u)
+	assert.Equal(t, float32(3), v)
 }
 
 // Go 有三个预定义的常量：`true`、`false`、`iota`
@@ -69,7 +76,7 @@ func TestEmptyConstantInGroups(t *testing.T) {
 }
 
 func TestIotaUsage(t *testing.T) {
-	// `iota` 在每遇到一次变量声明时都会加 1，初始为 0
+	// `iota` 在每遇到一次常量声明时都会加 1，初始为 0
 	t.Run("basic usage", func(t *testing.T) {
 		const (
 			a = iota // a == 0 (iota == 0)

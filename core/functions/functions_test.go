@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// 注意：Go 不支持可选参数、默认参数
+// Go 并不支持可选参数、默认参数
 
 func TestFunctionDeclaration(t *testing.T) {
 	// Go 中函数的定义使用 `func` 关键字
@@ -35,9 +35,8 @@ func TestReturnValues(t *testing.T) {
 		// Go 中的函数可以返回具名返回值，拥有名称的返回值可以直接使用，不需要再次声明
 		// 即使函数使用了命名返回值，你依旧可以无视它而返回明确的值
 		getNamedX2AndX3 := func(n int) (x2, x3 int) {
-			x2 = n * 2
-			x3 = n * 3
-			// 不带任何变量的 `return` 语句会返回具名返回值对应的变量，等价于 return x2, x3
+			x2, x3 = n*2, n*3
+			// 不带任何变量的 `return` 语句会返回具名返回值对应的变量，等价于 `return x2, x3`
 			return
 		}
 
@@ -122,10 +121,10 @@ func TestParameters(t *testing.T) {
 		var v2 int64 = 234
 		var v3 = "Hello" // inferred string
 		var v4 float32 = 1.234
-		assert.Equal(t, getType(v1), "int")
-		assert.Equal(t, getType(v2), "int64")
-		assert.Equal(t, getType(v3), "string")
-		assert.Equal(t, getType(v4), "unknown")
+		assert.Equal(t, "int", getType(v1))
+		assert.Equal(t, "int64", getType(v2))
+		assert.Equal(t, "string", getType(v3))
+		assert.Equal(t, "unknown", getType(v4))
 	})
 }
 
@@ -134,7 +133,7 @@ func TestRecursion(t *testing.T) {
 	nums := []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}
 	for i := 0; i <= 10; i++ {
 		result = fibonacci(i)
-		assert.Equal(t, nums[i], result)
+		assert.Equal(t, result, nums[i])
 	}
 }
 
@@ -143,7 +142,6 @@ func TestCallbacksAndClosures(t *testing.T) {
 	// 闭包是一个可调用对象 (这个对象的表现形式通常就是函数)，它记录了一些信息，这些信息来自于创建它的作用域
 	// 可以简单理解为使用了上下文变量的回调就是闭包
 	t.Run("callback", func(t *testing.T) {
-		// 函数
 		add := func(a, b int) int {
 			return a + b
 		}
@@ -170,7 +168,7 @@ func TestCallbacksAndClosures(t *testing.T) {
 
 		assert.Equal(t, 4, multiplyClosure(2))
 
-		// 如果更改了变量的值，相应的闭包调用结果会随之变化
+		// 如果更改了变量的值，相应的闭包不需要重新声明即会生效
 		multiplier = 3
 		assert.Equal(t, 6, multiplyClosure(2))
 	})

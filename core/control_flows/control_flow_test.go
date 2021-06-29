@@ -37,7 +37,7 @@ func TestIf(t *testing.T) {
 
 	t.Run("if with a short assignment", func(t *testing.T) {
 		isLessThanTen := func(x int) bool {
-			// 使用简短方式 `:=` 声明的变量的作用域只存在于 if 结构中，包括 else 块
+			// 使用简短方式 `:=` 声明的变量的作用域只存在于包括 else 块在内的 if 结构中
 			if val := 10; val > x {
 				return true
 			} else {
@@ -53,7 +53,7 @@ func TestIf(t *testing.T) {
 
 func TestSwitchCase(t *testing.T) {
 	t.Run("using literals", func(t *testing.T) {
-		// switch 结构，可以接受逗号分隔的字面量
+		// switch 结构，可以接受逗号分隔的一组字面量
 		checkValue := func(x int) string {
 			switch x {
 			case 98, 99:
@@ -89,7 +89,8 @@ func TestSwitchCase(t *testing.T) {
 	})
 
 	t.Run("fallthrough instead of break", func(t *testing.T) {
-		// Go 并不支持其他语言中的 `break` 关键字，在 Go 中，一旦成功地匹配到某个分支，在执行完相应代码后就会退出整个 switch 代码块 (简直人性化)
+		// Go 并不支持其他语言中的 `break` 关键字，在 Go 中，一旦成功地匹配到某个分支
+		// 在执行完相应代码后就会退出整个 switch 代码块 (简直人性化)
 		// 如果你需要继续执行下一个分支的语句，你必须显式使用 fallthrough 来达到继续往后匹配的目的
 		minusOneOrTwo := func(x int) int {
 			switch x {
@@ -186,7 +187,7 @@ func TestJump(t *testing.T) {
 				if j == 2 {
 					continue LABEL
 				}
-				assert.Equal(t, true, j != 2)
+				assert.True(t, j != 2)
 			}
 		}
 	})
