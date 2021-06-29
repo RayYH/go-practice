@@ -34,7 +34,7 @@ func TestNamedReturnValuesWithDefer(t *testing.T) {
 		return 1
 	}
 
-	assert.Equal(t, getValue(), 2)
+	assert.Equal(t, 2, getValue())
 
 	// 如果我们的返回值没有命名，则 defer 操作的只是一个函数内部的变量 ret
 	getValueWithoutNamedReturn := func() int {
@@ -44,5 +44,5 @@ func TestNamedReturnValuesWithDefer(t *testing.T) {
 		}()
 		return 1
 	}
-	assert.Equal(t, getValueWithoutNamedReturn(), 1)
+	assert.Equal(t, 1, getValueWithoutNamedReturn())
 }
