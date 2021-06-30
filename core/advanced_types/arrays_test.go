@@ -11,17 +11,17 @@ import (
 // 数组遍历
 func TestArraysIteration(t *testing.T) {
 	// 数组声明之后，数组中的每个元素都具有对应类型的零值
-	// 数组长度也是数组类型的一部分，所以 [5]int 和 [10]int 属于不同类型
+	// 数组长度也是数组类型的一部分，所以 `[5]int` 和 `[10]int` 属于不同类型
 	var intArr [5]int
 
-	// 我们可以使用 C 风格的循环体来操作数组，len(intArr) 返回数组 intArr 的长度
+	// 我们可以使用 C 风格的循环体来遍历数组，`len(intArr)` 返回数组 `intArr` 的长度
 	for i := 0; i < len(intArr); i++ {
 		// 通过索引下标我们可以访问和修改数组中的元素
-		assert.Equal(t, intArr[i], 0)
+		assert.Equal(t, 0, intArr[i])
 		intArr[i] = i * 2
 	}
 
-	// for range 风格可以同时获取元素的 k/v，如果指向获取 k 或者 v，使用空白标识符 _
+	// for range 风格可以同时获取元素的 k/v，如果只用获取 k 或者 v，使用空白标识符 _ 丢弃部分值即可
 	for i, v := range intArr {
 		assert.Equal(t, v, intArr[i])
 	}

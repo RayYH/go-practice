@@ -291,3 +291,33 @@ func TestPerson(t *testing.T) {
 		assert.Equal(t, fmt.Sprint(person), "Ray Hong")
 	})
 }
+
+// Log 示例
+func TestLog(t *testing.T) {
+	t.Run("Customer", func(t *testing.T) {
+		c := new(Customer)
+		c.Name = "Ray Hong"
+		c.Log = Log{"first message"}
+		// Log 是一个匿名字段，因此 c 可以直接调用 Log 结构体上的 Add 方法
+		c.Add("second message")
+		assert.Equal(t, "Ray Hong\nLog:{first message\nsecond message}\n", fmt.Sprint(c))
+	})
+
+	t.Run("CustomerHoldsRef", func(t *testing.T) {
+		c1 := new(CustomerHoldsRef)
+		c1.Name = "Ray Hong"
+		// `c1.log` 是一个 `Log` 指针，这里用 `new` 函数来创建一个 `Log` 指针类型，并对齐进行一些初始化
+		c1.log = new(Log)
+		c1.log.msg = "first message"
+		assert.Equal(t, fmt.Sprint(c1.Log()), "first message")
+
+		// 直接使用字面量进行初始化
+		c2 := CustomerHoldsRef{
+			Name: "Ray Hong",
+			log:  &Log{"first message"},
+		}
+		// `c2.log()` 返回一个 `Log` 指针
+		c2.Log().Add("second message")
+		assert.Equal(t, fmt.Sprint(c2.Log()), "first message\nsecond message")
+	})
+}
