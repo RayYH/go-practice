@@ -38,6 +38,7 @@ func TestIf(t *testing.T) {
 	t.Run("if with a short assignment", func(t *testing.T) {
 		isLessThanTen := func(x int) bool {
 			// 使用简短方式 `:=` 声明的变量的作用域只存在于包括 else 块在内的 if 结构中
+			// 如果变量在 if 结构之前就已经存在，那么在 if 结构中，该变量原来的值会被隐藏
 			if val := 10; val > x {
 				return true
 			} else {
@@ -56,6 +57,7 @@ func TestSwitchCase(t *testing.T) {
 		// switch 结构，可以接受逗号分隔的一组字面量
 		checkValue := func(x int) string {
 			switch x {
+			// 无论是常量、变量还是表达式，每个 case 的类型都必须一致
 			case 98, 99:
 				return "98 or 99"
 			case 100:
@@ -74,10 +76,11 @@ func TestSwitchCase(t *testing.T) {
 	t.Run("using expressions", func(t *testing.T) {
 		compareToZero := func(x int) string {
 			// 除了字面量外，Go 中 switch 的 case 还可以是一个表达式
-			switch {
-			case x < 0:
+			// switch 也可以使用与 if 类似的短赋值运算符
+			switch a := 0; {
+			case x < a:
 				return "<"
-			case x == 0:
+			case x == a:
 				return "=="
 			default:
 				return ">"
@@ -113,6 +116,7 @@ func TestSwitchCase(t *testing.T) {
 
 // Go 中的循环只支持 `for` 关键字
 func TestLoop(t *testing.T) {
+	// 基于计数器的迭代
 	t.Run("c style loop", func(t *testing.T) {
 		j := 0
 		for i := 0; i < 5; i++ {
@@ -192,6 +196,9 @@ func TestJump(t *testing.T) {
 		}
 	})
 
+	// 使用逆向的 goto 会很快导致意大利面条式的代码，所以不应当使用而选择更好的替代方案，如果您必须使用 goto，应当只使用正序的标签
+	// 标签和 goto 语句之间不能出现定义新变量的语句，否则会导致编译失败
+	// 使用标签和 goto 语句是不被鼓励的：它们会很快导致非常糟糕的程序设计，而且总有更加可读的替代方案来实现相同的需求
 	t.Run("goto", func(t *testing.T) {
 		i := 0
 	HERE:

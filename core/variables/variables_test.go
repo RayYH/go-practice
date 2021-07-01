@@ -67,9 +67,9 @@ func TestVariablesDeclarationAndInitialization(t *testing.T) {
 	// Go 中变量还可以是结构体、map、函数等多种类型，对于引用类型，变量声明后的零值都是 Nil
 	// 由于结构体是值类型，因此结构体类型的变量对应的零值不是 Nil
 	t.Run("declaration of variables holding advance types", func(t *testing.T) {
-		var v5 struct {
+		var v5 struct { // struct
 			f int
-		} // struct
+		}
 		var v6 struct{}        // empty struct
 		var v7 *int            // pointer to int type
 		var v8 map[string]int  // map
@@ -88,6 +88,10 @@ func TestGlobalVariablesInitializationAndScope(t *testing.T) {
 	t.Run("global variables are visible to other files", func(t *testing.T) {
 		assert.Equal(t, "This is a string.", globalString)
 		assert.Equal(t, "This is also a string.", GlobalString)
+	})
+
+	t.Run("global variables declared but no initialization have zero values", func(t *testing.T) {
+		assert.Equal(t, "", emptyGlobalVar)
 	})
 
 	// 全局变量不同于常量，只要可见，就可以被修改
@@ -125,6 +129,7 @@ func TestContentOfVariablesCanBeModifiedThroughPointers(t *testing.T) {
 	var os = runtime.GOOS
 	assert.NotNil(t, os)
 
+	// Go 语言的取地址符是 &，放到一个变量前使用就会返回相应变量的内存地址
 	// `&os` 表示获取 `os` 的内存地址，`q = p` 表示将 `p` 的值 (`os` 的内存地址) 赋给了 `q`
 	var p = &os
 	var q = p

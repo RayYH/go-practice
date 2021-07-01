@@ -16,17 +16,25 @@ import (
 // 当字符为 ASCII 码时则占用 1 个字节，其它字符根据需要占用 2-4 个字节
 // Go 中字符串的零值是空字符串
 func TestZeroValueOfStringType(t *testing.T) {
-	// see strings/strings_test for more information
+	// 和 C/C++不一样，Go 中的字符串是根据长度限定，而非特殊字符 \0 -> 二进制安全
 	var aStr string
 	assert.Equal(t, aStr, "")
 }
 
-// Go 中的字符串可以通过下标访问，但是不能通过下标修改，这同其他大多数语言一致 (PHPer 沉默了)
+// Go 中的字符串可以通过下标访问，但是不能通过下标修改，这同其他大多数语言中字符串的不可变性一致 (PHPer 沉默了)
+// 获取字符串中某个字节的地址 (&str[i]) 的行为是非法的
 func TestStringDeclarations(t *testing.T) {
 	var str string
 	str = "Hello World"
 	assert.Equal(t, "Hello World", str)
 	assert.Equal(t, str[0], uint8('H'))
+}
+
+// Go 支持以下 2 种形式的字面值
+// "" 包裹的解释字符串和 `` 包裹的非解释性字符串
+func TestStringTypes(t *testing.T) {
+	assert.Equal(t, "\n\r", "\n\r") // 这里的 \n\r 会被转义
+	assert.Equal(t, "\\n\\r", `\n\r`)
 }
 
 // byte/rune 切片可以直接转换为字符串

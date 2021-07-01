@@ -8,15 +8,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// 常量使用关键字 const 定义，用于存储不会改变的数据
 func TestDeclarations(t *testing.T) {
 	// 可以在函数内部声明常量，一旦函数退出，常量就会被释放
-	t.Run("minimal example", func(t *testing.T) {
-		// 常量的类型只能是布尔型、数值型、字符串型
+	t.Run("define constants via const keyword", func(t *testing.T) {
+		// 常量的类型只能是布尔型、数值型 (整数、浮点数、复数)、字符串型
 		const Pi = 3.14159
 		assert.Equal(t, 3.14159, Pi)
 	})
 
-	// 可以在一行同时定义多个常量
+	// 可以在一行同时定义多个常量 (并行赋值)
 	t.Run("constants can be declared at one line", func(t *testing.T) {
 		const name, age = "Ray", 24
 		assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
@@ -24,8 +25,8 @@ func TestDeclarations(t *testing.T) {
 
 	// 在编译期间自定义函数均属于未知，因此无法用于常量的赋值，但内置函数可以使用
 	t.Run("when declaring constants, we can use built-in functions", func(t *testing.T) {
-		const strLen = len("string")
-		assert.Equal(t, 6, strLen)
+		const strLength = len("string")
+		assert.Equal(t, 6, strLength)
 	})
 }
 
@@ -143,7 +144,7 @@ func TestIotaUsage(t *testing.T) {
 		assert.Equal(t, "0 1 4", fmt.Sprint(q, r, s))
 	})
 
-	// 同一行定义多个常量时，这些常量是包含 iota 的表达式时，它们对应的 iota 的值是相等的
+	// 同一行定义多个包含 iota 的常量时，每个常量对应的 iota 值是相等的
 	t.Run("multiple uses of iota in the same ConstSpec all have the same value", func(t *testing.T) {
 		const (
 			w       = iota             // w == 0           (iota == 0)

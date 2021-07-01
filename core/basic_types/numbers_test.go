@@ -33,6 +33,8 @@ import (
 
 func TestIntegerType(t *testing.T) {
 	t.Run("integer types", func(t *testing.T) {
+		// int 和 uint 在 32 位操作系统上占 32 位，在 64 位操作系统上占 64 位
+		// uintptr 的长度被设定为足够存放一个指针
 		var anInt int
 		var anInt8 int8
 		var anInt16 int16
@@ -62,6 +64,8 @@ func TestFloatType(t *testing.T) {
 	var aFloat32 float32
 	var aFloat64 float64
 	assert.Equal(t, "0 0", fmt.Sprint(aFloat32, aFloat64))
+	// Go 中 float32 精确到小数点后 7 位 (有效数字 6 位)，float64 精确到小数点后 15 位 (有效数字 14 位)
+	assert.Equal(t, "3.1415927, 3.141592653589793", fmt.Sprintf("%v, %v", float32(math.Pi), math.Pi))
 }
 
 // 字面量浮点数是可以直接用 == 进行比较的 (与 Python 相同)，但是大多数时候我们都会使用精度来判断两个浮点数是否相同
@@ -108,11 +112,14 @@ func TestUint8FromInt(t *testing.T) {
 	assert.Equal(t, got, expected)
 }
 
+// byte 类型是 uint8 的别名，适用于传统的 ASCII 编码
+// rune 类型是 int32 的别名，适用于 UTF-8 编码
 func TestBytesPresentation(t *testing.T) {
 	// byte 是 uint8 的别名，因此 byte 只能定义 ASCII 字符
 	var chA byte = 65
 	var chB byte = '\x41'
 	// 多字节字符我们可以用 int 类型变量存储
+	// 在书写 Unicode 字符时，需要在 16 进制数之前加上前缀 \u 或者 \U
 	var ch1 int = '\u0041'
 	var ch2 int = '\u03B2'
 	var ch3 int = '\U00101234'

@@ -9,21 +9,29 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Python 中的类型转换与其他语言类似，使用 `T(v)` 即可将值 `v` 强转为类型 `T`
+// Go 中的类型转换与其他语言类似，使用 `T(v)` 即可将值 `v` 强转为类型 `T`
+// (Go 是一门静态类型语言，不支持隐式类型转换)
 func TestTypeConversions(t *testing.T) {
 	var n int16 = 34
 	var m int32
-	// 这时 m 已经被转换为 int32 了，与 int16 的 n 不同
+
+	// m 为 int32 类型，但是值与 n 相同
 	m = int32(n)
-	assert.NotEqual(t, reflect.TypeOf(n), reflect.TypeOf(m))
-	// int32(n) and m are of the same type and same value
-	assert.Equal(t, reflect.TypeOf(int32(n)), reflect.TypeOf(m))
+	assert.NotEqual(t, reflect.TypeOf(n), reflect.TypeOf(m)) // 两者类型不同
+	assert.Equal(t, fmt.Sprint(m), fmt.Sprint(n))            // 若按字符串输出则都会输出 32
 
 	var x, y = 3, 4
-	var f = math.Sqrt(float64(x*x + y*y))
+	var f = math.Sqrt(float64(x*x + y*y)) // sqrt 会返回 float64 类型
 	var z = uint(f)
 	var r uint = 5
 	assert.Equal(t, r, z)
+
+	// 当从一个取值范围较大的转换到取值范围较小的类型时，会发生精度丢失的情况
+	t.Run("lost precision", func(t *testing.T) {
+		f64 := 3.1415926535897932384626433
+		f32 := float32(f64)
+		assert.Equal(t, fmt.Sprintf("%v %v", f32, f64), "3.1415927 3.141592653589793")
+	})
 }
 
 func TestTypeInterface(t *testing.T) {
