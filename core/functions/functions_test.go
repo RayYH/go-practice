@@ -7,7 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Go 并不支持可选参数、默认参数
+// Go 并不支持可选参数、默认参数、泛型
+// 在 Go 中，函数是一等公民 (可以将函数赋给一个变量)
 
 func TestFunctionDeclaration(t *testing.T) {
 	// Go 中函数的定义使用 `func` 关键字
@@ -77,7 +78,7 @@ func TestParameters(t *testing.T) {
 		assert.Equal(t, 12, *reply)
 	})
 
-	// 同其他语言一样，Go 使用 ... 来表示剩余参数
+	// 同其他语言一样，Go 使用 ... 来表示剩余参数 (变长参数)
 	t.Run("rest parameters", func(t *testing.T) {
 		min := func(s ...int) int {
 			if len(s) == 0 {
@@ -154,7 +155,7 @@ func TestCallbacksAndClosures(t *testing.T) {
 			return f(x, y)
 		}
 
-		// 这里 add 和 add2 作为参数传给 addWrapper，所以 add 和 add2 都是回调
+		// 这里 add 和 add2 作为参数传给 addWrapper，所以 add 和 add2 是回调函数
 		assert.Equal(t, 3, addWrapper(1, 2, add))
 		assert.Equal(t, 6, addWrapper(1, 2, add2))
 	})
@@ -168,9 +169,23 @@ func TestCallbacksAndClosures(t *testing.T) {
 
 		assert.Equal(t, 4, multiplyClosure(2))
 
-		// 如果更改了变量的值，相应的闭包不需要重新声明即会生效
+		// 如果更改了变量的值，相应的闭包无需重新声明，会自动利用变量最新的值
 		multiplier = 3
 		assert.Equal(t, 6, multiplyClosure(2))
+	})
+
+	t.Run("anonymous functions", func(t *testing.T) {
+		addWrapper := func(x, y int, f func(int, int) int) int {
+			return f(x, y)
+		}
+
+		c := 100
+
+		// 匿名函数同样被称之为闭包，它们被允许调用定义在其它环境下的变量
+		// 闭包可使得某个函数捕捉到一些外部状态 (一个闭包继承了函数所声明时的作用域)
+		assert.Equal(t, 105, addWrapper(2, 3, func(x, y int) int {
+			return x + y + c
+		}))
 	})
 
 	t.Run("adder example", func(t *testing.T) {
