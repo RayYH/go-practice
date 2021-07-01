@@ -9,6 +9,12 @@ import (
 )
 
 // 切片是对数组一个连续片段的引用，这里的数组我们称之为关联数组，通常是匿名的
+// 切片本质上是一个特殊的结构体，该结构体里面包含了一个指向底层数组的指针，因此传递的值的大小与数组大小无关
+// type SliceHeader struct {
+//	Data uintptr
+//	Len  int
+//	Cap  int
+//}
 
 func TestSlicesInitialization(t *testing.T) {
 	// 可以直接使用字面量声明一个切片：v := []type{...}
@@ -21,6 +27,7 @@ func TestSlicesInitialization(t *testing.T) {
 	})
 
 	// Go 中 make 只能用于创建切片、map、通道 (初始化为零值)，而 new 返回一个已经初始化内存的指针
+	// new 适用于值类型，比如数组和结构体
 	t.Run("using make method", func(t *testing.T) {
 		// capacity=length=10
 		checks := make([]bool, 10)
@@ -66,6 +73,8 @@ func TestPropertiesAndFeatures(t *testing.T) {
 		}
 		// 访问
 		for i := 0; i < len(slice); i++ {
+			// 注意切片中的索引值与关联数组的索引值并不一致
+			// slice[0,1,2,3] -> arr[2,3,4,5]
 			assert.Equal(t, slice[i], (i+2)*2)
 		}
 	})
@@ -122,7 +131,7 @@ func TestOperations(t *testing.T) {
 		assert.Equal(t, slice[0], 2)
 	})
 
-	// 改变切片长度的过程称之为切片重组 (reslice)
+	// 改变切片的过程称之为切片重组 (reslice)
 	t.Run("reslice", func(t *testing.T) {
 		var ar = [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
@@ -135,6 +144,13 @@ func TestOperations(t *testing.T) {
 		assert.Equal(t, a, []int{5, 6, 7, 8})
 		assert.Equal(t, 4, len(a))
 		assert.Equal(t, 5, cap(a))
+
+		// 我们可以在声明切片的过程中显式指出容量
+		t.Run("three index", func(t *testing.T) {
+			s := ar[2:4:7]
+			assert.Equal(t, 2, len(s))
+			assert.Equal(t, 5, cap(a))
+		})
 	})
 
 	// 通过 copy 方法来对切片进行复制
@@ -155,6 +171,7 @@ func TestSliceAndStrings(t *testing.T) {
 	t.Run("generate slices from strings", func(t *testing.T) {
 		s := "\u00ff\u754c"
 		// []byte(s) 将字符串转换为字符切片，处理 UTF-8 字符时使用 []int32 或者 []rune
+		// 此时可以通过代码 len([]int32(s)) 来获得字符串中字符的数量，但使用 utf8.RuneCountInString(s) 效率会更高一点
 		b := []byte(s)
 		res := ""
 		for i, c := range s {
@@ -347,6 +364,8 @@ func TestCapacityGrows(t *testing.T) {
 		assert.Equal(t, cap(scores), 1280)
 	})
 
+	// 如果切片的容量不足以存储新增元素，append 会分配新的切片来保证已有切片元素和新增元素的存储
+	// 因此，返回的切片可能已经指向一个不同的相关数组了
 	t.Run("share same data if slices have no need to grow", func(t *testing.T) {
 		a := []int{1, 2}
 		// 切片扩容，2 --> 4

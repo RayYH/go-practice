@@ -8,6 +8,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// 数组是具有相同类型的一组已编号且长度固定的数据项序列
+// 如果我们想让数组元素类型为任意类型的话可以使用空接口作为类型，当使用值时我们必须先做一个类型判断
+
 // 数组遍历
 func TestArraysIteration(t *testing.T) {
 	// 数组声明之后，数组中的每个元素都具有对应类型的零值
@@ -17,6 +20,7 @@ func TestArraysIteration(t *testing.T) {
 	// 我们可以使用 C 风格的循环体来遍历数组，`len(intArr)` 返回数组 `intArr` 的长度
 	for i := 0; i < len(intArr); i++ {
 		// 通过索引下标我们可以访问和修改数组中的元素
+		// 声明数组时所有的元素都会被自动初始化为对应类型的零值
 		assert.Equal(t, 0, intArr[i])
 		intArr[i] = i * 2
 	}
@@ -90,7 +94,28 @@ func TestArraysLiterals(t *testing.T) {
 	// 当使用值时我们必须先做一个类型判断
 	t.Run("empty interface", func(t *testing.T) {
 		var anyType = [...]interface{}{"1", 2, true}
-		assert.Equal(t, cap(anyType), 3)
+		assert.Equal(t, 3, cap(anyType))
+	})
+
+	// Go 语言中的数组是一种值类型，所以可以通过 new() 来创建
+	t.Run("new keyword", func(t *testing.T) {
+		var arr1 = new([5]int)
+
+		// arr1 是 *[5]int 类型
+
+		for _, v := range arr1 {
+			assert.Equal(t, 0, v)
+		}
+
+		for _, v := range *arr1 {
+			assert.Equal(t, 0, v)
+		}
+
+		// 这里发生的是值的拷贝
+		arr2 := *arr1
+		arr2[2] = 5
+		// 并不会对 arr1 产生修改
+		assert.Equal(t, 0, arr1[2])
 	})
 }
 
@@ -131,13 +156,7 @@ func TestArrayAsParameters(t *testing.T) {
 }
 
 // Go 中所有的参数都是按值传递的，为了减少值拷贝的开销，在接收数组作为参数时
-// 我们可以将数组指针作为参数传递，除此之外，我们可以传递切片，切片本质上是一个特殊的结构体
-// 该结构体里面包含了一个指向底层数组的指针，因此传递的值的大小与数组大小无关
-// type SliceHeader struct {
-//	Data uintptr
-//	Len  int
-//	Cap  int
-//}
+// 我们可以将数组指针作为参数传递，除此之外，我们可以传递切片
 func TestArraysPointerOrSlicesAsArguments(t *testing.T) {
 	// 传递数组的指针
 	Sum := func(numbers *[3]float64) (sum float64) {

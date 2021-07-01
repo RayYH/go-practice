@@ -14,6 +14,8 @@ import (
 func TestDeclarationsAndInitializationsOfMaps(t *testing.T) {
 	t.Run("non-initialized map is nil", func(t *testing.T) {
 		// map 是可以动态增长的，因此声明时不需要知道 map 的长度
+		// key 可以是任意可以用 == 或者 != 操作符比较的类型，比如 string、int、float
+		// value 可以是任意类型，通过使用空接口类型，我们可以存储任意值，但是使用这种类型作为值时需要先做一次类型断言
 		var mapList map[string]int
 		var mapAssigned map[string]int
 		// 未初始化的 map 的值是 nil
@@ -38,12 +40,14 @@ func TestDeclarationsAndInitializationsOfMaps(t *testing.T) {
 	// 我们可以使用 `make` 方法来初始化 map 为零值
 	// 而 `new` 方法返回的是一个内存经过初始化的指针 (永远不要使用 `new` 来初始化一个 map)
 	t.Run("using make to create maps", func(t *testing.T) {
+		// make 方法作用于 map 时依然可以接收第二个参数作为初始容量
 		mapCreated := make(map[string]float64)
 		mapCreated["key1"] = 4.5
 		mapCreated["key2"] = 3.14159
 		assert.Equal(t, mapCreated["key2"], 3.14159)
 
 		// 这里 mapDuplicated 是一个指向 map[string]float64 类型的指针
+		// 请只使用 make 来创建 map，避免使用 new 来创建 map
 		mapDuplicated := new(map[string]float64)
 		// 在这里 map 所需要的内存是 0，因此这里的 new 方法创建的内存实际上是 Nil，往其中直接追加元素是非法的
 		assert.Panics(t, func() {
@@ -119,8 +123,12 @@ func TestMapsWithOtherDataTypes(t *testing.T) {
 	})
 
 	t.Run("element of slice can be of map type", func(t *testing.T) {
+		// 分配切片
 		items := make([]map[string]int, 2)
+		// 在遍历 slice 时，如果通过 i, v := range items，则 v 只是 slice 的一个拷贝
+		// 操作 v 并不会对 slice 中的元素进行初始化
 		for i := range items {
+			// 分配切片中的每个元素
 			items[i] = make(map[string]int, 3)
 			items[i]["one"] = 1
 			items[i]["two"] = 2
@@ -158,7 +166,7 @@ func TestMapOperations(t *testing.T) {
 		// but not in loop
 		for key := range capitals {
 			// 如果使用 log 包的话，这里每一次打印的 key 的顺序都不一致
-			// 但是如果使用 fmt.Println() 的话，则是按 key 顺序排列的
+			// 但是如果使用 fmt.Println() 的话，则是按 key 顺序排列的 (仅仅是为了方便 debug)
 			// 综上，map 的遍历顺序是不能够被确定的
 			log.Println(key)
 			assert.NotNil(t, key)
