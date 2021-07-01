@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+	"unsafe"
 
 	"github.com/stretchr/testify/assert"
 )
+
+// Go 语言中，结构体和它所包含的数据在内存中是以连续块的形式存在的
 
 func TestStructsDefinitions(t *testing.T) {
 	// 使用 type [struct_name] struct { } 可以定义一个结构体
@@ -17,7 +20,7 @@ func TestStructsDefinitions(t *testing.T) {
 		assert.Equal(t, 1, t1.thing)
 	})
 
-	// Go 中的结构体可以不用声明 field 的名称，只声明 field 的类型，此时我们称这个 field 为匿名 field
+	// Go 中的结构体可以不用声明字段的名称，只声明字段的类型，此时我们称这个字段为匿名字段
 	t.Run("anonymous field", func(t *testing.T) {
 		type BooleanContainer struct {
 			bool // anonymous field
@@ -123,7 +126,7 @@ func TestStructsLiterals(t *testing.T) {
 }
 
 func TestStructFeatures(t *testing.T) {
-	// 无论是值类型，还是指针类型，Go 都可以使用 `.` 语法来调用结构体可用的方法，这种特性被称为智能指针
+	// 无论是值类型，还是指针类型，Go 都可以使用 `.` 语法来调用结构体可用的方法 (或属性)，这种特性被称为智能指针
 	// 简而言之：指针方法和值方法都可以在指针或非指针上被调用
 	t.Run("both value type and pointer type work on structs (smart pointers)", func(t *testing.T) {
 		// value type
@@ -165,11 +168,33 @@ func TestStructFeatures(t *testing.T) {
 		assert.Equal(t, "a string value", inspectField(mixinContainer, 1))
 		assert.Equal(t, "an int value", inspectField(mixinContainer, 2))
 
-		// 一种更为常用的反射用法是根据结构体中 field 的 Name 来获取对应 Tag 中的值
+		// 另一种用法是根据结构体中 field 的 Name 来获取对应 Tag 中的值
 		field, found := reflect.TypeOf(mixinContainer).FieldByName("StringValue")
 		if found {
 			assert.Equal(t, "a string value", fmt.Sprintf("%v", field.Tag.Get("description")))
 		}
+	})
+
+	// 结构体类型可以通过引用自身来定义。这在定义链表或二叉树节点时特别有用
+	t.Run("struct recursion", func(t *testing.T) {
+		type Node struct {
+			prev *Node
+			data int
+			next *Node
+		}
+
+		head := new(Node)
+		head.prev = nil
+		head.data = 0
+		head.next = new(Node)
+		// more nodes...
+	})
+
+	t.Run("struct size", func(t *testing.T) {
+		type T struct {
+			t float64
+		}
+		assert.Equal(t, uintptr(0x8), unsafe.Sizeof(T{}))
 	})
 }
 
@@ -186,6 +211,7 @@ func TestComparing2OOP(t *testing.T) {
 				return nil
 			}
 
+			// 如果 File 是一个结构体类型，那么表达式 new(File) 和 &File{} 是等价的
 			return &File{fd, name}
 		}
 

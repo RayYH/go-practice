@@ -109,7 +109,7 @@ func upperPerson(p *Person) {
 	p.lastName = strings.ToUpper(p.lastName)
 }
 
-/// String()
+// 如果类型定义了 String() 方法，它会被用在 fmt.Printf() 中生成默认的输出，等同于使用格式化描述符 %v 产生的输出
 
 func (p Person) String() string {
 	return fmt.Sprintf("%s %s", p.firstName, p.lastName)
