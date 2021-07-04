@@ -16,22 +16,55 @@ func (n UnKnownType) String() string {
 var secret interface{} = UnKnownType{"Ada", "Go", "Oberon"}
 
 func main() {
-	value := reflect.ValueOf(secret) // <main.UnKnownType Value>
-	typ := reflect.TypeOf(secret)    // main.UnKnownType
-	// alternative:
-	//typ := value.Type()  // main.UnKnownType
+	value := reflect.ValueOf(secret)
+
+	// 除了使用 reflect.TypeOf 方法获取指定变量的类型外，我们还可以使用 value.Type()
+	typ := reflect.TypeOf(secret)
 	fmt.Println(typ)
-	knd := value.Kind() // struct
+
+	// Kind() 返回变量的类型
+	// type Kind uint
+	//
+	// const (
+	//	 Invalid Kind = iota
+	//	 Bool
+	//	 Int
+	//	 Int8
+	//	 Int16
+	//	 Int32
+	//	 Int64
+	//	 Uint
+	//	 Uint8
+	//	 Uint16
+	//	 Uint32
+	//	 Uint64
+	//	 Uintptr
+	//	 Float32
+	//	 Float64
+	//	 Complex64
+	//	 Complex128
+	//	 Array
+	//	 Chan
+	//	 Func
+	//	 Interface
+	//	 Map
+	//	 Ptr
+	//	 Slice
+	//	 String
+	//	 Struct
+	//	 UnsafePointer
+	// )
+	knd := value.Kind()
 	fmt.Println(knd)
 
-	// iterate through the fields of the struct:
+	// NumField() 返回结构体中的字段个数
 	for i := 0; i < value.NumField(); i++ {
+		// Field() 返回结构体指定索引处的字段值
 		fmt.Printf("Field %d: %v\n", i, value.Field(i))
-		// error: panic: reflect.Value.SetString using value obtained using unexported field
-		//value.Field(i).SetString("C#")
+		// 如果我们使用 value.Field(i).SetString("Something") 来尝试修改字段值则会触发一个 panic
 	}
 
-	// call the first method, which is String():
+	// 调用第一个方法，即 String()
 	results := value.Method(0).Call(nil)
-	fmt.Println(results) // [Ada - Go - Oberon]
+	fmt.Println(results)
 }

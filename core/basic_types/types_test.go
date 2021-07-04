@@ -43,13 +43,13 @@ func TestTypeInterface(t *testing.T) {
 }
 
 func TestTypeAliases(t *testing.T) {
-	// alias types
 	type (
 		A1 = string
 		A2 = A1
 	)
 
-	// custom types
+	// 使用 type 关键字可以定义你自己的类型 (结构体、接口)，也可以定义一个已经存在的类型的别名
+	// 这里并不是真正意义上的别名，因为使用这种方法定义之后的类型可以拥有更多的特性，且在类型转换时必须显式转换
 	type (
 		B1 string
 		B2 B1

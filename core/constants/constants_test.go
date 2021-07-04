@@ -8,19 +8,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// 常量使用关键字 const 定义，用于存储不会改变的数据
-func TestDeclarations(t *testing.T) {
-	// 可以在函数内部声明常量，一旦函数退出，常量就会被释放
+// 1. 常量使用关键字 const 定义，用于存储不会改变的数据
+// 2. 常量不仅可以在包下声明，也可以在函数内部进行声明，一旦函数退出，常量就会被释放
+// 3. 常量的类型只能是布尔型、数值型 (整数、浮点数、复数)、字符串型
+func TestDeclarationsWithSpecifiedTypes(t *testing.T) {
 	t.Run("define constants via const keyword", func(t *testing.T) {
-		// 常量的类型只能是布尔型、数值型 (整数、浮点数、复数)、字符串型
-		const Pi = 3.14159
-		assert.Equal(t, 3.14159, Pi)
+		// 常量的定义格式：const identifier [type] = value
+		t.Run("with type specification", func(t *testing.T) {
+			const Pi float64 = 3.14
+			const size int64 = 1024
+			assert.Equal(t, 3.14, Pi)
+			assert.Equal(t, int64(1024), size)
+		})
+
+		// 大多数时候可以省略类型说明符 [type]，因为编译器可以自动推断出常量的类型
+		t.Run("without type specification", func(t *testing.T) {
+			const Pi = 3.14159
+			assert.Equal(t, 3.14159, Pi)
+		})
+
+		// 指示了具体类型的我们称之为显式类型定义，由编译器推导的我们称之为隐式类型定义
 	})
 
 	// 可以在一行同时定义多个常量 (并行赋值)
 	t.Run("constants can be declared at one line", func(t *testing.T) {
-		const name, age = "Ray", 24
-		assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
+		t.Run("with type specification", func(t *testing.T) {
+			const u, v float32 = 0, 3
+			assert.Equal(t, float32(0), u)
+			assert.Equal(t, float32(3), v)
+		})
+
+		t.Run("without type specification", func(t *testing.T) {
+			const name, age = "Ray", 24
+			assert.Equal(t, "Ray's age is 24", fmt.Sprintf("%s's age is %d", name, age))
+		})
 	})
 
 	// 在编译期间自定义函数均属于未知，因此无法用于常量的赋值，但内置函数可以使用
@@ -30,8 +51,9 @@ func TestDeclarations(t *testing.T) {
 	})
 }
 
-// Go 并不支持 Java 中的 `enum` 关键字，但是我们可以用 `const` 关键字来达到相同的效果
-func TestConstantsCanBeFactored(t *testing.T) {
+// Go 并不支持 Java 中的 enum 关键字 (枚举)，但是我们可以用 const 关键字来达到相同的效果
+// 为了可读性，我们通常使用 () 将逻辑上相关的一组常量包裹起来 ("factored" into blocks)
+func TestConstantsCanBeFactoredIntoBlocks(t *testing.T) {
 	const (
 		Sunday    = 0
 		Monday    = 1
@@ -45,18 +67,7 @@ func TestConstantsCanBeFactored(t *testing.T) {
 	assert.Equal(t, "0 1 2 3 4 5 6", fmt.Sprint(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday))
 }
 
-// 常量声明的时候可以声明类型，但这大多数时候都不是必须的，因为编译器可以自动推断
-func TestConstantsDeclarationsWithType(t *testing.T) {
-	const Pi float64 = 3.14
-	const size int64 = 1024
-	const u, v float32 = 0, 3
-	assert.Equal(t, 3.14, Pi)
-	assert.Equal(t, int64(1024), size)
-	assert.Equal(t, float32(0), u)
-	assert.Equal(t, float32(3), v)
-}
-
-// Go 有三个预定义的常量：`true`、`false`、`iota`
+// Go 有三个预定义的常量：true、false、iota
 func TestPredefinedConstants(t *testing.T) {
 	assert.True(t, true)
 	assert.False(t, false)
@@ -68,16 +79,18 @@ func TestPredefinedConstants(t *testing.T) {
 func TestEmptyConstantInGroups(t *testing.T) {
 	const (
 		a = 16
-		b // same as a
+		b
 		c = "char"
-		d // same as d
+		d
+		e
 	)
 	assert.Equal(t, a, b)
 	assert.Equal(t, c, d)
+	assert.Equal(t, d, e)
 }
 
 func TestIotaUsage(t *testing.T) {
-	// `iota` 在每遇到一次常量声明时都会加 1，初始为 0
+	// iota 在每遇到一次常量声明时都会加 1，初始为 0
 	t.Run("basic usage", func(t *testing.T) {
 		const (
 			a = iota // a == 0 (iota == 0)
@@ -89,14 +102,14 @@ func TestIotaUsage(t *testing.T) {
 		assert.Equal(t, 2, c)
 	})
 
-	// 在常量按组声明时，`iota` 可以省略
+	// 在常量按组声明时，iota 可以省略
 	t.Run("omit iotas after first occurrence of iota", func(t *testing.T) {
 		const (
 			d = iota // d == 0 (iota == 0)
 			e        // e == 1 (iota == 1)
 			f        // f == 2 (iota == 2)
 		)
-		// 下面两行单独声明则都会为 0
+		// 不是按组声明的 iota，值都为 0
 		const v1 = iota
 		const v2 = iota
 		assert.Equal(t, 0, d)
@@ -119,7 +132,7 @@ func TestIotaUsage(t *testing.T) {
 		assert.Equal(t, fmt.Sprintf("%s\n", "0 1 string string 4"), fmt.Sprintln(g, h, i, j, k))
 	})
 
-	// 只要常量组内使用了 `iota`，那么 `iota` 就会从第一行开始计数
+	// 只要常量组内使用了 iota (无论是在第几行使用)，那么 iota 就会从第一行开始计数
 	t.Run("iota will start counting from the first line", func(t *testing.T) {
 		const (
 			l = 7    // l == 7      (iota == 0)
@@ -144,7 +157,7 @@ func TestIotaUsage(t *testing.T) {
 		assert.Equal(t, "0 1 4", fmt.Sprint(q, r, s))
 	})
 
-	// 同一行定义多个包含 iota 的常量时，每个常量对应的 iota 值是相等的
+	// 同一行定义多个包含 iota 的常量时，每个常量对应的 iota 值是相等的，可以理解为这多个常量的声明只需要一个 const 关键字
 	t.Run("multiple uses of iota in the same ConstSpec all have the same value", func(t *testing.T) {
 		const (
 			w       = iota             // w == 0           (iota == 0)
@@ -157,7 +170,7 @@ func TestIotaUsage(t *testing.T) {
 
 func TestExamples(t *testing.T) {
 	t.Run("colors", func(t *testing.T) {
-		// `type` 可以对一个已存在数据类型进行别名，这在某些时候更具可读性
+		// type 可以对一个已存在数据类型进行别名，这在某些时候更具可读性
 		type Color int
 
 		const (
