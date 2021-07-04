@@ -9,5 +9,7 @@ var Pi float64
 
 func init() {
 	// Go 会先执行 init 函数，再执行 main 函数
-	Pi = 4 * math.Atan(1) // init() function computes Pi
+	Pi = 4 * math.Atan(1)
+
+	// init 函数也经常被用在当一个程序开始之前调用后台执行的 goroutine
 }
