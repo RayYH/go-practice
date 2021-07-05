@@ -188,6 +188,7 @@ func TestBitwiseOperator(t *testing.T) {
 	})
 }
 
+// 和 Python 类似，Go 也不支持 i++ 和 i-- 的写法
 func TestAssignmentOperators(t *testing.T) {
 	a := 1
 	assert.Equal(t, 1, a)
@@ -211,4 +212,8 @@ func TestAssignmentOperators(t *testing.T) {
 	assert.Equal(t, 20, c)
 	c ^= 0b00010101
 	assert.Equal(t, 1, c)
+
+	c = 1
+	c <<= 2
+	assert.Equal(t, 4, c)
 }

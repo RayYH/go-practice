@@ -1,7 +1,8 @@
 package main
 
 import (
-	// 可以将多个包别名为 .，相当于把包内的对象引入到当前包中，直接使用这些对象即可
+	// If an explicit period (.) appears instead of a name, all the package's exported identifiers will be declared in
+	// the current file's file block and can be accessed without a qualifier.
 	. "fmt"
 	. "math"
 )

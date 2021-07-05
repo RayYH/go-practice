@@ -1,6 +1,6 @@
 package main
 
-// 你可以通过别名来解决不同包之间的名称冲突
+// alias package name
 import fm "fmt"
 
 func main() {

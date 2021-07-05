@@ -34,22 +34,16 @@ func TestTypeConversions(t *testing.T) {
 	})
 }
 
-func TestTypeInterface(t *testing.T) {
-	i := 42
-	j := 3.14
-	k := 0.867 + 0.5i
-	// %T 打印出值的类型
-	assert.Equal(t, "int float64 complex128", fmt.Sprintf("%T %T %T", i, j, k))
-}
-
+// 使用 type 关键字可以定义你自己的类型 (结构体、接口)，也可以定义一个已经存在的类型的别名
+// 这里并不是真正意义上的别名，因为使用这种方法定义之后的类型可以拥有更多的特性，且在类型转换时必须显式转换
 func TestTypeAliases(t *testing.T) {
+	// 使用 = 表示别名，A1，A2，string 本质上是同一个类型
 	type (
 		A1 = string
 		A2 = A1
 	)
 
-	// 使用 type 关键字可以定义你自己的类型 (结构体、接口)，也可以定义一个已经存在的类型的别名
-	// 这里并不是真正意义上的别名，因为使用这种方法定义之后的类型可以拥有更多的特性，且在类型转换时必须显式转换
+	// 不使用 = 表示定义一个新类型，新类型不会有原类型所附带的方法
 	type (
 		B1 string
 		B2 B1
@@ -64,9 +58,11 @@ func TestTypeAliases(t *testing.T) {
 	var b3 B3
 	var b4 B4
 
+	// 别名的话可以和原类型进行比较
 	assert.Equal(t, "", a1)
 	assert.Equal(t, "", a2)
-	// 注意下面不能用 ""，而是必须强转为指定的类型
+
+	// 新类型的话必须转换为指定的类型才可以继续进行比较
 	assert.Equal(t, B1(""), b1)
 	assert.Equal(t, B2(""), b2)
 	assert.Nil(t, b3)
