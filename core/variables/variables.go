@@ -6,39 +6,26 @@ import (
 	"runtime"
 )
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// 1. 在函数体外声明的变量即为全局变量，可以在整个包或者外部包 (被导出后) 使用，与所在的源文件无关
-// 2. 在函数体内声明的变量称之为局部变量，它们的作用域只在函数体内，参数和返回值变量也是局部变量
-// 3. 内部作用域的变量可以暂时覆盖 (隐藏) 外部作用域的同名变量，待内部代码块执行完毕 (内部同名变量被释放)，外部同名变量便可以恢复使用
-// 4. 当一个变量被声明之后，系统自动赋予它该类型的零值 (所有的内存在 Go 中都是经过初始化的)
-// 5. 变量的命名规则遵循骆驼命名法，camelCase (局部变量或包内可见的全局变量) 或者 CamelCase (需要导出的全局变量)
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// 根据 Go 的可见性规则，globalString 只在当前包内可见，GlobalString 可以被导出到其他包内使用
+// global variables
 var globalString = "This is a string."
 var GlobalString = "This is also a string."
 
-// 全局变量允许只声明不使用
+// only declaration
 var emptyGlobalVar string
 var declaredVariable float64
 
-// 和常量一样，Go 中的变量也可以通过 () 包裹成一组，这种写法 ("factored" into blocks) 主要用于全局变量
 var (
 	myName = "Ray"
-	myAge  = 24 // 这里的 24 是 int 类型，如果你想要让 24 为 int64 类型，你需要使用 myAge int64 = 24
+	myAge  = 24
 )
 
-// 在定义全局变量时，可以使用内置的函数，因为变量的类型可以在运行时实现自动推断
+// use built-in functions
 var (
 	_ = runtime.Version()
 	_ = os.Getenv("HOME")
 	_ = os.Getenv("USER")
 )
 
-// init 函数不能被人为调用，该函数在每个包完成初始化后自动执行，并且执行优先级比 main 函数要高，每个源文件都只能包含一个 init 函数
 func init() {
-	// 我们可以在 init 函数中对全局变量进行初始化
 	declaredVariable = math.Atan(1)
 }

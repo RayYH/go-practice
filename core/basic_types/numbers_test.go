@@ -68,7 +68,7 @@ func TestDifferentRadixes(t *testing.T) {
 
 // e 表示 10 的连乘
 func TestWithExponentPart(t *testing.T) {
-	assert.Equal(t, 1000, 1e3)
+	assert.Equal(t, float64(1000), 1e3)
 }
 
 // 字面量浮点数是可以直接用 == 进行比较的 (与 Python 相同)，但是大多数时候我们都会使用精度来判断两个浮点数是否相同

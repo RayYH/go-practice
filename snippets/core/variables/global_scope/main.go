@@ -7,7 +7,7 @@ func n() {
 }
 
 func m() {
-	// 这里直接修改了全局变量 a 的值
+	// modify global variable a
 	a = "O"
 	print(a)
 }
