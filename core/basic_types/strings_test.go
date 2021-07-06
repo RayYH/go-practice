@@ -12,17 +12,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// 字符串是 UTF-8 字符的一个序列
-// 当字符为 ASCII 码时则占用 1 个字节，其它字符根据需要占用 2-4 个字节
-// Go 中字符串的零值是空字符串
 func TestZeroValueOfStringType(t *testing.T) {
-	// 和 C/C++不一样，Go 中的字符串是根据长度限定，而非特殊字符 \0 -> 二进制安全
 	var aStr string
 	assert.Equal(t, aStr, "")
 }
 
-// Go 中的字符串可以通过下标访问，但是不能通过下标修改，这同其他大多数语言中字符串的不可变性一致 (PHPer 沉默了)
-// 获取字符串中某个字节的地址 (&str[i]) 的行为是非法的
 func TestStringDeclarations(t *testing.T) {
 	var str string
 	str = "Hello World"
@@ -30,14 +24,11 @@ func TestStringDeclarations(t *testing.T) {
 	assert.Equal(t, str[0], uint8('H'))
 }
 
-// Go 支持以下 2 种形式的字面值
-// "" 包裹的解释字符串和 `` 包裹的非解释性字符串
 func TestStringTypes(t *testing.T) {
-	assert.Equal(t, "\n\r", "\n\r") // 这里的 \n\r 会被转义
+	assert.Equal(t, "\n\r", "\n\r")
 	assert.Equal(t, "\\n\\r", `\n\r`)
 }
 
-// byte/rune 切片可以直接转换为字符串
 func TestSlicesCanBeConvertedToStrings(t *testing.T) {
 	// string literal
 	var givenString = "Geeks"
@@ -54,7 +45,6 @@ func TestSlicesCanBeConvertedToStrings(t *testing.T) {
 	assert.Equal(t, myString2, givenString)
 }
 
-// len 方法返回字符串长度，包含中文字符时，需要用 utf8.RuneCountInString
 func TestStringsLength(t *testing.T) {
 	// 6 + 3 * 2 = 12
 	myStr := "Hello 世界"
@@ -62,11 +52,9 @@ func TestStringsLength(t *testing.T) {
 	assert.Equal(t, 8, utf8.RuneCountInString(myStr))
 }
 
-// 由于字符串可以通过下标访问，因此字符串可以进行遍历 (迭代)
 func TestStringIteration(t *testing.T) {
 	str := "Hello,世界"
-	// 通过 len 作为上限索引来循环，是按 ASCII 字符解析的
-	t.Run("as byte", func(t *testing.T) {
+	t.Run("when using len method, parsed as bytes", func(t *testing.T) {
 		n := len(str)
 		for i := 0; i < n; i++ {
 			ch := str[i]
@@ -74,14 +62,12 @@ func TestStringIteration(t *testing.T) {
 		}
 	})
 
-	// 使用 range 来进行遍历时，默认是按 rune (int32) 来解析的
 	t.Run("as char (rune)", func(t *testing.T) {
 		for _, ch := range str {
 			assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "int32")
 		}
 	})
 
-	// 强制转换为 rune slice 然后使用索引遍历可以达到和 range 一样的效果
 	t.Run("convert to rune slice", func(t *testing.T) {
 		str2 := []rune(str)
 		for i := 0; i < len(str2); i++ {
@@ -91,7 +77,6 @@ func TestStringIteration(t *testing.T) {
 	})
 }
 
-// Go 支持使用 `` 来表示多行字符串 (JavaScript 风格)
 func TestMultiLineStrings(t *testing.T) {
 	t.Run("empty multiple line string", func(t *testing.T) {
 		var rawStr1 = ``
@@ -134,22 +119,21 @@ FROM table
 	})
 }
 
-// Go 字符串基础操作
 func TestStringsBasicOperations(t *testing.T) {
 	s := "a-b-c"
-	// accessing elements - 访问
+	// accessing elements
 	assert.Equal(t, "a", string(s[0]))
-	// split string - 切割
+	// split string
 	assert.Equal(t, []string{"a", "b", "c"}, strings.Split(s, "-"))
-	// join array - 合并
+	// join array
 	assert.Equal(t, "a-b-c", strings.Join([]string{"a", "b", "c"}, "-"))
-	// trim spaces - 裁剪
+	// trim spaces
 	assert.Equal(t, "a b c", strings.TrimSpace(" a b c "))
-	// concatenate strings - 连接
+	// concatenate strings
 	assert.Equal(t, "Hello World", "Hello"+" "+"World")
 }
 
-// 字符串转换，主要是与数值类型，用到 strconv 包
+//
 func TestStringConversions(t *testing.T) {
 	// string to int
 	s := "10"
@@ -167,6 +151,14 @@ func TestStringConversions(t *testing.T) {
 	a = "str"
 	str2 := a.(string)
 	assert.Equal(t, "str", str2)
+}
+
+func ExampleDisplayStringLiterals() {
+	DisplayStringLiterals()
+	// Output: abc\n
+	//		\n
+	//"Hello, world!
+	//日本語日本語日本語日本語日本語日本語
 }
 
 // using +=: 10.57 ns/op
