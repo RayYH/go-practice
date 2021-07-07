@@ -56,9 +56,6 @@ type Interval struct {
 	end   int
 }
 
-// 1. Go 方法是作用在接收者 (receiver) 上的一个函数，接收者是某种类型的变量，因此方法是一种特殊类型的函数
-// 2. 类型 T (或 *T) 上的所有方法的集合叫做类型 T (或 *T) 的方法集
-
 func (i *Interval) duration() int {
 	return i.end - i.start
 }
@@ -109,8 +106,7 @@ func upperPerson(p *Person) {
 	p.lastName = strings.ToUpper(p.lastName)
 }
 
-// 如果类型定义了 String() 方法，它会被用在 fmt.Printf() 中生成默认的输出，等同于使用格式化描述符 %v 产生的输出
-
+// used when struct output as string
 func (p Person) String() string {
 	return fmt.Sprintf("%s %s", p.firstName, p.lastName)
 }
@@ -154,7 +150,7 @@ func (a Integer) LessThan(b Integer) bool {
 	return a < b
 }
 
-func (a *Integer) Add(b Integer) { // 传递指针可以修改 a 的值
+func (a *Integer) Add(b Integer) {
 	*a += b
 }
 
@@ -167,7 +163,7 @@ type Log struct{ msg string }
 func (l *Log) Add(s string)   { l.msg += "\n" + s }
 func (l *Log) String() string { return l.msg }
 
-// Customer 结构体包含了匿名结构体 Log
+// Customer struct contains anonymous struct Log
 type Customer struct {
 	Name string
 	Log
@@ -177,7 +173,7 @@ func (c *Customer) String() string {
 	return c.Name + "\nLog:" + fmt.Sprintln(c.Log)
 }
 
-// CustomerHoldsRef 结构体包含了 Log 结构体指针
+// CustomerHoldsRef struct contains pointer to Log struct
 type CustomerHoldsRef struct {
 	Name string
 	log  *Log
