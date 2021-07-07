@@ -1,7 +1,5 @@
 package advanced_types
 
-// map 类型是非线程安全的，当并行访问一个共享的 map 类型的数据，map 数据将会出错
-
 import (
 	"log"
 	"sort"
@@ -10,51 +8,34 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// map 的声明与初始化
 func TestDeclarationsAndInitializationsOfMaps(t *testing.T) {
 	t.Run("non-initialized map is nil", func(t *testing.T) {
-		// map 是可以动态增长的，因此声明时不需要知道 map 的长度
-		// key 可以是任意可以用 == 或者 != 操作符比较的类型，比如 string、int、float
-		// value 可以是任意类型，通过使用空接口类型，我们可以存储任意值，但是使用这种类型作为值时需要先做一次类型断言
 		var mapList map[string]int
-		var mapAssigned map[string]int
-		// 未初始化的 map 的值是 nil
 		assert.Nil(t, mapList)
-		assert.Nil(t, mapAssigned)
 	})
 
 	t.Run("maps are referenced types", func(t *testing.T) {
-		// 直接通过字面量 ({k1:v1, k2:v2} 风格) 来进行初始化，这里没有显式声明变量类型，因为编译器可以自行推断
 		mapList := map[string]int{
 			"one": 1,
 			"two": 2,
 		}
-		// 从已有的 map 直接赋值
 		mapDuplicated := mapList
-
-		// mapDuplicated 没有经过深度拷贝，因此修改它会同时修改原有的 mapList
 		mapDuplicated["one"] = 3
 		assert.Equal(t, mapList["one"], 3)
 	})
 
-	// 我们可以使用 `make` 方法来初始化 map 为零值
-	// 而 `new` 方法返回的是一个内存经过初始化的指针 (永远不要使用 `new` 来初始化一个 map)
 	t.Run("using make to create maps", func(t *testing.T) {
-		// make 方法作用于 map 时依然可以接收第二个参数作为初始容量
 		mapCreated := make(map[string]float64)
 		mapCreated["key1"] = 4.5
 		mapCreated["key2"] = 3.14159
 		assert.Equal(t, mapCreated["key2"], 3.14159)
 
-		// 这里 mapDuplicated 是一个指向 map[string]float64 类型的指针
-		// 请只使用 make 来创建 map，避免使用 new 来创建 map
+		// never use new() to create a map
 		mapDuplicated := new(map[string]float64)
-		// 在这里 map 所需要的内存是 0，因此这里的 new 方法创建的内存实际上是 Nil，往其中直接追加元素是非法的
 		assert.Panics(t, func() {
 			(*mapDuplicated)["self"] = 1.1
 		})
 
-		// 但是可以将一块已经初始化内存的 map[string]float64 赋给 mapDuplicated
 		mapDuplicated = &mapCreated
 		assert.NotNil(t, mapDuplicated)
 
@@ -69,26 +50,26 @@ func TestCURDOnMaps(t *testing.T) {
 		Name    string
 		Address string
 	}
-	// 使用 make 初始化一个 map
+	// declare a map
 	persons := make(map[string]PersonInfo)
 
-	// 添加 k/v
+	// add element (k/v)
 	persons["1"] = PersonInfo{"1", "Ray", "Street 1"}
 	persons["2"] = PersonInfo{"2", "Tom", "Street 2"}
 
-	// 根据 k 获取 v
+	// get v by k
 	person, ok := persons["1"]
 	assert.Equal(t, PersonInfo{"1", "Ray", "Street 1"}, person)
 	assert.True(t, ok)
 
-	// 修改 v 需要根据 k 重新赋值
+	// modify v by k
 	person.Name = "Rayyh"
 	persons["1"] = person
 	person, ok = persons["1"]
 	assert.Equal(t, PersonInfo{"1", "Rayyh", "Street 1"}, person)
 	assert.True(t, ok)
 
-	// 根据 k 移除元素
+	// remove element by k
 	delete(persons, "1")
 	_, ok = persons["1"]
 	assert.False(t, ok)
@@ -123,12 +104,8 @@ func TestMapsWithOtherDataTypes(t *testing.T) {
 	})
 
 	t.Run("element of slice can be of map type", func(t *testing.T) {
-		// 分配切片
 		items := make([]map[string]int, 2)
-		// 在遍历 slice 时，如果通过 i, v := range items，则 v 只是 slice 的一个拷贝
-		// 操作 v 并不会对 slice 中的元素进行初始化
 		for i := range items {
-			// 分配切片中的每个元素
 			items[i] = make(map[string]int, 3)
 			items[i]["one"] = 1
 			items[i]["two"] = 2
@@ -143,12 +120,11 @@ func TestMapOperations(t *testing.T) {
 		m := map[string]int{"Alice": 23, "Eve": 2, "Bob": 25, "Mary": 25}
 		invMap := make(map[int]string)
 
-		// 直接 k/v 对调即可，注意如果 v 相同，会被替换掉
 		for k, v := range m {
 			invMap[v] = k
 		}
 
-		// 由于遍历的顺序是不确定的，因此你无法判断处 25 对应的值是 "Bob" 还是 "Mary"
+		// since iteration order is not certain, so value of key 25 can be "Bob" or "Mary"
 		assert.Equal(t, invMap[23], "Alice")
 		assert.Equal(t, invMap[2], "Eve")
 	})
@@ -165,9 +141,6 @@ func TestMapOperations(t *testing.T) {
 		// starting with Go 1.12, the fmt package prints maps in key-sorted order to ease testing
 		// but not in loop
 		for key := range capitals {
-			// 如果使用 log 包的话，这里每一次打印的 key 的顺序都不一致
-			// 但是如果使用 fmt.Println() 的话，则是按 key 顺序排列的 (仅仅是为了方便 debug)
-			// 综上，map 的遍历顺序是不能够被确定的
 			log.Println(key)
 			assert.NotNil(t, key)
 			assert.NotNil(t, capitals[key])
@@ -180,7 +153,6 @@ func TestMapOperations(t *testing.T) {
 		m := map[string]int{"Alice": 23, "Eve": 2, "Bob": 25}
 		keys := make([]string, 0, len(m))
 
-		// 让 map 遍历的顺序稳定的方法就是对 k 进行排序，然后对 k 进行遍历
 		for k := range m {
 			keys = append(keys, k)
 		}
