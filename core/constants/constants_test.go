@@ -36,6 +36,11 @@ func TestDeclarations(t *testing.T) {
 		})
 	})
 
+	t.Run("assigned values can be expressions", func(t *testing.T) {
+		const num = 1 * 3
+		assert.Equal(t, 3, num)
+	})
+
 	t.Run("when declaring constants, we can use built-in functions", func(t *testing.T) {
 		const strLength = len("string")
 		assert.Equal(t, 6, strLength)
@@ -54,13 +59,6 @@ func TestConstantsCanBeFactoredIntoBlocks(t *testing.T) {
 	)
 
 	assert.Equal(t, "0 1 2 3 4 5 6", fmt.Sprint(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday))
-}
-
-func TestPredefinedConstants(t *testing.T) {
-	assert.True(t, true)
-	assert.False(t, false)
-	const a = iota
-	assert.Equal(t, 0, a)
 }
 
 func TestConstantWithoutGivenValueInGroups(t *testing.T) {
