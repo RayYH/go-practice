@@ -54,16 +54,27 @@ func TestStringsLength(t *testing.T) {
 
 func TestStringIteration(t *testing.T) {
 	str := "Hello,世界"
+	asciiStr := "Hello World"
 	t.Run("when using len method, parsed as bytes", func(t *testing.T) {
 		n := len(str)
 		for i := 0; i < n; i++ {
 			ch := str[i]
 			assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "uint8")
 		}
+
+		n = len(asciiStr)
+		for i := 0; i < n; i++ {
+			ch := asciiStr[i]
+			assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "uint8")
+		}
 	})
 
 	t.Run("as char (rune)", func(t *testing.T) {
 		for _, ch := range str {
+			assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "int32")
+		}
+
+		for _, ch := range asciiStr {
 			assert.Equal(t, fmt.Sprint(reflect.TypeOf(ch)), "int32")
 		}
 	})
@@ -133,24 +144,26 @@ func TestStringsBasicOperations(t *testing.T) {
 	assert.Equal(t, "Hello World", "Hello"+" "+"World")
 }
 
-//
 func TestStringConversions(t *testing.T) {
-	// string to int
-	s := "10"
-	i, err := strconv.Atoi(s)
-	assert.Equal(t, 10, i)
-	assert.Nil(t, err)
+	t.Run("string to int", func(t *testing.T) {
+		s := "10"
+		i, err := strconv.Atoi(s)
+		assert.Equal(t, 10, i)
+		assert.Nil(t, err)
+	})
 
-	// int to string
-	n := 99
-	str := strconv.Itoa(n)
-	assert.Equal(t, "99", str)
+	t.Run("int to string", func(t *testing.T) {
+		n := 99
+		str := strconv.Itoa(n)
+		assert.Equal(t, "99", str)
+	})
 
-	// a can be any type
-	var a interface{}
-	a = "str"
-	str2 := a.(string)
-	assert.Equal(t, "str", str2)
+	t.Run("any to string", func(t *testing.T) {
+		var a interface{}
+		a = "str"
+		str2 := a.(string)
+		assert.Equal(t, "str", str2)
+	})
 }
 
 func ExampleDisplayStringLiterals() {

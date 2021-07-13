@@ -204,8 +204,6 @@ func TestAppendSlices(t *testing.T) {
 		b := []int{4, 5, 6}
 		a = append(a, b...)
 		assert.Equal(t, a, []int{1, 2, 3, 4, 5, 6})
-		b[0] = 9
-		assert.Equal(t, a, []int{1, 2, 3, 4, 5, 6})
 	})
 
 	t.Run("delete element", func(t *testing.T) {

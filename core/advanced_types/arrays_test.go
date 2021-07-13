@@ -39,6 +39,9 @@ func TestArraysLiterals(t *testing.T) {
 
 	t.Run("empty interface", func(t *testing.T) {
 		var anyType = [...]interface{}{"1", 2, true}
+		assert.Equal(t,"1", anyType[0].(string))
+		assert.Equal(t,2, anyType[1].(int))
+		assert.Equal(t,true, anyType[2].(bool))
 		assert.Equal(t, 3, cap(anyType))
 	})
 
