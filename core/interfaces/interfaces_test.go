@@ -116,6 +116,7 @@ func TestVector(t *testing.T) {
 	vector.Set(0, "str")
 	vector.Set(1, true)
 	assert.Equal(t, "str", vector.At(0).(string))
+	assert.Equal(t, true, vector.At(1).(bool))
 }
 
 func TestMethodSets(t *testing.T) {
