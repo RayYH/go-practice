@@ -115,6 +115,9 @@ func (v *Vector) At(i int) Element {
 }
 
 func (v *Vector) Set(i int, e Element) {
+	if len(v.elems) == cap(v.elems) {
+		v.elems = append(v.elems, make([]Element, len(v.elems)+1)...)
+	}
 	v.elems[i] = e
 }
 

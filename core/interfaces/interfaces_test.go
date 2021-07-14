@@ -111,6 +111,13 @@ func TestShaper(t *testing.T) {
 	})
 }
 
+func TestVector(t *testing.T) {
+	vector := new(Vector)
+	vector.Set(0, "str")
+	vector.Set(1, true)
+	assert.Equal(t, "str", vector.At(0).(string))
+}
+
 func TestMethodSets(t *testing.T) {
 	t.Run("using value type", func(t *testing.T) {
 		var lst List
